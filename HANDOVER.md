@@ -10,26 +10,29 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | OT model, security telemetry, five cyber rules, cases, ATT&CK context | yes | 15 cyber tests; 10-seed evaluation (0 false positives in 5 h) | n/a |
 | Cyber-physical assessment (7 conclusions, unknowns, next steps) | yes | 60/60 evaluation runs correct; independent blind-authored evaluation 90/90 (80/90 before the IND-05 fix) | n/a |
 | Overview, Spatial with OT layer, workbench, Cyber & OT, demo launcher | yes | browser at 1440 × 900, 820 px, 768 px and 700 px; 13 scripted captures; 82 s screen-capture demo | n/a |
-| Agent layer with cyber context and causal-overreach gate | yes | test double; adversarial gate (0/99) | **no** |
-| Claude provider and AI service | yes | local API stub; browser failure path | **no** |
-| Ollama provider (local, free) | yes | local stub of the Ollama API, including a full five-agent run | **no** (no model downloaded) |
+| Agent layer with cyber context and causal-overreach gate | yes | test double; adversarial gate (0/99) | **small local sample** (`qwen3:4b`, EVALUATION.md §4) |
+| Claude provider and AI service | yes | local API stub; browser failure path; cross-site request refusal | **no** (no API key) |
+| Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (slow: 19–45 min per call) |
+| Standalone desktop app | **no** | — | — (plan: docs/DESKTOP_ARCHITECTURE.md) |
 
-Verified on 2026-11-20: type-check and lint clean; 128 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
+Verified on 2026-11-20: type-check and lint clean; 129 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
 
 **Repository:** public on GitHub, [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main`. See docs/PUBLISHING.md.
 
 ## 2. Open items that need the owner
 
-1. **Live LLM validation.** The free route is local: approve `ollama pull qwen3:4b` (about 2.5 GB), then run `npm run eval:live` with `ATLAS_LLM_PROVIDER=ollama` (docs/LOCAL_AI.md) and update EVALUATION.md §4–5. The Claude route needs an API key, which the owner does not plan to buy. The product is complete without either.
-2. **Licence:** none is included, so the public code is all rights reserved. Add MIT or Apache-2.0 to allow reuse (docs/PUBLISHING.md).
+1. **Licence:** none is included, so the public code is all rights reserved. Add MIT or Apache-2.0 to allow reuse (docs/PUBLISHING.md).
+2. **Code signing** (paid) before distributing a Windows installer widely (docs/DESKTOP_ARCHITECTURE.md §12).
 
 ## 3. Roadmap
 
-1. Measure local inference: run the five-agent review on `qwen3:4b` and record schema pass rate, grounding failures and latency on this hardware (CPU only).
-2. More cyber scenarios: communication loss (loss of view), program download, and a session through an unexpected path. Each needs a rule test and an evaluation case.
-3. A second independent evaluation round, with scenarios written by a domain expert rather than an AI author, and without access to the scenario-language interface.
-4. Persistence of incidents, cases and verdicts; asset-model and OT-inventory import; a real data-source adapter behind the existing interfaces.
-5. Code splitting for the 1.2 MB bundle.
+1. Desktop application, phases 1–4 of docs/DESKTOP_ARCHITECTURE.md (Electron shell, Ollama runtime manager, persistence, installer).
+2. Broader live AI measurement on a machine with enough free memory to keep the model resident (all four live cases, several runs each), so answer quality can be compared with the deterministic engine rather than only observed.
+3. More cyber scenarios: communication loss (loss of view), program download, and a session through an unexpected path. Each needs a rule test and an evaluation case.
+4. A second independent evaluation round, with scenarios written by a domain expert rather than an AI author, and without access to the scenario-language interface.
+5. Asset-model and OT-inventory import; a real data-source adapter behind the existing interfaces.
+6. Code splitting for the 1.2 MB bundle.
+7. Dev tooling: `npm audit` reports 9 moderate advisories in the ESLint toolchain (via `minimatch`); none in runtime dependencies. Update ESLint when a fixed release is available.
 
 ## 4. Decisions
 
@@ -41,6 +44,6 @@ Verified on 2026-11-20: type-check and lint clean; 128 tests pass in 9 files; th
 
 ## 5. Environment notes
 
-- No system Node.js or git on the development machine; a portable Node.js lives in `.tools/node`, and `start-atlas.cmd` uses it.
+- No system Node.js or git on the development machine; a portable Node.js lives in `.tools/node`, and `start-vanterra.cmd` uses it.
 - Windows PowerShell 5.1 corrupts UTF-8 when files are round-tripped through `Get-Content`/`Set-Content`. Edit files with an editor or with explicit UTF-8 I/O.
 - `npm run capture` drives the installed Edge or Chrome through `playwright-core`; it downloads nothing.

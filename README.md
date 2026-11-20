@@ -8,7 +8,7 @@
 
 > **Simulated, and honest about it.** The plant (32 assets, 84 signals) and its OT network (14 devices, 5 zones) are simulations. The detection, correlation, cyber-physical assessment, agent workflow and validation that act on that data are real code. Nothing connects to or controls real equipment or networks. [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) draws the line.
 
-> **AI status.** The optional five-agent LLM review runs on either the Claude API or a **local model through Ollama, with no API key and no cost** ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)). Both providers are tested up to the network boundary against local stubs, but **neither has been run against a live model yet**: no key was used, and no local model has been downloaded. The deterministic investigation, including the full cyber-physical assessment, needs no model at all.
+> **AI status.** The optional five-agent LLM review runs on either the Claude API or a **local model through Ollama, with no API key and no cost** ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)). The local path has been **run for real** with `qwen3:4b` on a CPU-only 16 GB laptop: real agent calls inside real investigations, through the same validation gates, which rejected and repaired real model answers ([EVALUATION.md §4](EVALUATION.md#4-live-language-model)). On that hardware it is slow (19–45 min per agent call). The Claude provider has not been run against the live API (no key). The deterministic investigation, including the full cyber-physical assessment, needs no model at all.
 
 ## Contents
 
@@ -29,9 +29,11 @@ The possible conclusions are explicit: *physical explanation supported* · *cont
 
 ## Quick start
 
-**Windows without Node.js installed:** double-click `start-atlas.cmd` (uses a portable Node.js in `.tools/node` if present).
+Vanterra currently runs as a web app on a local development server; it is not yet a packaged desktop application ([the plan for that](docs/DESKTOP_ARCHITECTURE.md)). You need [Node.js](https://nodejs.org) 20 or newer.
 
-**Any platform with Node.js 20+:**
+**Windows:** double-click `start-vanterra.cmd`. It installs dependencies on first run, starts the server and opens the browser.
+
+**Any platform:**
 
 ```bash
 npm install
@@ -48,7 +50,7 @@ Open http://localhost:5173 in a WebGL2 browser. Everything works offline with no
 | `npm run dev` | Development server (with the AI service) |
 | `npm test` | 118 unit, scenario, cyber and agent-workflow tests |
 | `npm run eval` | Offline evaluation over 10 seeds → `eval/results/` |
-| `npm run eval:live` | Live-model evaluation; needs an API key |
+| `npm run eval:live` | Live-model evaluation with a real model (local Ollama or Claude) |
 | `npm run build` | Type-check and build a static bundle (no AI service) |
 | `npm run capture` | Regenerate `docs/screenshots/` from the running app |
 | `npm run record-demo` | Record the captioned demo video from the running app |
@@ -147,11 +149,11 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 128 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 129 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 
-Everything is optional; see [.env.example](.env.example). AI review needs `ANTHROPIC_API_KEY` in `.env.local` (read only by the server process). `npm run eval:live` then measures the live model.
+Everything is optional; see [.env.example](.env.example). AI review needs either `ATLAS_LLM_PROVIDER=ollama` with a local model ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)) or `ANTHROPIC_API_KEY`, in `.env.local` (read only by the server process). `npm run eval:live` then measures the live model.
 
 ## Project layout
 
@@ -166,7 +168,7 @@ src/
   runtime/      headless core, browser runtime, AI client
   spatial/      Three.js scene and OT layer
   ui/           Overview, Spatial, workbench, Cyber & OT
-server/         AI service and Claude provider
+server/         AI service, Claude and Ollama providers
 docs/           screenshots, brand, demo script, portfolio, publishing
 ```
 
@@ -176,7 +178,8 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 - **Rules, not learned models.** The five cyber rules and the assessment criteria were written alongside the scenarios they are evaluated on.
 - **Flow summaries, not packets**; account names, not people. The assessment says so in every conclusion.
 - **One incident per asset at a time**, and hypotheses freeze after an operator intervention.
-- **No live LLM run** with either provider; no persistence; the AI service exists only with `npm run dev` or `npm run preview`.
+- **Live AI evidence is a small local sample**: one 4B model on one CPU-only laptop, where an investigation takes hours. Claude has not been run live.
+- **Not a desktop application yet**: it runs on a local development server and needs Node.js; no persistence. The AI service exists only with `npm run dev` or `npm run preview`. The plan is in [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 - **The independent scenario author was another AI agent**, separated by information, not a human investigator.
 - **No real equipment or network can be reached or controlled**, by design.
 
@@ -188,7 +191,9 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 | [EVALUATION.md](EVALUATION.md) | Methodology, ground truth, results, caveats, what is not measured |
 | [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) | Exactly what is simulated and what is real |
 | [docs/BRAND.md](docs/BRAND.md) | Name evaluation, identity, colour and terminology |
-| [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: hardware, model choice, setup |
+| [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: measured performance, fixes, setup |
+| [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md) | Decision record and plan for a standalone Windows app |
+| [SECURITY.md](SECURITY.md) | Security controls, known risks, reporting |
 | [eval/independent/](eval/independent/) | Authoring brief, plant catalog and blind-authored scenarios |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo recording package |
 | [docs/PORTFOLIO.md](docs/PORTFOLIO.md) | Descriptions, CV text, interview explanation |

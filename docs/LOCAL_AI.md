@@ -6,10 +6,10 @@ Vanterra's optional five-agent review can run on a local model through [Ollama](
 
 | Item | State |
 | --- | --- |
-| Provider `server/ollamaProvider.ts` | **Implemented.** Ollama's native chat API with structured outputs (the agent's zod schema is sent as JSON Schema in `format`), temperature 0, `think: false` for thinking models, typed errors, readiness check |
+| Provider `server/ollamaProvider.ts` | **Implemented.** Ollama's native chat API with structured outputs (the agent's zod schema is sent as JSON Schema in `format`), temperature 0, `think: false` for thinking models, one call at a time, output cap, typed errors, readiness check |
 | Validation | Unchanged: every local answer passes the same schema gate and grounding gate (evidence IDs, certainty, probability and causal-overreach wording) as any provider |
-| Tests | 7 tests against a local stub of Ollama's API, including a full five-agent run through the provider. **These are not model runs.** |
-| Real local inference | **Not run.** Ollama 0.40.16 is installed and running on the development machine, but **no model is downloaded**, and downloading one needs the owner's approval |
+| Tests | 9 tests against a local stub of Ollama's API (request shape, queueing, slow answers, cut-off connections, cancellation, deadlines, output cap, a full five-agent run). **These are not model runs.** |
+| Real local inference | **Run.** `qwen3:4b` (Q4_K_M, 2.33 GB) on Ollama 0.40.16, CPU only. Real agent calls inside real Vanterra investigations; measurements below and in [EVALUATION.md §4](../EVALUATION.md#4-live-language-model) |
 
 ## Development-machine hardware (inspected, not assumed)
 
@@ -18,36 +18,65 @@ Vanterra's optional five-agent review can run on a local model through [Ollama](
 | OS | Windows 11 Pro 64-bit (build 26200) |
 | CPU | Intel Core i5-1135G7, 4 cores / 8 threads |
 | GPU | Intel Iris Xe (integrated). Ollama does not accelerate it, so inference runs on the CPU |
-| RAM | 15.7 GB total, about 0.6 GB free at inspection time (heavily used) |
-| Disk | 17.6 GB free on C: |
-| Ollama | 0.40.16, server running on 127.0.0.1:11434, no models |
+| RAM | 15.7 GB total; typically 0.3–2.4 GB available during the runs, because other applications were open |
+| Ollama | 0.40.16, `127.0.0.1:11434`, one model: `qwen3:4b` |
 
-## Recommendation
+## Measured performance
 
-| Model | Download | Context | Why or why not |
-| --- | --- | --- | --- |
-| **`qwen3:4b`** (recommended) | 2.5 GB | 256K | Best reasoning per gigabyte in this range; supports structured output; thinking is switched off. Fits in RAM with other applications closed |
-| `qwen2.5:3b` (lighter fallback) | 1.9 GB | 32K | Faster on CPU and reliable at JSON; weaker reasoning |
-| `phi4-mini` / `llama3.2:3b` | 2.5 / 2.0 GB | 128K | Viable alternatives |
-| 7–8B models (`qwen2.5:7b`, `qwen3:8b`) | 4.7–5.2 GB | — | Not recommended here: memory pressure with 0.6 GB free, and a few tokens per second on this CPU |
+All figures come from Ollama's own timing log on the machine above.
 
-Sizes and context windows are from the official ollama.com library pages, read on 2026-11-20.
+| Measurement | Result |
+| --- | --- |
+| Model download | 2.33 GB in 100 s |
+| Model in memory (16k context) | 4.76 GB reported by Ollama; the runner process used 5.1–6.6 GB private memory |
+| Cold load | 14 s |
+| Short structured call, model resident (112-token prompt) | prompt 29 tokens/s, generation **6.1 tokens/s**, 26 s in total |
+| Agent call, pump-bearing Evidence Analyst (9,328-token input) | prompt 17 tokens/s (9 min), generation **0.88 tokens/s** for 1,661 tokens (32 min): **40 min 40 s** |
+| Agent call, pump-bearing Impact Analyst (5,469-token input) | prompt 23 tokens/s (4 min), generation 1.44 tokens/s for 1,301 tokens: **19 min** |
+| Repair call, Evidence Analyst (10,097 tokens; 9,319 reused from Ollama's prompt cache) | generation 0.81 tokens/s for 2,104 tokens: **45 min** |
 
-**Expected performance (an estimate, not a measurement):** a CPU-only 4B model on this processor processes prompts at tens of tokens per second and generates at single-digit tokens per second. Agent inputs are about 5–12k tokens, so one agent call may take a few minutes and a full five-agent run tens of minutes. Local mode therefore defaults to a 900 s per-call timeout and a 3600 s run deadline. Quality on the grounding gates is unknown until measured.
+**The bottleneck is memory, not the model or the orchestration.** Generation fell from 6.1 tokens/s with the model resident to 0.8–1.4 tokens/s during the runs, while Windows reported 2,500–14,000 page reads per second, only 4–5.8 GB of the runner's 5.1–6.6 GB in RAM, and the CPU at 83–100 %. The model was being read back from the page file for every token. Long contexts cost something too (attention over ~10k tokens), but not a factor of six.
 
-## Enabling it (after approving the download)
+What this means in practice:
 
-1. Download the model (about 2.5 GB):
+- With other applications open on a 16 GB laptop, one five-agent investigation takes **hours**: each call takes 19–45 minutes, and an investigation makes 5–10 calls (one repair per agent is allowed).
+- With enough free memory to keep the model resident (roughly 6–7 GB available), the same calls should be several times faster. That is an expectation from the resident-model measurement above, not a measured investigation.
+- Agent inputs are 5–10k tokens (measured with Ollama's tokenizer: 4,916–10,097). They fit in the 16,384-token context with the 4,096-token output cap; no prompt was truncated (`truncated = 0` on every call).
+
+## Reliability fixes found by running it for real
+
+The first live runs exposed three defects that the stub tests could not, because the stub answers instantly. Each is fixed and has a regression test:
+
+1. **Five-minute transport deadline.** Node's `fetch` gives up when response headers take more than 300 s; Ollama sends none until it has an answer (or, streaming, until the first token, after reading the whole input). Every agent call on this machine failed at exactly 5 min. The provider now uses `node:http`, whose only deadline is the agent timeout.
+2. **Timeouts spent in a queue.** Ollama on a CPU serves one request at a time, but the workflow starts two analysts together; the second one's timeout ran while it waited. Calls are now queued in the provider, each timeout starts when the call is sent, and the run deadline still bounds the wait. Cancelling a queued call frees its place.
+3. **Unbounded generation.** The workflow allows 16,000 output tokens; at 1 token/s a looping answer could run for hours. Local output is capped at 4,096 tokens (complete answers are about 400–2,100), configurable with `ATLAS_OLLAMA_NUM_PREDICT`.
+
+Defaults for local mode now come from these measurements: 3600 s per call and 14400 s per run (they were 900 s and 3600 s, which could not succeed on this machine). Runs can be cancelled at any time.
+
+## Enabling it
+
+1. Install [Ollama](https://ollama.com) and download the model (about 2.3 GB):
    ```
    ollama pull qwen3:4b
    ```
-2. Add to `.env.local`:
+2. Create `.env.local` in the project root:
    ```
    ATLAS_LLM_PROVIDER=ollama
    ATLAS_LLM_MODEL=qwen3:4b
    ```
 3. Restart `npm run dev`. The status strip shows **AI: Ready** with `ollama`. If the model is missing or Ollama is not running, the AI tab says exactly that.
-4. Measure it on the three fault scenarios: `npm run eval:live`. It refuses to run on a test double, so every number it writes comes from the model. Results go to `eval/results/agentic-live.md`.
+4. Close memory-heavy applications before starting an investigation; see the measurements above.
+5. To measure it: `npm run eval:live -- --testTimeout=36000000`. It refuses to run on a test double, so every number it writes comes from the model. `ATLAS_LIVE_SCENARIOS=cp-fan-setpoint` limits it to the flagship cyber-physical case. Results go to `eval/results/agentic-live.{json,md}` after every scenario.
+
+## Model choice
+
+| Model | Download | Context | Notes |
+| --- | --- | --- | --- |
+| **`qwen3:4b`** (used) | 2.3 GB | 256K | Structured output works; thinking is switched off |
+| `qwen2.5:3b` (lighter) | 1.9 GB | 32K | Less memory, so less paging on a busy 16 GB machine; weaker reasoning. Not measured |
+| 7–8B models | 4.7–5.2 GB | — | Not recommended on this hardware: the 4B model already pages |
+
+Sizes and context windows are from the official ollama.com library pages, read on 2026-11-20.
 
 ## What does not change
 

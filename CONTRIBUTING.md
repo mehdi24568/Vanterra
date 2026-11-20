@@ -2,7 +2,7 @@
 
 ## Setup
 
-Node.js 20 or newer. On Windows without a system Node.js, `start-atlas.cmd` uses a portable Node.js in `.tools/node`.
+Node.js 20 or newer. On Windows, `start-vanterra.cmd` uses Node.js from PATH, or a portable Node.js unpacked into `.tools/node` (ignored by Git).
 
 ```bash
 npm install
@@ -22,7 +22,7 @@ npm run check
 npm run eval
 ```
 
-`check` runs the type-check (strict), ESLint and the 128 tests. `eval` runs the offline evaluation suites (including the independent scenarios) and rewrites `eval/results/`. If a change alters a result, update EVALUATION.md with the new numbers and the reason.
+`check` runs the type-check (strict), ESLint and the 129 tests. `eval` runs the offline evaluation suites (including the independent scenarios) and rewrites `eval/results/`. If a change alters a result, update EVALUATION.md with the new numbers and the reason.
 
 ## Rules the code relies on
 

@@ -1,6 +1,6 @@
 # Vanterra evaluation
 
-This document reports what has been measured about ATLAS, how, and what has not been measured. Every number here was produced by a script in this repository and can be regenerated. Deterministic results and language-model results are kept in separate sections because they have different standing: the first are measured, and the second are **not measured yet**.
+This document reports what has been measured about Vanterra, how, and what has not been measured. Every number here was produced by a script in this repository and can be regenerated. Deterministic results and language-model results are kept in separate sections because they have different standing: the first are measured across seeds, and the second come from a **small live sample on a local model**.
 
 | Part | Command | Status |
 | --- | --- | --- |
@@ -9,7 +9,7 @@ This document reports what has been measured about ATLAS, how, and what has not 
 | Independent, blind-authored scenarios (18 scenarios × 5 new seeds) | `npm run eval` | **Measured** — first run 80/90, after one product fix 90/90 (§2c) |
 | Governance gate against adversarial model answers | `npm run eval` | **Measured** — 99 corrupted answers |
 | Agent-workflow mechanics | `npm run eval` | **Measured with the scripted test double** — says nothing about reasoning quality |
-| Live model: grounding, reasoning quality, latency, tokens, cost | `npm run eval:live` | **Not measured** — no API key has been available in this environment |
+| Live model: grounding, reasoning quality, latency, tokens, cost | `npm run eval:live` | **Local model (`qwen3:4b`, CPU): run on a small sample** (§4). Claude: not measured (no API key) |
 | Human assessment | — | **Not studied** — no user study was run |
 
 Raw results: `eval/results/*.json`; generated tables: `eval/results/*.md`.
@@ -224,27 +224,43 @@ These runs prove orchestration, call budget, bounded context and the no-mutation
 
 ---
 
-## 4. Live language model — not measured
+## 4. Live language model
 
-**No live-model result exists.** There has been no Anthropic API key in the development environment, and the harness refuses to substitute the test double. The integration is implemented and tested up to the network boundary:
+**Local model: run.** `qwen3:4b` (Q4_K_M) through Ollama 0.40.16 on a CPU-only laptop (Intel i5-1135G7, 16 GB RAM, other applications open). Every number in this section comes from real model responses inside real Vanterra investigations, through the same provider, schema gate and grounding gate the app uses. **Claude: not run** (no API key); that provider is tested only against a local stub of the Messages API.
 
-- `server/atlasAi.test.ts` runs the real provider class and the official SDK against a local HTTP stub of the Messages API. It checks request shape, authentication header, structured-output configuration, retries, error mapping, refusal, truncation, non-JSON output, timeout and abort.
+### Method
+
+`npm run eval:live` builds each scenario's investigation context exactly as the app does (seed 20260112, investigated 150 s after injection), runs the five-agent workflow through the configured provider, and scores the report against the injected fault, the deterministic engine's result and the evidence catalogue (metrics below). It refuses to run on the test double. Results are written after every scenario to `eval/results/agentic-live.{json,md}`.
+
+Because one investigation takes hours on this machine (docs/LOCAL_AI.md), live validation was deliberately small: one representative case per run, one run per case. These are observations, not statistics.
+
+### Run 1: physical scenarios (stopped, partial)
+
+Planned: pump-bearing, cooling-fan, mcc-sag. Stopped after 1 h 46 min, during the first scenario, for two reasons. The measured pace (19–45 min per call, with CPU at 100 % and heavy paging) projected 12–15 hours for the three scenarios. And the harness then saved results only at the very end, so any interruption would have lost everything. That second problem is fixed: results are now written after each scenario.
+
+What it completed, from the run log and Ollama's timing log (answer contents were not retained):
+
+| Agent (pump-bearing) | Calls | Outcome |
+| --- | --- | --- |
+| Evidence Analyst | 2 (40 min + 45 min) | The first answer was **rejected by Vanterra's validation**; the repaired answer was accepted as *degraded*: the grounding gate removed claims it could not support |
+| Impact Analyst | 2 (19 min + stopped) | The first answer was rejected; the repair call was running when the run was stopped |
+
+This establishes that real local inference runs end to end inside a real investigation, that real model answers were rejected by the gates and repaired, and the timing profile. It does not measure answer quality.
+
+### Run 2: flagship cyber-physical scenario
+
+*In progress at the time of writing; results are added here when the run finishes.*
+
+### Earlier provider checks
+
+- `server/atlasAi.test.ts` runs the Claude provider class and the official SDK against a local HTTP stub of the Messages API: request shape, authentication header, structured-output configuration, retries, error mapping, refusal, truncation, non-JSON output, timeout and abort.
 - In the browser, with a placeholder key and an unreachable endpoint, the run failed after 2 calls in about 1.2 s with "network: Could not reach the model provider", and the deterministic assessment was unaffected.
 
-What is still unverified: that the API accepts the five structured-output schemas as sent, and everything about the model's answers.
+### How to run it
 
-### How to measure it
+Local (free): see [docs/LOCAL_AI.md](docs/LOCAL_AI.md), then `npm run eval:live -- --testTimeout=36000000`, optionally with `ATLAS_LIVE_SCENARIOS=cp-fan-setpoint`.
 
-1. Create `.env.local` in the project root:
-   ```
-   ANTHROPIC_API_KEY=<your key>
-   ```
-2. Run:
-   ```
-   npm run eval:live
-   ```
-   It investigates each of the three fault scenarios (seed 20260112, 150 s after injection) with the configured model, prints each agent's status and latency, and writes `eval/results/agentic-live.{json,md}`. It fails without measuring anything if no real provider is configured.
-3. Expect about 15 model calls in total. On `claude-opus-5-5` at list price ($4 / $20 per million input / output tokens) and contexts of 30–40 KB, the cost should be on the order of a dollar or two. That is an estimate, not a measurement. The script prints the actual token counts and an estimated cost.
+Claude: put `ANTHROPIC_API_KEY=<your key>` in `.env.local` and run `npm run eval:live`. Expect about 5–10 model calls per scenario; at list price ($4 / $20 per million input / output tokens for `claude-opus-5-5`) that is an estimated dollar or two for all four scenarios, not a measurement.
 
 ### What `eval:live` measures
 
@@ -281,12 +297,12 @@ In the evaluation the injected fault stands in for a verified human verdict, sin
 - **No sensor faults, data gaps, late or out-of-order data** in the evaluation.
 - **Fixes evaluated on the seeds that found the problems** (see §2).
 - **The governance gate is tested against designed corruptions**, not against a real model's errors.
-- **Live-model metrics: not measured.** No statement in this repository about AI reasoning quality, latency or cost is based on a measurement.
+- **Live-model metrics: a small local sample only** (§4): one CPU-only machine, one 4B model, one run per case. Nothing here measures Claude, larger models, or variance between runs.
 
 ## 7. Reproducing
 
 ```
 npm run eval        # offline, about a minute, never calls a model
-npm run eval:live   # needs ANTHROPIC_API_KEY in .env.local; costs money
-npm test            # 128 unit, scenario, cyber, agent and provider tests
+npm run eval:live   # a real model: local Ollama (free, slow on CPU) or Claude (API key, costs money)
+npm test            # 129 unit, scenario, cyber, agent and provider tests
 ```

@@ -199,7 +199,7 @@ What a real deployment still needs that this prototype does not have: authentica
 
 ## 13. Testing
 
-`npm test` runs 128 tests in 9 files:
+`npm test` runs 129 tests in 9 files:
 
 - **Unit:** telemetry normalisation, each detector, graph search and its rules, sonar mechanics.
 - **End to end, headless:** each scenario is run through the whole pipeline and asserted on what the engines concluded: first anomaly, incident membership, origin, leading hypothesis and its score band, rejected alternatives and the contradiction that rejected them.
@@ -344,6 +344,11 @@ The agents receive the events and this assessment in their context (`cyber` in `
 - the agent's zod schema is converted with `z.toJSONSchema` and sent as `format`, so outputs are schema-constrained before Vanterra's own gates run;
 - temperature 0, and `think: false` for thinking models, so no chain-of-thought is produced;
 - a `health()` readiness check (server reachable, model pulled) drives `/api/ai/status`, so the UI says exactly why local AI is unavailable;
-- local mode defaults to longer bounds (900 s per call, 3600 s per run) and zero cost.
+- transport is `node:http`, not `fetch`: fetch abandons a request whose headers take more than 300 s, and Ollama sends none until it has an answer;
+- calls are queued one at a time (Ollama on a CPU has one slot, while two analysts start together); each call's timeout starts when it is sent, and the run deadline (`LlmRequest.deadlineAt`) still bounds the wait;
+- generated tokens are capped at 4096 (`ATLAS_OLLAMA_NUM_PREDICT`) so a looping answer stops;
+- local mode defaults to longer bounds (3600 s per call, 14400 s per run, from measurements) and zero cost.
+
+The first three were found by the first live runs on `qwen3:4b`; none of them could appear against the instant-answering stub.
 
 The same five agents, schema gate, grounding gate (including causal overreach), audit and read-only guarantees apply to every provider.

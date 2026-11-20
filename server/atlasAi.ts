@@ -98,8 +98,11 @@ export function configureAi(env: Env) {
       keepAlive: env.ATLAS_OLLAMA_KEEP_ALIVE?.trim() || '10m',
       maxOutputTokens: positive(env.ATLAS_OLLAMA_NUM_PREDICT, 4096),
     });
-    limits.agentTimeoutMs = positive(env.ATLAS_LLM_AGENT_TIMEOUT_S, 900) * 1000;
-    limits.runDeadlineMs = positive(env.ATLAS_LLM_RUN_DEADLINE_S, 3600) * 1000;
+    // Measured on a CPU-only laptop (i5-1135G7, 16 GB, qwen3:4b): single calls took 19–45 min
+    // under memory pressure and an investigation needs 5–10 calls, so the earlier 15 min /
+    // 1 h bounds could not succeed. Runs can still be cancelled at any time.
+    limits.agentTimeoutMs = positive(env.ATLAS_LLM_AGENT_TIMEOUT_S, 3600) * 1000;
+    limits.runDeadlineMs = positive(env.ATLAS_LLM_RUN_DEADLINE_S, 14_400) * 1000;
     return { providerName, provider, reason, model: local, effort, limits, price: { input: 0, output: 0 } };
   } else {
     reason = `Unknown ATLAS_LLM_PROVIDER "${providerName}". Supported: anthropic, ollama, none.`;

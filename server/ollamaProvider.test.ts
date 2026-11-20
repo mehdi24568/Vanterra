@@ -197,7 +197,8 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     expect(ai.provider?.testDouble).toBe(false);
     expect(ai.model).toBe('qwen3:4b');
     expect(ai.price).toEqual({ input: 0, output: 0 });
-    expect(ai.limits.agentTimeoutMs).toBe(900_000);
+    expect(ai.limits.agentTimeoutMs).toBe(3_600_000);
+    expect(ai.limits.runDeadlineMs).toBe(14_400_000);
   });
 
   it('reports itself unavailable, with the reason, when Ollama has no model', async () => {
