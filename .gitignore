@@ -1,0 +1,31 @@
+# Dependencies and local tools (portable Node.js and Git live in .tools)
+node_modules
+.tools
+
+# Build and test output
+dist
+coverage
+test-results
+playwright-report
+*.tsbuildinfo
+*.log
+
+# Local configuration and secrets: never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# Personal editor / assistant settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

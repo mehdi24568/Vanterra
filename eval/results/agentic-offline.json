@@ -1,0 +1,804 @@
+{
+  "generated": "2026-11-20T12:55:35.182Z",
+  "gate": {
+    "total": 99,
+    "leaked": 0,
+    "byCorruption": [
+      {
+        "corruption": "cites evidence that does not exist",
+        "trials": 15,
+        "reachedOutput": 0,
+        "bySchema": 0
+      },
+      {
+        "corruption": "names an asset that does not exist",
+        "trials": 9,
+        "reachedOutput": 0,
+        "bySchema": 0
+      },
+      {
+        "corruption": "refers to a hypothesis that does not exist",
+        "trials": 9,
+        "reachedOutput": 0,
+        "bySchema": 0
+      },
+      {
+        "corruption": "states a confirmed root cause",
+        "trials": 9,
+        "reachedOutput": 0,
+        "bySchema": 0
+      },
+      {
+        "corruption": "restates a score as a probability",
+        "trials": 9,
+        "reachedOutput": 0,
+        "bySchema": 0
+      },
+      {
+        "corruption": "adds a top-level disposition field",
+        "trials": 15,
+        "reachedOutput": 0,
+        "bySchema": 15
+      },
+      {
+        "corruption": "adds a confirmed flag inside a list item",
+        "trials": 12,
+        "reachedOutput": 0,
+        "bySchema": 12
+      },
+      {
+        "corruption": "returns the wrong type for a required list",
+        "trials": 15,
+        "reachedOutput": 0,
+        "bySchema": 15
+      },
+      {
+        "corruption": "makes an observation with no citation",
+        "trials": 6,
+        "reachedOutput": 0,
+        "bySchema": 0
+      }
+    ],
+    "trials": [
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "pump-bearing",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "pump-bearing",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "pump-bearing",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "cooling-fan",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "cooling-fan",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "cooling-fan",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "evidence_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "impact_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "hypothesis_analyst",
+        "scenario": "mcc-sag",
+        "corruption": "makes an observation with no citation",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "names an asset that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "adds a confirmed flag inside a list item",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "investigation_planner",
+        "scenario": "mcc-sag",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "cites evidence that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "refers to a hypothesis that does not exist",
+        "reachedOutput": false,
+        "caughtBy": "grounding (item removed)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "states a confirmed root cause",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "restates a score as a probability",
+        "reachedOutput": false,
+        "caughtBy": "grounding (whole answer refused)"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "adds a top-level disposition field",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      },
+      {
+        "agent": "orchestrator",
+        "scenario": "mcc-sag",
+        "corruption": "returns the wrong type for a required list",
+        "reachedOutput": false,
+        "caughtBy": "schema"
+      }
+    ]
+  },
+  "figures": {
+    "trials": 9,
+    "flagged": 9
+  },
+  "mechanics": [
+    {
+      "scenario": "pump-bearing",
+      "testDouble": true,
+      "status": "complete",
+      "modelCalls": 5,
+      "repairs": 0,
+      "contextBytes": 43005,
+      "anomalies": 29,
+      "hypotheses": 5,
+      "signals": 54,
+      "confirmedByAi": false,
+      "incidentUnchanged": true
+    },
+    {
+      "scenario": "cooling-fan",
+      "testDouble": true,
+      "status": "complete",
+      "modelCalls": 5,
+      "repairs": 0,
+      "contextBytes": 37345,
+      "anomalies": 29,
+      "hypotheses": 5,
+      "signals": 42,
+      "confirmedByAi": false,
+      "incidentUnchanged": true
+    },
+    {
+      "scenario": "mcc-sag",
+      "testDouble": true,
+      "status": "complete",
+      "modelCalls": 5,
+      "repairs": 0,
+      "contextBytes": 30614,
+      "anomalies": 23,
+      "hypotheses": 3,
+      "signals": 39,
+      "confirmedByAi": false,
+      "incidentUnchanged": true
+    }
+  ],
+  "liveRecorded": false
+}

@@ -1,0 +1,46 @@
+{
+  "name": "vanterra",
+  "private": true,
+  "version": "0.3.0",
+  "description": "Vanterra - cyber-physical intelligence platform: process anomaly detection, simulated OT network detection, evidence-bound cyber-physical assessment, 3D digital twin and a bounded multi-agent LLM review (simulated environment)",
+  "engines": {
+    "node": ">=20"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "eval": "vitest run --config vitest.eval.config.ts --project eval --silent=false",
+    "capture": "node scripts/capture-screenshots.mjs",
+    "eval:live": "vitest run --config vitest.eval.config.ts --project live --silent=false",
+    "check": "tsc --noEmit && eslint . && vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "playwright-core": "^1.65.1",
+    "typescript": "~5.9",
+    "typescript-eslint": "^8.72.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  }
+}

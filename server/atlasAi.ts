@@ -1,0 +1,213 @@
+/**
+ * ATLAS AI service - a small server-side API mounted on the Vite dev and preview servers.
+ *
+ *   GET  /api/ai/status        is an AI provider configured? (never returns key material)
+ *   POST /api/ai/investigate   run the agent workflow on a posted investigation context;
+ *                              streams progress as newline-delimited JSON
+ *
+ * Why a server at all: an API key bundled into a browser application is public.
+ * Here the key stays in the Node process; the browser sends a strictly-validated
+ * context document and receives a report. The endpoint cannot be used as a general
+ * proxy to the model, because prompts are fixed on this side and the only caller
+ * input is the schema-checked context.
+ */
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { Plugin } from 'vite';
+import { ContextSchema } from '../src/agents/context';
+import { DEFAULT_LIMITS, runInvestigation } from '../src/agents/orchestrator';
+import type { LlmProvider } from '../src/agents/provider';
+import type { RunEvent } from '../src/agents/report';
+import { ScriptedProvider } from '../src/agents/testing/scriptedProvider';
+import { AnthropicProvider } from './anthropicProvider';
+import type { Effort } from './anthropicProvider';
+
+export interface AiStatus {
+  available: boolean;
+  provider: string;
+  model: string | null;
+  effort: string | null;
+  /** True when the configured provider is the scripted test double, not a model. */
+  testDouble: boolean;
+  reason: string | null;
+  limits: { maxModelCalls: number; agentTimeoutS: number; runDeadlineS: number };
+}
+
+type Env = Record<string, string | undefined>;
+
+const EFFORTS: Effort[] = ['low', 'medium', 'high', 'xhigh', 'max'];
+const MAX_BODY_BYTES = 400_000;
+const MAX_CONCURRENT_RUNS = 2;
+
+function positive(value: string | undefined, fallback: number): number {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? n : fallback;
+}
+
+/**
+ * Turns environment variables into a provider, limits and price.
+ * Shared by the server middleware and the command-line verification/evaluation
+ * scripts, so both exercise exactly the same configuration path.
+ */
+export function configureAi(env: Env) {
+  const providerName = (env.ATLAS_LLM_PROVIDER ?? 'anthropic').trim().toLowerCase();
+  const model = env.ATLAS_LLM_MODEL?.trim() || 'claude-opus-5-5';
+  const effort = EFFORTS.includes(env.ATLAS_LLM_EFFORT as Effort) ? (env.ATLAS_LLM_EFFORT as Effort) : 'medium';
+  const limits = {
+    ...DEFAULT_LIMITS,
+    agentTimeoutMs: positive(env.ATLAS_LLM_AGENT_TIMEOUT_S, DEFAULT_LIMITS.agentTimeoutMs / 1000) * 1000,
+    runDeadlineMs: positive(env.ATLAS_LLM_RUN_DEADLINE_S, DEFAULT_LIMITS.runDeadlineMs / 1000) * 1000,
+  };
+  const priceIn = Number(env.ATLAS_LLM_PRICE_INPUT);
+  const priceOut = Number(env.ATLAS_LLM_PRICE_OUTPUT);
+  const price = Number.isFinite(priceIn) && Number.isFinite(priceOut) && priceIn > 0 && priceOut > 0 ? { input: priceIn, output: priceOut } : null;
+
+  let provider: LlmProvider | null = null;
+  let reason: string | null = null;
+  const apiKey = env.ANTHROPIC_API_KEY?.trim() || undefined;
+  const authToken = env.ANTHROPIC_AUTH_TOKEN?.trim() || undefined;
+
+  if (providerName === 'none') {
+    reason = 'AI investigation is switched off (ATLAS_LLM_PROVIDER=none).';
+  } else if (providerName === 'scripted') {
+    if (env.ATLAS_ALLOW_SCRIPTED_PROVIDER === '1') provider = new ScriptedProvider({}, 700);
+    else reason = 'The scripted test double is not enabled (set ATLAS_ALLOW_SCRIPTED_PROVIDER=1 for interface testing).';
+  } else if (providerName === 'anthropic') {
+    if (apiKey || authToken) {
+      provider = new AnthropicProvider({
+        apiKey,
+        authToken,
+        // Deliberately not read from ANTHROPIC_BASE_URL: an ambient value set for another
+        // tool on this machine must not silently redirect requests.
+        baseURL: env.ATLAS_LLM_BASE_URL?.trim() || 'https://api.anthropic.com',
+        model,
+        effort,
+        refusalFallback: (env.ATLAS_LLM_REFUSAL_FALLBACK ?? 'default').trim().toLowerCase() !== 'off',
+      });
+    } else {
+      reason = 'No API key configured. Set ANTHROPIC_API_KEY in .env.local and restart the server.';
+    }
+  } else {
+    reason = `Unknown ATLAS_LLM_PROVIDER "${providerName}". Supported: anthropic, none.`;
+  }
+  return { providerName, provider, reason, model, effort, limits, price };
+}
+
+export function createAiService(env: Env) {
+  const { providerName, provider, reason, effort, limits, price } = configureAi(env);
+
+  const status: AiStatus = {
+    available: provider !== null,
+    provider: provider?.id ?? providerName,
+    model: provider ? provider.model : null,
+    effort: provider && !provider.testDouble ? effort : null,
+    testDouble: provider?.testDouble ?? false,
+    reason,
+    limits: {
+      maxModelCalls: 5 * limits.maxAttemptsPerAgent,
+      agentTimeoutS: Math.round(limits.agentTimeoutMs / 1000),
+      runDeadlineS: Math.round(limits.runDeadlineMs / 1000),
+    },
+  };
+
+  let activeRuns = 0;
+
+  const json = (res: ServerResponse, code: number, body: unknown) => {
+    res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(JSON.stringify(body));
+  };
+
+  const readBody = (req: IncomingMessage): Promise<string> =>
+    new Promise((resolve, reject) => {
+      let size = 0;
+      const chunks: Buffer[] = [];
+      req.on('data', (chunk: Buffer) => {
+        size += chunk.length;
+        if (size > MAX_BODY_BYTES) {
+          reject(new Error('too_large'));
+          req.destroy();
+          return;
+        }
+        chunks.push(chunk);
+      });
+      req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+      req.on('error', reject);
+    });
+
+  async function investigate(req: IncomingMessage, res: ServerResponse): Promise<void> {
+    if (!provider) return json(res, 503, { error: 'ai_unavailable', message: reason });
+    if (activeRuns >= MAX_CONCURRENT_RUNS) return json(res, 429, { error: 'busy', message: 'Another investigation is still running. Try again shortly.' });
+
+    let body: string;
+    try {
+      body = await readBody(req);
+    } catch (err) {
+      return json(res, err instanceof Error && err.message === 'too_large' ? 413 : 400, { error: 'bad_request', message: 'Request body could not be read or is too large.' });
+    }
+    let payload: unknown;
+    try {
+      payload = JSON.parse(body);
+    } catch {
+      return json(res, 400, { error: 'bad_request', message: 'Body is not valid JSON.' });
+    }
+    const parsed = ContextSchema.safeParse((payload as { context?: unknown })?.context);
+    if (!parsed.success) {
+      const first = parsed.error.issues[0];
+      return json(res, 400, { error: 'invalid_context', message: `Investigation context rejected: ${first.path.join('.')} ${first.message}` });
+    }
+
+    activeRuns += 1;
+    const controller = new AbortController();
+    let finished = false;
+    // If the browser goes away, stop spending tokens.
+    res.on('close', () => {
+      if (!finished) controller.abort();
+    });
+    res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no' });
+    const send = (event: RunEvent) => {
+      if (!res.writableEnded) res.write(`${JSON.stringify(event)}\n`);
+    };
+    try {
+      const report = await runInvestigation(parsed.data, { provider, limits, emit: send, signal: controller.signal, price });
+      console.info(
+        `[atlas-ai] ${report.runId} ${report.incidentId} ${report.status} in ${report.durationMs} ms, ${report.governance.modelCalls} calls, ` +
+          `${report.usage.inputTokens}+${report.usage.outputTokens} tokens, ${report.governance.claimsRejected} claims rejected`,
+      );
+    } catch (err) {
+      console.error('[atlas-ai] workflow error', err);
+      send({ type: 'run_failed', message: 'The investigation workflow stopped unexpectedly.' });
+    } finally {
+      finished = true;
+      activeRuns -= 1;
+      res.end();
+    }
+  }
+
+  function handle(req: IncomingMessage, res: ServerResponse, next: () => void): void {
+    const url = (req.url ?? '').split('?')[0];
+    if (url === '/api/ai/status' && req.method === 'GET') return json(res, 200, status);
+    if (url === '/api/ai/investigate' && req.method === 'POST') {
+      void investigate(req, res);
+      return;
+    }
+    if (url.startsWith('/api/ai/')) return json(res, 404, { error: 'not_found' });
+    next();
+  }
+
+  return { status, handle };
+}
+
+/** Vite plugin: mounts the service on both the dev server and `vite preview`. */
+export function atlasAi(env: Env): Plugin {
+  const service = createAiService(env);
+  return {
+    name: 'atlas-ai',
+    configureServer(server) {
+      server.middlewares.use(service.handle);
+      const s = service.status;
+      server.config.logger.info(`  [atlas-ai] ${s.available ? `${s.provider} · ${s.model}${s.testDouble ? ' (TEST DOUBLE, not a model)' : ''}` : `unavailable: ${s.reason}`}`);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(service.handle);
+    },
+  };
+}

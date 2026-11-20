@@ -1,0 +1,3164 @@
+{
+  "generated": "2026-11-20T12:56:32.570Z",
+  "seeds": [
+    20260112,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "windowS": 240,
+  "thresholds": {
+    "MATERIAL_Z": 3,
+    "MATERIAL_MIN_S": 5,
+    "AFFECTED_Z": 1
+  },
+  "summary": [
+    {
+      "scenario": "pump-bearing",
+      "expectedOrigin": "P-101",
+      "expectedLead": "bearing_wear",
+      "runs": 10,
+      "detected": 10,
+      "firstDetectionS": {
+        "n": 10,
+        "mean": 11.175,
+        "median": 11.125,
+        "min": 10.5,
+        "max": 12
+      },
+      "detectionAfterOnsetS": {
+        "n": 10,
+        "mean": 5.675,
+        "median": 5.625,
+        "min": 5,
+        "max": 6.5
+      },
+      "incidentOpenS": {
+        "n": 10,
+        "mean": 16.725,
+        "median": 16.875,
+        "min": 14.75,
+        "max": 18
+      },
+      "timeToCorrectS": {
+        "n": 10,
+        "mean": 18.5,
+        "median": 19,
+        "min": 16,
+        "max": 19
+      },
+      "signalRecall": 0.65,
+      "monitoredRecall": 0.7428571428571429,
+      "materialSignalsPerRun": 40,
+      "monitoredMaterialPerRun": 35,
+      "signalPrecision": 1,
+      "falseDetections": 0,
+      "oneIncident": 10,
+      "originCorrectAtEnd": 10,
+      "originAtFirstIncident": 10,
+      "leadCorrectAtEnd": 10,
+      "meanStability": 0.9933094706611563,
+      "meanLeadMargin": 0.5333333333333333,
+      "alternativesContradicted": 1,
+      "expectedHypothesisContradicted": 0,
+      "firstRecommendationOnOrigin": 10,
+      "twinDetections": 0,
+      "noConfirmation": true
+    },
+    {
+      "scenario": "cooling-fan",
+      "expectedOrigin": "CT-401",
+      "expectedLead": "tower_airflow_loss",
+      "runs": 10,
+      "detected": 10,
+      "firstDetectionS": {
+        "n": 10,
+        "mean": 3.425,
+        "median": 3.5,
+        "min": 3.25,
+        "max": 3.5
+      },
+      "detectionAfterOnsetS": {
+        "n": 10,
+        "mean": 0.175,
+        "median": 0.25,
+        "min": 0,
+        "max": 0.25
+      },
+      "incidentOpenS": {
+        "n": 10,
+        "mean": 5.25,
+        "median": 5.25,
+        "min": 5.25,
+        "max": 5.25
+      },
+      "timeToCorrectS": {
+        "n": 10,
+        "mean": 6,
+        "median": 6,
+        "min": 6,
+        "max": 6
+      },
+      "signalRecall": 0.9333333333333333,
+      "monitoredRecall": 1,
+      "materialSignalsPerRun": 15,
+      "monitoredMaterialPerRun": 14,
+      "signalPrecision": 1,
+      "falseDetections": 0,
+      "oneIncident": 10,
+      "originCorrectAtEnd": 10,
+      "originAtFirstIncident": 10,
+      "leadCorrectAtEnd": 10,
+      "meanStability": 1,
+      "meanLeadMargin": 0.7999999999999999,
+      "alternativesContradicted": 1,
+      "expectedHypothesisContradicted": 0,
+      "firstRecommendationOnOrigin": 10,
+      "twinDetections": 0,
+      "noConfirmation": true
+    },
+    {
+      "scenario": "mcc-sag",
+      "expectedOrigin": "MCC-520",
+      "expectedLead": "mcc_joint",
+      "runs": 10,
+      "detected": 10,
+      "firstDetectionS": {
+        "n": 10,
+        "mean": 2.9,
+        "median": 3,
+        "min": 2.75,
+        "max": 3
+      },
+      "detectionAfterOnsetS": {
+        "n": 10,
+        "mean": 1.9,
+        "median": 2,
+        "min": 1.75,
+        "max": 2
+      },
+      "incidentOpenS": {
+        "n": 10,
+        "mean": 5.9,
+        "median": 6,
+        "min": 5.75,
+        "max": 6
+      },
+      "timeToCorrectS": {
+        "n": 10,
+        "mean": 6,
+        "median": 6,
+        "min": 6,
+        "max": 6
+      },
+      "signalRecall": 0.87248322147651,
+      "monitoredRecall": 0.87248322147651,
+      "materialSignalsPerRun": 15,
+      "monitoredMaterialPerRun": 15,
+      "signalPrecision": 1,
+      "falseDetections": 0,
+      "oneIncident": 10,
+      "originCorrectAtEnd": 10,
+      "originAtFirstIncident": 10,
+      "leadCorrectAtEnd": 10,
+      "meanStability": 1,
+      "meanLeadMargin": 1,
+      "alternativesContradicted": 1,
+      "expectedHypothesisContradicted": 0,
+      "firstRecommendationOnOrigin": 10,
+      "twinDetections": 0,
+      "noConfirmation": true
+    }
+  ],
+  "combos": [
+    {
+      "scenarios": "pump-bearing + cooling-fan",
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "scenarios": "pump-bearing + mcc-sag",
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "scenarios": "cooling-fan + mcc-sag",
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    }
+  ],
+  "sequential": [
+    {
+      "order": "pump-bearing → cooling-fan → mcc-sag",
+      "gapS": 30,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "order": "pump-bearing → cooling-fan → mcc-sag",
+      "gapS": 60,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "order": "pump-bearing → cooling-fan → mcc-sag",
+      "gapS": 90,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "order": "mcc-sag → cooling-fan → pump-bearing",
+      "gapS": 30,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "order": "mcc-sag → cooling-fan → pump-bearing",
+      "gapS": 60,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    },
+    {
+      "order": "mcc-sag → cooling-fan → pump-bearing",
+      "gapS": 90,
+      "runs": 10,
+      "separated": 10,
+      "originsCorrect": 10,
+      "leadsCorrect": 10
+    }
+  ],
+  "normal": [
+    {
+      "activity": "steady operation",
+      "runs": 10,
+      "simulatedHours": 5,
+      "anomalies": 0,
+      "incidents": 0,
+      "anomaliesPerHour": 0
+    },
+    {
+      "activity": "rate change 100 → 70 → 100 %",
+      "runs": 10,
+      "simulatedHours": 2.3333333333333335,
+      "anomalies": 0,
+      "incidents": 0,
+      "anomaliesPerHour": 0
+    },
+    {
+      "activity": "feed pump changeover",
+      "runs": 10,
+      "simulatedHours": 1.1666666666666667,
+      "anomalies": 0,
+      "incidents": 0,
+      "anomaliesPerHour": 0
+    }
+  ],
+  "runs": {
+    "single": [
+      {
+        "seed": 20260112,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 22.8σ)",
+          "M-301.POWER (max 41.5σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.5σ)",
+          "M-320.POWER (max 7.8σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.9σ)",
+          "M-340.POWER (max 7.7σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.1σ)",
+          "CH-402.POWER (max 13.7σ)",
+          "TX-501.LOAD (max 6.2σ)",
+          "MCC-510.CURRENT (max 9.7σ)",
+          "MCC-520.BUS_TEMP (max 5.9σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11.5,
+        "detectionAfterOnsetS": 6,
+        "incidentOpenS": 17,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9910714285714286,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 1,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 22.8σ)",
+          "M-301.POWER (max 41.9σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.4σ)",
+          "M-320.POWER (max 7.9σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.8σ)",
+          "M-340.POWER (max 7.7σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.1σ)",
+          "CH-402.POWER (max 14.0σ)",
+          "TX-501.LOAD (max 6.6σ)",
+          "MCC-510.CURRENT (max 9.9σ)",
+          "MCC-520.BUS_TEMP (max 5.8σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11,
+        "detectionAfterOnsetS": 5.5,
+        "incidentOpenS": 17,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 18,
+        "stability": 0.9955357142857143,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 2,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 23.3σ)",
+          "M-301.POWER (max 42.2σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.8σ)",
+          "M-320.POWER (max 7.7σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.8σ)",
+          "M-340.POWER (max 7.6σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.3σ)",
+          "CH-402.POWER (max 13.2σ)",
+          "TX-501.LOAD (max 6.4σ)",
+          "MCC-510.CURRENT (max 10.0σ)",
+          "MCC-520.BUS_TEMP (max 6.0σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11.25,
+        "detectionAfterOnsetS": 5.75,
+        "incidentOpenS": 16.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9910714285714286,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 3,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 22.3σ)",
+          "M-301.POWER (max 42.8σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.4σ)",
+          "M-320.POWER (max 7.8σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.9σ)",
+          "M-340.POWER (max 7.8σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.1σ)",
+          "CH-402.POWER (max 13.5σ)",
+          "TX-501.LOAD (max 6.2σ)",
+          "MCC-510.CURRENT (max 9.7σ)",
+          "MCC-520.BUS_TEMP (max 6.0σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11.75,
+        "detectionAfterOnsetS": 6.25,
+        "incidentOpenS": 17.5,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9955156950672646,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 4,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 23.0σ)",
+          "M-301.POWER (max 40.7σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.6σ)",
+          "M-320.POWER (max 7.6σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.7σ)",
+          "M-340.POWER (max 7.9σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.0σ)",
+          "CH-402.POWER (max 13.2σ)",
+          "TX-501.LOAD (max 6.1σ)",
+          "MCC-510.CURRENT (max 9.8σ)",
+          "MCC-520.BUS_TEMP (max 6.1σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 12,
+        "detectionAfterOnsetS": 6.5,
+        "incidentOpenS": 16.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9910714285714286,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 5,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 22.6σ)",
+          "M-301.POWER (max 40.5σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.5σ)",
+          "M-320.POWER (max 7.6σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.9σ)",
+          "M-340.POWER (max 7.7σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 5.9σ)",
+          "CH-402.POWER (max 13.4σ)",
+          "TX-501.LOAD (max 6.4σ)",
+          "MCC-510.CURRENT (max 9.7σ)",
+          "MCC-520.BUS_TEMP (max 5.9σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11,
+        "detectionAfterOnsetS": 5.5,
+        "incidentOpenS": 15.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9866666666666667,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 6,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 23.0σ)",
+          "M-301.POWER (max 43.7σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.4σ)",
+          "M-320.POWER (max 7.8σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.5σ)",
+          "M-340.POWER (max 7.8σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.1σ)",
+          "CH-402.POWER (max 13.0σ)",
+          "TX-501.LOAD (max 6.4σ)",
+          "MCC-510.CURRENT (max 9.5σ)",
+          "MCC-520.BUS_TEMP (max 6.0σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 11.25,
+        "detectionAfterOnsetS": 5.75,
+        "incidentOpenS": 17.5,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9955156950672646,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 7,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 23.2σ)",
+          "M-301.POWER (max 41.1σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.3σ)",
+          "M-320.POWER (max 8.0σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.8σ)",
+          "M-340.POWER (max 7.3σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 5.8σ)",
+          "CH-402.POWER (max 13.0σ)",
+          "TX-501.LOAD (max 6.3σ)",
+          "MCC-510.CURRENT (max 9.5σ)",
+          "MCC-520.BUS_TEMP (max 5.9σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 10.75,
+        "detectionAfterOnsetS": 5.25,
+        "incidentOpenS": 14.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 16,
+        "stability": 0.995575221238938,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 8,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 22.8σ)",
+          "M-301.POWER (max 43.5σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.4σ)",
+          "M-320.POWER (max 7.7σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.8σ)",
+          "M-340.POWER (max 7.1σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 5.9σ)",
+          "CH-402.POWER (max 13.0σ)",
+          "TX-501.LOAD (max 6.3σ)",
+          "MCC-510.CURRENT (max 10.1σ)",
+          "MCC-520.BUS_TEMP (max 5.9σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 10.75,
+        "detectionAfterOnsetS": 5.25,
+        "incidentOpenS": 18,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 18,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 9,
+        "scenario": "pump-bearing",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 28,
+        "signalsMaterial": 40,
+        "signalsAffected": 42,
+        "detections": 26,
+        "recall": 0.65,
+        "signalsMonitoredMaterial": 35,
+        "monitoredRecall": 0.7428571428571429,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "M-101.POWER (max 23.5σ)",
+          "M-301.POWER (max 42.3σ)",
+          "FL-310.AVAIL (max Infinityσ)",
+          "M-320.WIND_TEMP (max 7.4σ)",
+          "M-320.POWER (max 7.8σ)",
+          "PK-330.AVAIL (max Infinityσ)",
+          "M-340.WIND_TEMP (max 6.7σ)",
+          "M-340.POWER (max 7.4σ)",
+          "PZ-350.AVAIL (max Infinityσ)",
+          "CT-401.BASIN_TEMP (max 6.1σ)",
+          "CH-402.POWER (max 12.8σ)",
+          "TX-501.LOAD (max 6.0σ)",
+          "MCC-510.CURRENT (max 9.6σ)",
+          "MCC-520.BUS_TEMP (max 5.9σ)"
+        ],
+        "physicalOnsetS": 5.5,
+        "firstDetectionS": 10.5,
+        "detectionAfterOnsetS": 5,
+        "incidentOpenS": 16.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 19,
+        "stability": 0.9910714285714286,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.5333333333333333,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 7,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 20260112,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 133.3σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 1,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 137.0σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 2,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 128.3σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 3,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 132.5σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.25,
+        "detectionAfterOnsetS": 0,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 4,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 127.8σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 5,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 130.9σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.25,
+        "detectionAfterOnsetS": 0,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 6,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 124.9σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.25,
+        "detectionAfterOnsetS": 0,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 7,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 127.6σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 8,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 126.4σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 9,
+        "scenario": "cooling-fan",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 48,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 14,
+        "recall": 0.9333333333333333,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 1,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CH-402.POWER (max 125.7σ)"
+        ],
+        "physicalOnsetS": 3.25,
+        "firstDetectionS": 3.5,
+        "detectionAfterOnsetS": 0.25,
+        "incidentOpenS": 5.25,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 0.8,
+        "alternatives": 4,
+        "alternativesWithObservedContradiction": 4,
+        "recommendations": 5,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 20260112,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.2σ)",
+          "CV-340.SPEED (max 3.2σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 1,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.2σ)",
+          "CV-340.SPEED (max 3.1σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 2.75,
+        "detectionAfterOnsetS": 1.75,
+        "incidentOpenS": 5.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 2,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.2σ)",
+          "CV-340.SPEED (max 3.1σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 3,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 14,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.9285714285714286,
+        "signalsMonitoredMaterial": 14,
+        "monitoredRecall": 0.9285714285714286,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-340.SPEED (max 3.2σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 2.75,
+        "detectionAfterOnsetS": 1.75,
+        "incidentOpenS": 5.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 4,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.1σ)",
+          "CV-340.SPEED (max 3.1σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 2.75,
+        "detectionAfterOnsetS": 1.75,
+        "incidentOpenS": 5.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 5,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.1σ)",
+          "CV-340.SPEED (max 3.2σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 6,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.2σ)",
+          "CV-340.SPEED (max 3.2σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 7,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.2σ)",
+          "CV-340.SPEED (max 3.2σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 8,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.1σ)",
+          "CV-340.SPEED (max 3.1σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 2.75,
+        "detectionAfterOnsetS": 1.75,
+        "incidentOpenS": 5.75,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      },
+      {
+        "seed": 9,
+        "scenario": "mcc-sag",
+        "signalsMeasured": 82,
+        "signalsUnchanged": 56,
+        "signalsMaterial": 15,
+        "signalsAffected": 15,
+        "detections": 13,
+        "recall": 0.8666666666666667,
+        "signalsMonitoredMaterial": 15,
+        "monitoredRecall": 0.8666666666666667,
+        "precision": 1,
+        "falseDetections": [],
+        "missedMaterial": [
+          "CV-320.SPEED (max 3.1σ)",
+          "CV-340.SPEED (max 3.0σ)"
+        ],
+        "physicalOnsetS": 1,
+        "firstDetectionS": 3,
+        "detectionAfterOnsetS": 2,
+        "incidentOpenS": 6,
+        "incidentsAtEnd": 1,
+        "twinDetections": 0,
+        "originAtFirstIncident": true,
+        "originCorrectAtEnd": true,
+        "leadCorrectAtEnd": true,
+        "timeToCorrectS": 6,
+        "stability": 1,
+        "expectedRank": 1,
+        "expectedSupport": 1,
+        "expectedContradictionsObserved": 0,
+        "leadMargin": 1,
+        "alternatives": 2,
+        "alternativesWithObservedContradiction": 2,
+        "recommendations": 6,
+        "firstRecommendationOnOrigin": true,
+        "noConfirmation": true
+      }
+    ],
+    "multi": [
+      {
+        "seed": 20260112,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "scenarios": "pump-bearing + cooling-fan",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "scenarios": "pump-bearing + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 1,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 2,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 3,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 4,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 5,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 6,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 7,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 8,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 9,
+        "scenarios": "cooling-fan + mcc-sag",
+        "incidents": 2,
+        "expected": 2,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "scenarios": "pump-bearing + cooling-fan + mcc-sag",
+        "incidents": 3,
+        "expected": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "merged": 0,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      }
+    ],
+    "sequential": [
+      {
+        "seed": 20260112,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "pump-bearing → cooling-fan → mcc-sag",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 30,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 60,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 20260112,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 1,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 2,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 3,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 4,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 5,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 6,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 7,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 8,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      },
+      {
+        "seed": 9,
+        "order": "mcc-sag → cooling-fan → pump-bearing",
+        "gapS": 90,
+        "incidents": 3,
+        "separated": true,
+        "originsCorrect": true,
+        "leadsCorrect": true,
+        "origins": [
+          "CT-401",
+          "MCC-520",
+          "P-101"
+        ]
+      }
+    ],
+    "normal": [
+      {
+        "seed": 20260112,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 20260112,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 20260112,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 1,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 1,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 1,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 2,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 2,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 2,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 3,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 3,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 3,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 4,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 4,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 4,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 5,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 5,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 5,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 6,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 6,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 6,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 7,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 7,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 7,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 8,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 8,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 8,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 9,
+        "activity": "steady operation",
+        "simulatedS": 1800,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 9,
+        "activity": "rate change 100 → 70 → 100 %",
+        "simulatedS": 840,
+        "anomalies": 0,
+        "incidents": 0
+      },
+      {
+        "seed": 9,
+        "activity": "feed pump changeover",
+        "simulatedS": 420,
+        "anomalies": 0,
+        "incidents": 0
+      }
+    ]
+  }
+}
