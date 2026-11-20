@@ -236,6 +236,7 @@ export async function runInvestigation(ctx: InvestigationContext, deps: RunDeps)
           schema,
           maxOutputTokens: limits.maxOutputTokens,
           timeoutMs: Math.min(limits.agentTimeoutMs, remaining),
+          deadlineAt: deadline,
           signal: deps.signal,
         });
         output = response.output;

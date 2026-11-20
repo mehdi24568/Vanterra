@@ -6,7 +6,7 @@
 import { createServer } from 'node:http';
 import type { IncomingMessage, Server, ServerResponse } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { buildInvestigationContext } from '../src/agents/buildContext';
 import { runInvestigation } from '../src/agents/orchestrator';
 import { LlmError } from '../src/agents/provider';
@@ -63,6 +63,9 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     expect(seen.think).toBe(false);
     expect((seen.options as Record<string, unknown>).temperature).toBe(0);
     expect((seen.options as Record<string, unknown>).num_predict).toBe(2000);
+    // The workflow allows 16k output tokens; locally that is capped so a looping answer stops.
+    await provider(url).complete(request({ maxOutputTokens: 16_000 }));
+    expect((seen.options as Record<string, unknown>).num_predict).toBe(4096);
     const format = seen.format as Record<string, unknown>;
     expect(format.type).toBe('object');
     expect(format.additionalProperties).toBe(false);
@@ -116,6 +119,76 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     await expect(pending).rejects.toMatchObject({ kind: 'aborted' });
     await expect(provider('http://127.0.0.1:9').complete(request())).rejects.toBeInstanceOf(LlmError);
     await expect(provider('http://127.0.0.1:9').complete(request())).rejects.toMatchObject({ kind: 'network' });
+  });
+
+  // Regression (first live run, qwen3:4b on a CPU): fetch abandons a request whose headers
+  // take more than 300 s, and Ollama sends none until it has an answer. The provider must
+  // wait as long as the agent timeout allows, so it does not use fetch for completions.
+  it('waits for a late answer without a transport deadline, and reports a cut-off connection', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    let mode = 'late';
+    const url = await stub((_req, _body, res) => {
+      if (mode === 'late') setTimeout(() => send(res, 200, { message: { content: '{"summary":"late"}' }, done_reason: 'stop' }), 1200);
+      else {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.write('{"message":{"content":"{\\"summ');
+        setTimeout(() => res.socket?.destroy(), 50);
+      }
+    });
+    try {
+      const out = await provider(url).complete(request({ timeoutMs: 5000 }));
+      expect(out.output).toEqual({ summary: 'late' });
+      expect(fetchSpy).not.toHaveBeenCalled();
+      mode = 'cut';
+      const cut = provider(url).complete(request({ timeoutMs: 5000 }));
+      await expect(cut).rejects.toMatchObject({ kind: 'network' });
+      await expect(cut).rejects.toThrow(/before the answer was complete/);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  // Regression (first live run): Ollama on a CPU has one slot, but two analysts start
+  // together. The second must not be timed out while it waits behind the first.
+  it('sends one call at a time and starts each timeout when the call is sent, within the run deadline', async () => {
+    let inFlight = 0;
+    let maxInFlight = 0;
+    let received = 0;
+    const url = await stub((_req, _body, res) => {
+      received++;
+      inFlight++;
+      maxInFlight = Math.max(maxInFlight, inFlight);
+      setTimeout(() => {
+        inFlight--;
+        send(res, 200, { message: { content: '{"summary":"ok"}' }, done_reason: 'stop' });
+      }, 600);
+    });
+    const p = provider(url);
+    // Each call alone fits in 900 ms; both together take about 1200 ms.
+    const both = await Promise.all([p.complete(request({ timeoutMs: 900 })), p.complete(request({ timeoutMs: 900 }))]);
+    expect(both.map((r) => r.output)).toEqual([{ summary: 'ok' }, { summary: 'ok' }]);
+    expect(maxInFlight).toBe(1);
+    expect(both.every((r) => r.latencyMs < 900)).toBe(true);
+
+    // The run deadline still applies to the wait: this call is never sent.
+    received = 0;
+    const first = p.complete(request({ timeoutMs: 5000 }));
+    const late = p.complete(request({ timeoutMs: 5000, deadlineAt: Date.now() + 300 }));
+    await expect(late).rejects.toMatchObject({ kind: 'timeout' });
+    await first;
+    expect(received).toBe(1);
+
+    // Cancelling a queued call frees its place; later calls still run in order.
+    received = 0;
+    const ctl = new AbortController();
+    const running = p.complete(request({ timeoutMs: 5000 }));
+    const cancelled = p.complete(request({ timeoutMs: 5000, signal: ctl.signal }));
+    const after = p.complete(request({ timeoutMs: 5000 }));
+    ctl.abort();
+    await expect(cancelled).rejects.toMatchObject({ kind: 'aborted' });
+    await Promise.all([running, after]);
+    expect(received).toBe(2);
+    expect(maxInFlight).toBe(1);
   });
 
   it('is configured from the environment with zero cost and wider local time bounds', () => {

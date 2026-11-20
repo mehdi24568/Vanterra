@@ -6,7 +6,8 @@
  * It has no tools, no memory and no access to the application.
  *
  * Implementations:
- *   server/anthropicProvider.ts            Claude through the official Anthropic SDK (the shipped provider)
+ *   server/anthropicProvider.ts            Claude through the official Anthropic SDK
+ *   server/ollamaProvider.ts               a local model through Ollama (no key, no cost)
  *   src/agents/testing/scriptedProvider.ts a deterministic test double, never presented as a model
  */
 import type { z } from 'zod';
@@ -18,7 +19,10 @@ export interface LlmRequest<T> {
   user: string;
   schema: z.ZodType<T>;
   maxOutputTokens: number;
+  /** Time allowed for this call once it is sent. */
   timeoutMs: number;
+  /** End of the whole run (epoch ms). A provider that queues calls must not wait past it. */
+  deadlineAt?: number;
   signal?: AbortSignal;
 }
 

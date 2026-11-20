@@ -96,6 +96,7 @@ export function configureAi(env: Env) {
       model: local,
       numCtx: positive(env.ATLAS_OLLAMA_NUM_CTX, 16384),
       keepAlive: env.ATLAS_OLLAMA_KEEP_ALIVE?.trim() || '10m',
+      maxOutputTokens: positive(env.ATLAS_OLLAMA_NUM_PREDICT, 4096),
     });
     limits.agentTimeoutMs = positive(env.ATLAS_LLM_AGENT_TIMEOUT_S, 900) * 1000;
     limits.runDeadlineMs = positive(env.ATLAS_LLM_RUN_DEADLINE_S, 3600) * 1000;
