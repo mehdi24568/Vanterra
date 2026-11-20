@@ -13,9 +13,10 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Agent layer with cyber context and causal-overreach gate | yes | test double; adversarial gate (0/99) | **small local sample** (`qwen3:4b`, EVALUATION.md §4) |
 | Claude provider and AI service | yes | local API stub; browser failure path; cross-site request refusal | **no** (no API key) |
 | Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (slow: 19–45 min per call) |
+| Plain-language briefing ("In plain words", Cyber-physical tab) | yes | 6 tests: verdicts per case, evidence exists, no jargon or overreach, read-only; checked in the browser | n/a (deterministic); **not yet tested with users** |
 | Standalone desktop app | **no** | — | — (plan: docs/DESKTOP_ARCHITECTURE.md) |
 
-Verified on 2026-11-20: type-check and lint clean; 129 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
+Verified on 2026-11-20: type-check and lint clean; 135 tests pass in 10 files; the build succeeds; `npm run eval` runs all four suites.
 
 **Repository:** public on GitHub, [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main`. See docs/PUBLISHING.md.
 
@@ -26,6 +27,7 @@ Verified on 2026-11-20: type-check and lint clean; 129 tests pass in 9 files; th
 
 ## 3. Roadmap
 
+1. Validate the plain-language briefing with 3–5 non-specialists, then prototype investigation drills (docs/PRODUCT_DISCOVERY.md §8).
 1. Desktop application, phases 1–4 of docs/DESKTOP_ARCHITECTURE.md (Electron shell, Ollama runtime manager, persistence, installer).
 2. Broader live AI measurement on a machine with enough free memory to keep the model resident (all four live cases, several runs each), so answer quality can be compared with the deterministic engine rather than only observed.
 3. More cyber scenarios: communication loss (loss of view), program download, and a session through an unexpected path. Each needs a rule test and an evaluation case.

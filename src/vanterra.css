@@ -796,6 +796,83 @@
   color: var(--text-dim);
 }
 
+/* Plain-language briefing */
+.brief {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.brief__short {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.brief__ask {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--text-faint);
+  border-radius: 5px;
+}
+.brief__ask--yes {
+  border-left-color: var(--cyber);
+}
+.brief__ask--check {
+  border-left-color: var(--orange);
+}
+.brief__ask--no {
+  border-left-color: var(--amber);
+}
+.brief__q {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.brief__a {
+  font-size: 13.5px;
+}
+.brief__why {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+.brief__h {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.brief__list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.brief__evidence {
+  display: inline;
+  margin-left: 6px;
+}
+.brief__evidence summary {
+  display: inline;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-dim);
+  text-decoration: underline dotted;
+}
+.brief__evidence summary:focus-visible {
+  outline: 2px solid var(--cyber);
+  outline-offset: 2px;
+}
+.brief__ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
 .cp-strip {
   width: 100%;
   display: grid;

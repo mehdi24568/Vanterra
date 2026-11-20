@@ -161,14 +161,15 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
       setTimeout(() => {
         inFlight--;
         send(res, 200, { message: { content: '{"summary":"ok"}' }, done_reason: 'stop' });
-      }, 600);
+      }, 1000);
     });
     const p = provider(url);
-    // Each call alone fits in 900 ms; both together take about 1200 ms.
-    const both = await Promise.all([p.complete(request({ timeoutMs: 900 })), p.complete(request({ timeoutMs: 900 }))]);
+    // Each call alone fits in 1800 ms; both together take about 2000 ms. Wide margins keep
+    // this about logic, not machine speed.
+    const both = await Promise.all([p.complete(request({ timeoutMs: 1800 })), p.complete(request({ timeoutMs: 1800 }))]);
     expect(both.map((r) => r.output)).toEqual([{ summary: 'ok' }, { summary: 'ok' }]);
     expect(maxInFlight).toBe(1);
-    expect(both.every((r) => r.latencyMs < 900)).toBe(true);
+    expect(both.every((r) => r.latencyMs < 1800)).toBe(true);
 
     // The run deadline still applies to the wait: this call is never sent.
     received = 0;
@@ -189,7 +190,7 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     await Promise.all([running, after]);
     expect(received).toBe(2);
     expect(maxInFlight).toBe(1);
-  });
+  }, 30_000);
 
   it('is configured from the environment with zero cost and wider local time bounds', () => {
     const ai = configureAi({ ATLAS_LLM_PROVIDER: 'ollama' });

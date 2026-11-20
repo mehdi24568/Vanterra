@@ -14,6 +14,9 @@ export default defineConfig(({ mode }) => {
     test: {
       environment: 'node',
       include: ['src/**/*.test.ts', 'server/**/*.test.ts'],
+      // Scenario tests simulate minutes of plant time. On a busy laptop (for example while a
+      // local model is running) the 5 s default was exceeded; the assertions are unchanged.
+      testTimeout: 30_000,
     },
   };
 });

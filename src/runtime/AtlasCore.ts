@@ -31,6 +31,8 @@ import type { ReasoningProvider } from '../intelligence/reasoning';
 import { TelemetryEngine } from '../telemetry/TelemetryEngine';
 import { assessCase, assessCyberPhysical } from '../cyber/assess';
 import type { CaseAssessment, CyberPhysicalAssessment } from '../cyber/assess';
+import { briefIncident } from '../cyber/briefing';
+import type { Briefing } from '../cyber/briefing';
 import { CyberEngine } from '../cyber/CyberEngine';
 import type { SecurityRecord } from '../cyber/types';
 
@@ -186,6 +188,21 @@ export class AtlasCore implements IngestSink {
     if (!inc || !this.cyber) return null;
     const anomalies = inc.anomalyIds.map((id) => this.intelligence.anomaly(id)).filter((a): a is Anomaly => !!a);
     return assessCyberPhysical(inc, anomalies, this.cyber, this.now);
+  }
+
+  /** The same assessment restated in everyday language, with evidence on every statement. */
+  briefIncident(incidentId: string): Briefing | null {
+    const inc = this.intelligence.get(incidentId);
+    const a = this.assessIncident(incidentId);
+    if (!inc || !a || !this.cyber) return null;
+    const cyber = this.cyber;
+    return briefIncident(inc, a, {
+      assetName: (id) => this.graph.asset(id)?.name,
+      signalName: (id) => this.telemetry.signal(id)?.name,
+      anomaly: (id) => this.intelligence.anomaly(id),
+      event: (id) => cyber.event(id),
+      parameterName: (id) => cyber.model.parameters.find((p) => p.id === id)?.name,
+    });
   }
 
   assessCyberCase(caseId: string): CaseAssessment | null {

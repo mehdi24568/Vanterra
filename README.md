@@ -123,6 +123,8 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 
 `src/cyber/assess.ts` evaluates up to four explanations for every incident: equipment fault, unapproved control change, approved change, and unrelated cyber activity. Each has explicit criteria (observed or not, with evidence IDs), a status, unknowns and next steps. It is deterministic and read-only, and it cannot change an incident or a verdict. Only an operator confirms.
 
+**In plain words.** `src/cyber/briefing.ts` restates the same assessment for non-specialists at the top of the Cyber-physical tab. It gives a short summary, a direct answer to *"should this become a cyber investigation?"* (yes, check, separately, no, not yet), what is known for certain, and what the evidence suggests, labelled as interpretation. Every statement keeps its evidence one click away. No model is involved, so it is instant, offline and cannot invent anything. Why this was built, and what was considered instead, is in [docs/PRODUCT_DISCOVERY.md](docs/PRODUCT_DISCOVERY.md).
+
 ![Physical fault with no cyber evidence: the assessment says so, and says what absence of evidence does not prove](docs/screenshots/11-physical-no-cyber.png)
 
 ## AI review
@@ -149,7 +151,7 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 129 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 135 tests in 10 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 
@@ -193,6 +195,7 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 | [docs/BRAND.md](docs/BRAND.md) | Name evaluation, identity, colour and terminology |
 | [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: measured performance, fixes, setup |
 | [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md) | Decision record and plan for a standalone Windows app |
+| [docs/PRODUCT_DISCOVERY.md](docs/PRODUCT_DISCOVERY.md) | Who this is for, evidence versus hypotheses, the selected direction and its first proof |
 | [SECURITY.md](SECURITY.md) | Security controls, known risks, reporting |
 | [eval/independent/](eval/independent/) | Authoring brief, plant catalog and blind-authored scenarios |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo recording package |

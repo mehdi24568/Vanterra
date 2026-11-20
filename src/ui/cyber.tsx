@@ -8,6 +8,7 @@ import { formatClock } from '../core/format';
 import type { Incident, Severity } from '../core/types';
 import { ATTACK_SOURCE } from '../cyber/attack';
 import type { CpExplanation, CpStanding } from '../cyber/assess';
+import type { BriefingStatement } from '../cyber/briefing';
 import type { CyberEvent } from '../cyber/types';
 import { useRuntime, useUi } from './context';
 import { AssetLink, Section } from './primitives';
@@ -103,6 +104,8 @@ export function CyberPhysicalPanel({ incident }: { incident: Incident }) {
         <span className="standing__meta">Deterministic assessment · declared relationships only · no model involved</span>
       </div>
 
+      <PlainBriefing incident={incident} />
+
       <Section
         title="Relationship to the OT layer"
         aside={
@@ -153,6 +156,55 @@ export function CyberPhysicalPanel({ incident }: { incident: Incident }) {
           ))}
         </ol>
       </Section>
+    </div>
+  );
+}
+
+/**
+ * The assessment above, restated in everyday words for non-specialists. Each statement
+ * keeps its evidence one click away; the expert sections below stay unchanged.
+ */
+function PlainBriefing({ incident }: { incident: Incident }) {
+  const runtime = useRuntime();
+  const b = runtime.core.briefIncident(incident.id);
+  if (!b) return null;
+  return (
+    <Section title="In plain words" aside={<span className="muted">restates the assessment · no model involved</span>}>
+      <div className="brief">
+        <p className="brief__short">{b.inShort}</p>
+        <div className={`brief__ask brief__ask--${b.cyberInvestigation.answer}`}>
+          <span className="brief__q">Should this become a cyber investigation?</span>
+          <strong className="brief__a">{b.cyberInvestigation.label}</strong>
+          <span className="brief__why">{b.cyberInvestigation.reason}</span>
+        </div>
+        <BriefList title="What we know for certain" items={b.known} />
+        <BriefList title="What the evidence suggests (interpretation, not fact)" items={b.suggests} />
+      </div>
+    </Section>
+  );
+}
+
+function BriefList({ title, items }: { title: string; items: BriefingStatement[] }) {
+  return (
+    <div className="brief__group">
+      <h4 className="brief__h">{title}</h4>
+      <ul className="brief__list">
+        {items.map((s) => (
+          <li key={s.text}>
+            <span>{s.text}</span>
+            {s.evidence.length > 0 && (
+              <details className="brief__evidence">
+                <summary>Evidence ({s.evidence.length})</summary>
+                <span className="brief__ids">
+                  {s.evidence.map((id) => (
+                    <EvidenceId key={id} id={id} />
+                  ))}
+                </span>
+              </details>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

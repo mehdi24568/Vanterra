@@ -304,5 +304,5 @@ In the evaluation the injected fault stands in for a verified human verdict, sin
 ```
 npm run eval        # offline, about a minute, never calls a model
 npm run eval:live   # a real model: local Ollama (free, slow on CPU) or Claude (API key, costs money)
-npm test            # 129 unit, scenario, cyber, agent and provider tests
+npm test            # 135 unit, scenario, cyber, briefing, agent and provider tests
 ```

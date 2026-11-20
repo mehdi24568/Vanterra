@@ -16,6 +16,7 @@ import type { InvestigationContext } from './context';
 import { ground, needsRepair } from './grounding';
 import { crossCheck, planTasks, runInvestigation } from './orchestrator';
 import { LlmError } from './provider';
+import type { LlmProvider } from './provider';
 import { EvidenceAnalystSchema, OrchestratorSchema } from './schemas';
 import { ScriptedProvider, mechanicalAnswer } from './testing/scriptedProvider';
 import { buildAgentInput } from './agents';
@@ -229,13 +230,29 @@ describe('workflow: normal operation of the pipeline (test double)', () => {
   it('runs the two independent analysts concurrently and the rest in order', async () => {
     const { ctx } = scenario('pump-bearing');
     const provider = new ScriptedProvider({}, 40);
-    const started = Date.now();
-    await runInvestigation(ctx, { provider, limits: LIMITS });
+    // Record when each call runs: concurrency is shown by overlapping calls, which does not
+    // depend on how busy the machine is (a total-duration bound did).
+    const spans: Record<string, { start: number; end: number }> = {};
+    const timed: LlmProvider = {
+      id: provider.id,
+      model: provider.model,
+      testDouble: provider.testDouble,
+      complete: async (r) => {
+        const start = performance.now();
+        try {
+          return await provider.complete(r);
+        } finally {
+          spans[r.name] = { start, end: performance.now() };
+        }
+      },
+    };
+    await runInvestigation(ctx, { provider: timed, limits: LIMITS });
     const order = provider.calls.map((c) => c.agent);
     expect(order.slice(0, 2).sort()).toEqual(['evidence_analyst', 'impact_analyst']);
     expect(order.slice(2)).toEqual(['hypothesis_analyst', 'investigation_planner', 'orchestrator']);
-    // Five calls of 40 ms each, two of them overlapping: clearly less than 5 x 40 plus overhead.
-    expect(Date.now() - started).toBeLessThan(40 * 5 + 150);
+    const [ev, im, hy] = [spans.evidence_analyst, spans.impact_analyst, spans.hypothesis_analyst];
+    expect(ev.start < im.end && im.start < ev.end).toBe(true); // the two analysts overlap
+    expect(hy.start).toBeGreaterThanOrEqual(Math.max(ev.end, im.end)); // the next agent waits for both
   });
 
   it('skips analysts that have nothing to analyse, and says why', () => {
