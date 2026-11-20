@@ -1,0 +1,740 @@
+{
+  "author": "independent author (no access to detection code)",
+  "scenarios": [
+    {
+      "id": "IND-01",
+      "category": "mechanical_no_cyber",
+      "title": "Feed pump bearing wear, an operator password typo and a duty changeover",
+      "narrative": "At t=0 the drive-end bearing of feed pump P-101 starts to wear; vibration and bearing temperature climb over about 90 s. At t=30 the shift operator, busy acknowledging alarms, mistypes the HMI-01 password once and logs on at the second attempt. At t=150 the operator gives the textbook response and swaps duty to the standby pump P-102 (routine changeover). There is no engineering or remote access, no controller change and no cross-zone traffic at any point.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 0, "type": "builtin", "id": "pump-bearing" },
+        { "atS": 30, "type": "security", "records": [
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "local", "srcHost": null },
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "success", "method": "local", "srcHost": null }
+        ] },
+        { "atS": 150, "type": "builtin", "id": "pump-changeover" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["P-101", "M-101"],
+            "acceptableConclusions": ["physical_supported"],
+            "forbiddenConclusions": ["control_change_supported", "authorized_change_supported", "possible_relationship", "correlated_not_causal", "multiple_plausible", "insufficient_evidence"],
+            "note": "Progressive vibration and bearing-temperature rise on P-101 is mechanical wear. The only security observation is one operator typo on the operator's own HMI, which does not touch PLC-200 and is not cyber evidence."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": false,
+          "expectedFlags": [],
+          "forbiddenFlags": ["failed_logons", "unapproved_change", "approved_change", "out_of_window_session", "segmentation_violation"]
+        },
+        "rationale": "The physical signature is a textbook bearing degradation on P-101 and nothing cyber reaches the pump-house controller. One failed logon followed immediately by success, by the usual operator on the usual host, is not 'repeated failed logons'. The changeover to P-102 is a normal and correct operating response; it must neither create a second incident on P-102 nor be treated as suspicious."
+      }
+    },
+    {
+      "id": "IND-02",
+      "category": "mechanical_no_cyber",
+      "title": "Cooling-tower fan trip that mimics the fan-setpoint attack",
+      "narrative": "At t=0 the CT-401 fan trips on motor protection. Fan current collapses, the basin water warms, the trim chiller loads up and warmer cooling water reaches HX-201 and the process. Change record CHG-1042 (fan speed setpoint) has an open window throughout, but nobody logs on to EWS-01 and no controller change is made. The only extra security observation is the historian service's routine logon on HIST-01 at t=45.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 0, "type": "builtin", "id": "cooling-fan" },
+        { "atS": 45, "type": "security", "records": [
+          { "kind": "auth", "host": "HIST-01", "identity": "svc.historian", "result": "success", "method": "local", "srcHost": null }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["physical_supported"],
+            "forbiddenConclusions": ["control_change_supported", "authorized_change_supported", "possible_relationship", "correlated_not_causal", "multiple_plausible", "insufficient_evidence"],
+            "note": "A trip of the fan itself with no recorded write or engineering session. An open change window is not evidence that a change was made."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": false,
+          "expectedFlags": [],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "out_of_window_session", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "The symptoms overlap heavily with a fan-speed reduction (less fan current, warmer basin, chiller loading up, warmer process), which tempts a system that pattern-matches on the cooling attack. But the controller audit holds no write, there is no engineering session, and the fan current and status collapse rather than step down, so this is a trip. CHG-1042's window being open does not make authorized_change_supported correct: no change was made. A routine service logon on the historian is not cyber evidence near the incident."
+      }
+    },
+    {
+      "id": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "title": "Vendor account guessed at the jump host, then a read-only sweep of every controller",
+      "narrative": "From an enterprise host, someone makes six failed logon attempts for vendor.remote on JMP-01 (t=10 and t=25) and succeeds at t=45. At t=70 they RDP from the jump host to EWS-01 and log on as vendor.remote; no change record covers this account. Between t=100 and t=160 they open engineering connections from EWS-01 to all five controllers and upload (read) each program, including controllers far outside the cooling vendor's scope. Nothing is written, downloaded or mode-changed. Both sessions log off at t=200. The process stays normal.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 4200 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 25, "type": "security", "records": [
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 45, "type": "security", "records": [
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 220000 }
+        ] },
+        { "atS": 70, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 180000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" }
+        ] },
+        { "atS": 100, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 64000 },
+          { "kind": "controllerAudit", "plcId": "PLC-500", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-200", "protocol": "Engineering", "bytes": 58000 },
+          { "kind": "controllerAudit", "plcId": "PLC-200", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 130, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-300", "protocol": "Engineering", "bytes": 61000 },
+          { "kind": "controllerAudit", "plcId": "PLC-300", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-400", "protocol": "Engineering", "bytes": 57000 },
+          { "kind": "controllerAudit", "plcId": "PLC-400", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 160, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-600", "protocol": "Engineering", "bytes": 52000 },
+          { "kind": "controllerAudit", "plcId": "PLC-600", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 200, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [],
+        "maxPhysicalIncidents": 0,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["failed_logons", "out_of_window_session", "new_communication"],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "segmentation_violation"]
+        },
+        "rationale": "This is serious reconnaissance: password guessing on one account at one host, a successful logon, an EWS session that no change record covers, and program reads from every controller, most of them outside the cooling vendor's scope. Every hop uses a permitted conduit (enterprise to DMZ over RDP, DMZ to supervisory over RDP, supervisory to control over Engineering), so there is no segmentation violation, but the jump-host-to-EWS and EWS-to-controller connections never occur in normal operation. Program uploads are reads, so there was no controller change, approved or unapproved. Nothing physical happened, so no physical incident may be raised."
+      }
+    },
+    {
+      "id": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "title": "Enterprise host reaches straight into the HMI and controllers during planned rate changes",
+      "narrative": "An enterprise host bypasses the DMZ. At t=20 it opens RDP directly to HMI-01 and fails three op.shift logons; at t=40 it fails two more and sends small EtherNet/IP probes directly to PLC-300 and PLC-400; at t=130 it probes PLC-300 again. No logon ever succeeds and no controller audit record is written. Independently, operations cut throughput to 70 % at t=90 and return to 100 % at t=240, both planned. The process follows the planned rate changes with no fault.",
+      "durationS": 390,
+      "actions": [
+        { "atS": 20, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "HMI-01", "protocol": "RDP", "bytes": 5200 },
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 40, "type": "security", "records": [
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "HMI-01", "identity": "op.shift", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "flow", "src": "ENT-01", "dst": "PLC-300", "protocol": "EtherNet/IP", "bytes": 1100 },
+          { "kind": "flow", "src": "ENT-01", "dst": "PLC-400", "protocol": "EtherNet/IP", "bytes": 1100 }
+        ] },
+        { "atS": 90, "type": "builtin", "id": "reduced-rate" },
+        { "atS": 130, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "PLC-300", "protocol": "EtherNet/IP", "bytes": 900 }
+        ] },
+        { "atS": 240, "type": "builtin", "id": "full-rate" }
+      ],
+      "truth": {
+        "physicalIncidents": [],
+        "maxPhysicalIncidents": 0,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["segmentation_violation", "failed_logons"],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "out_of_window_session"]
+        },
+        "rationale": "Enterprise-to-supervisory and enterprise-to-control traffic has no permitted conduit, so these are segmentation violations, and five failed op.shift logons on HMI-01 are repeated failures. No logon succeeded and no controller recorded any change. The throughput drop that follows the PLC-300 probe is planned operations; temporal proximity does not turn a planned rate change into a physical incident or an attack effect. No physical incident should be raised."
+      }
+    },
+    {
+      "id": "IND-05",
+      "category": "coupled_cyber_physical",
+      "title": "Approved engineer goes below the approved fan-speed floor",
+      "narrative": "The controls engineer logs on at the EWS-01 console inside the CHG-1042 window, takes a backup upload of PLC-500, and at t=30 applies the approved change: fan speed setpoint 100 % to 60 %. Wanting more energy saving, at t=75 the engineer lowers it again to 40 %, below the 55 % floor approved in CHG-1042, and logs off at t=120. The tower loses airflow: fan current drops in two steps, the basin warms, the trim chiller loads up and warmer cooling water reaches HX-201. Most of the deviation develops after the 40 % write.",
+      "durationS": 360,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "auth", "host": "EWS-01", "identity": "eng.controls", "result": "success", "method": "local", "srcHost": null },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 42000 },
+          { "kind": "controllerAudit", "plcId": "PLC-500", "action": "program_upload", "identity": "eng.controls", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 30, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 60, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 75, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 60, "newValue": 40, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 120, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "eng.controls" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["control_change_supported"],
+            "forbiddenConclusions": ["authorized_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "The setting in force while the deviation develops (40 %) is outside CHG-1042's approved range. Right person, right host and open window do not make an out-of-range value approved."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change", "approved_change"],
+          "forbiddenFlags": ["failed_logons", "segmentation_violation"]
+        },
+        "rationale": "Every condition of CHG-1042 is met except the value of the second write. Checking the full record (identity, source host, window, parameter and allowed range) shows write 1 (60 %) approved and write 2 (40 %) unapproved. The final 40 % setting drives the airflow loss, so the deviation is explained by an unapproved controller change; intent is not established (probably well-meant overreach, not an attack). There is no equipment fault, so multiple_plausible is wrong. A conclusion fixed when only the approved 60 % write existed must be revised once the 40 % write arrives."
+      }
+    },
+    {
+      "id": "IND-06",
+      "category": "coupled_cyber_physical",
+      "title": "Operator trims fan speed from the HMI with no change record",
+      "narrative": "There is no intrusion of any kind. At t=20 the shift operator, logged on to HMI-01 as usual, lowers the cooling-tower fan speed setpoint on PLC-500 from 100 % to 60 % from the HMI faceplate to save energy. The value happens to lie inside CHG-1042's range and the CHG-1042 window is open, but CHG-1042 authorises only eng.controls working from EWS-01. Fan current drops, the basin warms and the trim chiller loads up.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 20, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 60, "identity": "op.shift", "srcHost": "HMI-01" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["control_change_supported"],
+            "forbiddenConclusions": ["authorized_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "A recorded write that matches no change record (wrong identity and wrong source host) fully explains the cooling deviation."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change"],
+          "forbiddenFlags": ["approved_change", "out_of_window_session", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "Nothing about this looks like an attack, which is the point: the controller audit shows a fan-speed write by op.shift from HMI-01, and CHG-1042 covers only eng.controls from EWS-01. Matching only on parameter, window and range would wrongly call it approved. The write explains the deviation, so the correct conclusion is an unapproved control change with intent not established, not a physical fault and not authorised work. HMI-to-controller traffic is a permitted routine path and there was no EWS logon, so no segmentation or session flags apply."
+      }
+    },
+    {
+      "id": "IND-07",
+      "category": "coupled_cyber_physical",
+      "title": "Vendor walks the fan speed down in small, in-range steps",
+      "narrative": "The cooling-plant vendor account enters with valid credentials: enterprise host to JMP-01 at t=10, then RDP to EWS-01 at t=25. No change record covers vendor.remote. From EWS-01 it lowers the fan speed setpoint in three small steps, 100 to 85 % (t=40), 85 to 70 % (t=100) and 70 to 55 % (t=160), and logs off at t=200. Each value lies inside CHG-1042's allowed range and the CHG-1042 window is open, but CHG-1042 authorises only eng.controls. The cumulative effect is a steadily falling fan current, a warming basin and a loading chiller.",
+      "durationS": 420,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 210000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 25, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 185000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 36000 }
+        ] },
+        { "atS": 40, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 85, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 100, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 85, "newValue": 70, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 160, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 70, "newValue": 55, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 200, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["control_change_supported"],
+            "forbiddenConclusions": ["authorized_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "Three unapproved writes by an identity no change record covers; their cumulative effect is the deviation."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change", "out_of_window_session"],
+          "forbiddenFlags": ["approved_change", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "In-range values during an open window look approved, and small steps keep each individual change below an alarming size. But CHG-1042 names eng.controls, so every vendor write is unapproved, and the vendor's EWS logon is not covered by any change record even though the clock is inside CHG-1042's window (coverage depends on the record, not just the time). The writes are the only explanation for the gradual airflow loss: control_change_supported, intent not established."
+      }
+    },
+    {
+      "id": "IND-08",
+      "category": "sensor_fault",
+      "title": "Fan current transmitter fails low just after a vendor read of PLC-500",
+      "narrative": "vendor.remote logs on to JMP-01 from the enterprise network (t=15), then to EWS-01 (t=30); no change record covers this account. At t=50 it opens an engineering connection to PLC-500 and uploads (reads) its program, and it logs off at t=90. Nothing is written. At t=100, independently, the current transducer on the CT-401 fan motor develops a fixed offset and the reading drops by about 18 A. The fan is actually still running at full speed: basin temperature, fan vibration, chiller load and cooling-water temperatures stay normal.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 15, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 190000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 30, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 160000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" }
+        ] },
+        { "atS": 50, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 70000 },
+          { "kind": "controllerAudit", "plcId": "PLC-500", "action": "program_upload", "identity": "vendor.remote", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 90, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] },
+        { "atS": 100, "type": "sensorFault", "signalId": "CT-401.FAN_CURRENT", "bias": -18 }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["possible_relationship", "insufficient_evidence"],
+            "forbiddenConclusions": ["control_change_supported", "authorized_change_supported", "multiple_plausible", "physical_supported", "correlated_not_causal"],
+            "note": "Applies if the single-signal offset is raised as an incident. The controller of CT-401 was reached, but only read; no change exists, and no other signal shows a real airflow loss."
+          }
+        ],
+        "minPhysicalIncidents": 0,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["out_of_window_session"],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "A drop in fan current right after an uncovered vendor session on PLC-500 looks like the first symptom of the fan-speed attack. But the audit shows only a program upload (a read), and nothing else in the heat balance moves: if airflow had really fallen, the basin would warm and the chiller would load up. A careful investigator concludes that one instrument is wrong, and that the cyber access reached the controller but is not shown to have caused anything: a possible relationship, or insufficient evidence. control_change_supported would invent a change that does not exist. physical_supported is also wrong because an uncovered session did reach PLC-500. Whether an uncorroborated single-signal offset is raised as an incident at all is left open."
+      }
+    },
+    {
+      "id": "IND-09",
+      "category": "sensor_fault",
+      "title": "Bearing temperature transmitter drift prompts an unnecessary pump swap",
+      "narrative": "From t=10 the drive-end bearing temperature transmitter on P-101 drifts upward by about 3 C per minute. The bearing is healthy: vibration, motor current, winding temperature and lube-oil pressure and temperature stay normal. At t=150 the operator, seeing the rising reading, swaps duty to P-102. P-101 stops and its real bearing temperature falls, but the reading keeps drifting away from the true value. No cyber activity occurs beyond normal background.",
+      "durationS": 330,
+      "actions": [
+        { "atS": 10, "type": "sensorFault", "signalId": "P-101.BRG_TEMP", "driftPerMin": 3.0 },
+        { "atS": 150, "type": "builtin", "id": "pump-changeover" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["P-101", "M-101"],
+            "acceptableConclusions": ["physical_supported", "insufficient_evidence"],
+            "forbiddenConclusions": ["control_change_supported", "authorized_change_supported", "possible_relationship", "multiple_plausible", "correlated_not_causal"],
+            "note": "Applies if the drift is raised as an incident: a non-cyber (instrument) explanation with no cyber evidence at all."
+          }
+        ],
+        "minPhysicalIncidents": 0,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": false,
+          "expectedFlags": [],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "failed_logons", "out_of_window_session", "segmentation_violation"]
+        },
+        "rationale": "Only one transmitter moves. A real bearing failure would also raise vibration, and the reading keeps diverging after the pump is stopped, which are the marks of instrument drift. There is no cyber evidence, so any cyber-linked conclusion would be fabricated. The changeover is a normal operation and must not produce a separate incident on P-102."
+      }
+    },
+    {
+      "id": "IND-10",
+      "category": "authorized_maintenance",
+      "title": "Approved fan tuning to the lowest permitted speed",
+      "narrative": "Inside the CHG-1042 window the controls engineer logs on at the EWS-01 console (t=10), uploads the PLC-500 program as a backup (t=20) and at t=40 lowers the cooling-tower fan speed setpoint from 100 % to 55 %, the lowest value CHG-1042 allows. The engineer logs off at t=90. The thermal effect is large and looks like the vendor attack (fan current down, basin warming, chiller loading up, warmer process cooling water), but it is the approved work.",
+      "durationS": 330,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "auth", "host": "EWS-01", "identity": "eng.controls", "result": "success", "method": "local", "srcHost": null }
+        ] },
+        { "atS": 20, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 45000 },
+          { "kind": "controllerAudit", "plcId": "PLC-500", "action": "program_upload", "identity": "eng.controls", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 40, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 55, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 90, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "eng.controls" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["authorized_change_supported"],
+            "forbiddenConclusions": ["control_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "Approved identity, source host, parameter, window, and a value on the inclusive lower bound of the approved range."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": false,
+          "expectedFlags": ["approved_change"],
+          "forbiddenFlags": ["unapproved_change", "out_of_window_session", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "The write matches CHG-1042 on every element: eng.controls, EWS-01, PLC-500, the fan speed parameter, inside the window, and 55 % lies within the approved range of 55 to 100 (bounds inclusive). The backup upload beforehand is good engineering practice. The physical effect is real and should still be reported as an incident, but it is explained by authorised work, so nothing about the session warrants a warning. Treating the boundary value as out of range, or the large thermal effect as a sign of malice, would be wrong."
+      }
+    },
+    {
+      "id": "IND-11",
+      "category": "authorized_maintenance",
+      "title": "Approved fan tuning while the engineer's account is attacked at the jump host",
+      "narrative": "From t=0 an enterprise host tries the eng.controls account on JMP-01 six times (t=0 and t=35); every attempt fails and nothing gets past the DMZ. Meanwhile the real controls engineer, physically at the EWS-01 console, logs on locally at t=30 and at t=50 applies CHG-1042: fan speed setpoint 100 % to 60 %. The engineer logs off at t=110. The cooling deviation that follows comes entirely from the approved change.",
+      "durationS": 330,
+      "actions": [
+        { "atS": 0, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 4100 },
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 30, "type": "security", "records": [
+          { "kind": "auth", "host": "EWS-01", "identity": "eng.controls", "result": "success", "method": "local", "srcHost": null }
+        ] },
+        { "atS": 35, "type": "security", "records": [
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "eng.controls", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 45, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 30000 }
+        ] },
+        { "atS": 50, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 60, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 110, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "eng.controls" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["authorized_change_supported"],
+            "forbiddenConclusions": ["control_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "The change matches CHG-1042 and came from a local console session. The failed remote attempts on the same account never succeeded."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["failed_logons", "approved_change"],
+          "forbiddenFlags": ["unapproved_change", "out_of_window_session", "segmentation_violation"]
+        },
+        "rationale": "Two things are true at once and must be kept apart. Someone is guessing the engineer's password at the jump host, a genuine warning, but every attempt failed and no session left the DMZ. The setpoint change was made from a local logon at the engineering workstation and matches CHG-1042 in identity, host, parameter, window and range. Merging the two into 'stolen credentials used to change the fan' would be overconfident and is not supported: the incident is explained by approved work, and the credential attack is a separate finding."
+      }
+    },
+    {
+      "id": "IND-12",
+      "category": "suspicious_insufficient",
+      "title": "Direct DMZ traffic to the pump controller, then a bearing failure",
+      "narrative": "At t=0 vendor.remote logs on to JMP-01 from the enterprise network. At t=15 and t=40 the jump host sends EtherNet/IP traffic directly to PLC-200, the pump-house controller, although no conduit permits DMZ-to-control traffic. There is no EWS session and no controller audit record (no write, download, upload or mode change). At t=60 feed pump P-101's bearing starts to wear: genuine mechanical degradation. The vendor session on the jump host ends at t=150.",
+      "durationS": 330,
+      "actions": [
+        { "atS": 0, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 175000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 15, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "PLC-200", "protocol": "EtherNet/IP", "bytes": 2600 }
+        ] },
+        { "atS": 40, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "PLC-200", "protocol": "EtherNet/IP", "bytes": 3400 }
+        ] },
+        { "atS": 60, "type": "builtin", "id": "pump-bearing" },
+        { "atS": 150, "type": "security", "records": [
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["P-101", "M-101"],
+            "acceptableConclusions": ["possible_relationship", "insufficient_evidence"],
+            "forbiddenConclusions": ["control_change_supported", "multiple_plausible", "authorized_change_supported", "physical_supported", "correlated_not_causal"],
+            "note": "Unauthorised traffic reached the controller of the failing pump shortly before onset, but no change is recorded and the signature is bearing wear."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["segmentation_violation"],
+          "forbiddenFlags": ["unapproved_change", "approved_change", "out_of_window_session"]
+        },
+        "rationale": "DMZ-to-control traffic straight to PLC-200 is a clear segmentation violation, and it reached the controller of the equipment that then failed, so 'no cyber evidence relates' (physical_supported) and 'unrelated coincidence' (correlated_not_causal) are both wrong. But no controller change is recorded, and progressive vibration with bearing heating is the signature of mechanical wear, so control_change_supported and multiple_plausible overstate the evidence. The defensible statement is a possible relationship that the evidence cannot establish."
+      }
+    },
+    {
+      "id": "IND-13",
+      "category": "suspicious_insufficient",
+      "title": "Failed vendor logons at the jump host, then the cooling fan trips",
+      "narrative": "Between t=0 and t=25 an enterprise host makes five failed logon attempts for vendor.remote (the cooling-plant vendor account) on JMP-01. The account never gets in, no session reaches EWS-01 and no traffic leaves the DMZ. At t=70 the CT-401 fan trips on an electrical or mechanical fault. CHG-1042's window is open, but no change is made.",
+      "durationS": 300,
+      "actions": [
+        { "atS": 0, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 3900 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 25, "type": "security", "records": [
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 70, "type": "builtin", "id": "cooling-fan" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["correlated_not_causal", "physical_supported"],
+            "forbiddenConclusions": ["control_change_supported", "possible_relationship", "multiple_plausible", "authorized_change_supported", "insufficient_evidence"],
+            "note": "The cyber activity never got past the DMZ and never reached PLC-500. The fan trip is physical."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["failed_logons"],
+          "forbiddenFlags": ["out_of_window_session", "unapproved_change", "approved_change", "segmentation_violation"]
+        },
+        "rationale": "The story is tempting: someone attacks the cooling vendor's account, and a minute later the cooling tower fails. But the evidence shows the attempt failed at the jump host, with no session on EWS-01, no traffic into the control network and no audit record on PLC-500. Repeated failures deserve a warning on their own, but they have no path to the fan. The fan trip is a physical event, and the cyber activity is at most coincidental in time."
+      }
+    },
+    {
+      "id": "IND-14",
+      "category": "conflicting_evidence",
+      "title": "Unapproved fan cut followed by an independent fan trip",
+      "narrative": "vendor.remote reaches EWS-01 through the jump host with valid credentials (no change record covers it) and at t=40 lowers the PLC-500 fan speed setpoint from 100 % to 45 %, then logs off at t=70. Fan current steps down and the basin starts to warm. At t=120, independently, the CT-401 fan motor trips: current collapses to zero, status goes to off and heat rejection collapses. A 45 % speed reference cannot by itself produce a trip.",
+      "durationS": 360,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 200000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 25, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 170000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 33000 }
+        ] },
+        { "atS": 40, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 45, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 70, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] },
+        { "atS": 120, "type": "builtin", "id": "cooling-fan" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["multiple_plausible"],
+            "forbiddenConclusions": ["control_change_supported", "physical_supported", "authorized_change_supported", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "A real unapproved setpoint change and a real, independent trip act on the same equipment with overlapping effects."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change", "out_of_window_session"],
+          "forbiddenFlags": ["approved_change", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "The unapproved write explains the first step (reduced fan current, early basin warming). The trip explains the collapse to zero current, the off status and most of the downstream temperature rise, none of which a 45 % reference produces. control_change_supported would absorb a physical fault into the cyber story, and physical_supported would ignore a real unapproved change on the same equipment. Both causes are present and fit, which is what multiple_plausible states. It is one incident on one asset with overlapping effects."
+      }
+    },
+    {
+      "id": "IND-15",
+      "category": "conflicting_evidence",
+      "title": "Out-of-scope logic download to the pump controller, then bearing wear",
+      "narrative": "The cooling-plant vendor account reaches EWS-01 through the jump host (t=5 and t=15); no change record covers it. At t=30 it opens an engineering connection to PLC-200, the pump-house controller and outside this vendor's scope, and performs a program download. In this simulation the download changes nothing physical, but an investigator cannot know that without reviewing the logic. At t=50 the bearing of P-101 starts to wear, a genuine mechanical degradation. The sessions end at t=80.",
+      "durationS": 330,
+      "actions": [
+        { "atS": 5, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 205000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 15, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 165000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" }
+        ] },
+        { "atS": 30, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-200", "protocol": "Engineering", "bytes": 350000 },
+          { "kind": "controllerAudit", "plcId": "PLC-200", "action": "program_download", "identity": "vendor.remote", "srcHost": "EWS-01" }
+        ] },
+        { "atS": 50, "type": "builtin", "id": "pump-bearing" },
+        { "atS": 80, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["P-101", "M-101"],
+            "acceptableConclusions": ["multiple_plausible", "possible_relationship"],
+            "forbiddenConclusions": ["control_change_supported", "physical_supported", "correlated_not_causal", "authorized_change_supported", "insufficient_evidence"],
+            "note": "An unapproved logic change on the failing pump's controller just before onset, together with a classic bearing-wear signature."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change", "out_of_window_session"],
+          "forbiddenFlags": ["approved_change", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "An unapproved program download to the controller of the failing pump, 20 s before onset, by an account with no business on that controller, cannot be dismissed, so physical_supported and correlated_not_causal are wrong. But the observed signature is mechanical bearing wear, and nothing shows the new logic changed how the pump runs, so control_change_supported claims more than the evidence supports. Both explanations remain open until the downloaded logic is reviewed, which is what multiple_plausible states. possible_relationship is accepted as a slightly weaker statement of the same uncertainty."
+      }
+    },
+    {
+      "id": "IND-16",
+      "category": "conflicting_evidence",
+      "title": "Unapproved fan cut hidden by a basin thermometer drifting low",
+      "narrative": "The vendor account is guessed at the jump host (four failures at t=5, success at t=15) and used to reach EWS-01 at t=28; no change record covers it. Independently, from t=20 the CT-401 basin temperature transmitter drifts low at about 1.5 C per minute. At t=40 the vendor lowers the fan speed setpoint from 100 % to 40 % and logs off at t=80. The basin water really warms, the chiller loads up, and cooling-water and process outlet temperatures rise, but the basin reading stays flat or even falls because of the drifting transmitter.",
+      "durationS": 360,
+      "actions": [
+        { "atS": 5, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 3800 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "failure", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 15, "type": "security", "records": [
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" },
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 195000 }
+        ] },
+        { "atS": 20, "type": "sensorFault", "signalId": "CT-401.BASIN_TEMP", "driftPerMin": -1.5 },
+        { "atS": 28, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 172000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 31000 }
+        ] },
+        { "atS": 40, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 40, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 80, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["control_change_supported"],
+            "forbiddenConclusions": ["physical_supported", "authorized_change_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "The unapproved 40 % write explains the deviation. The drifting basin transmitter is a separate instrument defect that hides one symptom; it does not explain the deviation."
+          }
+        ],
+        "minPhysicalIncidents": 1,
+        "maxPhysicalIncidents": 1,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["failed_logons", "out_of_window_session", "unapproved_change"],
+          "forbiddenFlags": ["approved_change", "segmentation_violation"]
+        },
+        "rationale": "One instrument contradicts the cyber explanation, and the rest of the plant supports it. The fan current falls at the moment of the write, the chiller loads up, and the cooling-water and process temperatures rise. A basin that is cooling while the chiller works harder is physically inconsistent, so the basin reading is the faulty one. The instrument defect does not account for any of the real deviation, so multiple_plausible (change plus an independent fault that fits) is wrong, and so is any conclusion that discounts the write because the headline temperature looks normal."
+      }
+    },
+    {
+      "id": "IND-17",
+      "category": "sequential_independent",
+      "title": "Vendor fan-speed attack, then an unrelated feed-pump bearing failure",
+      "narrative": "vendor.remote enters through the jump host (t=10) to EWS-01 (t=20), with no change record covering it, and at t=30 lowers the cooling-tower fan speed setpoint on PLC-500 from 100 % to 35 %, then logs off at t=70. The cooling plant degrades over the following minutes. At t=240, unrelated, feed pump P-101's bearing starts to wear. The pump is in a different area, its controller PLC-200 was never touched, it is not cooled by the cooling-water loop, and it sits upstream of the process cooler.",
+      "durationS": 480,
+      "actions": [
+        { "atS": 10, "type": "security", "records": [
+          { "kind": "flow", "src": "ENT-01", "dst": "JMP-01", "protocol": "RDP", "bytes": 215000 },
+          { "kind": "auth", "host": "JMP-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "ENT-01" }
+        ] },
+        { "atS": 20, "type": "security", "records": [
+          { "kind": "flow", "src": "JMP-01", "dst": "EWS-01", "protocol": "RDP", "bytes": 168000 },
+          { "kind": "auth", "host": "EWS-01", "identity": "vendor.remote", "result": "success", "method": "remote", "srcHost": "JMP-01" },
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 34000 }
+        ] },
+        { "atS": 30, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 35, "identity": "vendor.remote", "srcHost": "EWS-01" },
+        { "atS": 70, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "vendor.remote" },
+          { "kind": "logoff", "host": "JMP-01", "identity": "vendor.remote" }
+        ] },
+        { "atS": 240, "type": "builtin", "id": "pump-bearing" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["control_change_supported"],
+            "forbiddenConclusions": ["authorized_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "An unapproved fan-speed cut by an uncovered vendor session explains the cooling deviation."
+          },
+          {
+            "originAnyOf": ["P-101", "M-101"],
+            "acceptableConclusions": ["physical_supported", "correlated_not_causal"],
+            "forbiddenConclusions": ["control_change_supported", "multiple_plausible", "possible_relationship", "authorized_change_supported", "insufficient_evidence"],
+            "note": "Bearing wear on a pump whose controller saw no cyber activity; it must be its own incident, not part of the cooling investigation."
+          }
+        ],
+        "minPhysicalIncidents": 2,
+        "maxPhysicalIncidents": 2,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["unapproved_change", "out_of_window_session"],
+          "forbiddenFlags": ["approved_change", "failed_logons", "segmentation_violation"]
+        },
+        "rationale": "The first incident is a straightforward coupled case. The second starts more than three minutes after the attacker left, on equipment in another area, under a controller (PLC-200) that received no traffic or change, and with no cooling-water or process path from the cooling plant back to the pump (the pump sits upstream of HX-201, and its bearing is served by the lube-oil skid, not the cooling-water loop). Folding it into the open cyber incident, or calling it a possible consequence of the intrusion, would be merging unrelated problems. It is an independent mechanical failure; mentioning the earlier intrusion as nearby in time but unrelated is acceptable."
+      }
+    },
+    {
+      "id": "IND-18",
+      "category": "sequential_independent",
+      "title": "Approved tuning and a premature recipe change, then an MCC-520 joint fault",
+      "narrative": "The controls engineer logs on at the EWS-01 console (t=5) and at t=20 applies CHG-1042 (fan speed setpoint 100 % to 60 %, approved). In the same session, at t=65, the engineer also enters tomorrow's packaging recipe change early: PLC-400 fill target 500 g to 510 g. The value is inside CHG-1038's range, but CHG-1038's window is 2026-01-13 06:00-08:00, the next day. That parameter has no physical effect. The engineer logs off at t=110. At t=220 a high-resistance joint starts developing at the MCC-520 incomer: bus voltage sags, the joint heats, and the agitator, packaging-line drives and air compressor on MCC-520 are affected. The cooling plant, fed from MCC-510, is not affected by the sag.",
+      "durationS": 540,
+      "actions": [
+        { "atS": 5, "type": "security", "records": [
+          { "kind": "auth", "host": "EWS-01", "identity": "eng.controls", "result": "success", "method": "local", "srcHost": null }
+        ] },
+        { "atS": 15, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-500", "protocol": "Engineering", "bytes": 29000 }
+        ] },
+        { "atS": 20, "type": "engineeringWrite", "plcId": "PLC-500", "parameterId": "PLC-500:CT401_FAN_SPEED_SP", "oldValue": 100, "newValue": 60, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 60, "type": "security", "records": [
+          { "kind": "flow", "src": "EWS-01", "dst": "PLC-400", "protocol": "Engineering", "bytes": 27000 }
+        ] },
+        { "atS": 65, "type": "engineeringWrite", "plcId": "PLC-400", "parameterId": "PLC-400:FL310_FILL_TARGET", "oldValue": 500, "newValue": 510, "identity": "eng.controls", "srcHost": "EWS-01" },
+        { "atS": 110, "type": "security", "records": [
+          { "kind": "logoff", "host": "EWS-01", "identity": "eng.controls" }
+        ] },
+        { "atS": 220, "type": "builtin", "id": "mcc-sag" }
+      ],
+      "truth": {
+        "physicalIncidents": [
+          {
+            "originAnyOf": ["CT-401"],
+            "acceptableConclusions": ["authorized_change_supported"],
+            "forbiddenConclusions": ["control_change_supported", "physical_supported", "multiple_plausible", "possible_relationship", "correlated_not_causal", "insufficient_evidence"],
+            "note": "The cooling deviation is explained by the approved CHG-1042 write. The unapproved write in the same session went to PLC-400, which does not control the cooling plant."
+          },
+          {
+            "originAnyOf": ["MCC-520"],
+            "acceptableConclusions": ["physical_supported", "correlated_not_causal"],
+            "forbiddenConclusions": ["control_change_supported", "authorized_change_supported", "multiple_plausible", "possible_relationship", "insufficient_evidence"],
+            "note": "An electrical fault at the MCC-520 incomer. A fill-weight target on the packaging controller cannot depress bus voltage or heat an incomer joint, and loads not controlled by PLC-400 (agitator, air compressor) are hit too."
+          }
+        ],
+        "minPhysicalIncidents": 2,
+        "maxPhysicalIncidents": 2,
+        "cyber": {
+          "expectNotableActivity": true,
+          "expectedFlags": ["approved_change", "unapproved_change"],
+          "forbiddenFlags": ["failed_logons", "segmentation_violation"]
+        },
+        "rationale": "Three separate findings must stay separate. (1) The fan write matches CHG-1042 in every respect, so the cooling deviation is authorised work. (2) The recipe write has the right engineer, host and value range, but CHG-1038's window is tomorrow, so it is an unapproved change, with no physical consequence. (3) The MCC-520 joint fault starts about two minutes after the session ended, on a different supply from the cooling plant. Its symptoms reach the packaging line that PLC-400 controls, which tempts a link to the recipe change, but its origin is the incomer joint, which no controller change can cause. It is a new, independent electrical incident and must not be absorbed into the maintenance incident."
+      }
+    }
+  ]
+}

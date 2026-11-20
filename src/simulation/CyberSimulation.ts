@@ -145,6 +145,7 @@ export class CyberSimulation {
   reset(seed: number): void {
     this.rng = new Rng((seed ^ 0x5bd1e995) >>> 0);
     this.running = [];
+    this.injected = [];
     this.startMs = null;
     this.lastPoll = -Infinity;
     this.shiftLogon = false;
@@ -152,6 +153,22 @@ export class CyberSimulation {
 
   get active(): string[] {
     return this.running.map((r) => r.id);
+  }
+
+  private injected: SecurityRecord[] = [];
+
+  /**
+   * Queue security records for the next step (evaluation scenarios). Their timestamps are
+   * set to the step's time, so they flow through the same path as scripted activity.
+   */
+  inject(records: SecurityRecord[]): void {
+    this.injected.push(...records);
+  }
+
+  /** A simulated engineering write: the controller's audit record plus its effect on the process. */
+  engineeringWrite(write: { plcId: string; parameterId: string; oldValue: number; newValue: number; identity: string; srcHost: string }): void {
+    this.injected.push({ type: 'plc_audit', t: 0, plcId: write.plcId, action: 'parameter_write', parameterId: write.parameterId, oldValue: write.oldValue, newValue: write.newValue, identity: write.identity, srcHost: write.srcHost });
+    this.applyControl(write.parameterId, write.newValue);
   }
 
   trigger(id: string, nowMs: number): boolean {
@@ -162,7 +179,8 @@ export class CyberSimulation {
 
   /** Records observed up to and including `nowMs`. */
   step(nowMs: number): SecurityRecord[] {
-    const out: SecurityRecord[] = [];
+    const out: SecurityRecord[] = this.injected.map((r) => ({ ...r, t: nowMs }));
+    this.injected = [];
     if (this.startMs === null) this.startMs = nowMs;
     const elapsedS = (nowMs - this.startMs) / 1000;
 

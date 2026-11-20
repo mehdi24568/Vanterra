@@ -183,6 +183,8 @@ export class SimulationEngine {
   private faults!: Faults;
   private active = new Map<string, number>();
   private pendingEvents: SourceEvent[] = [];
+  /** Instrument faults: the process is untouched, only what the sensor reports. */
+  private sensorFaults = new Map<string, { bias: number; driftPerMin: number; startT: number }>();
 
   constructor(seed: number) {
     this.seed = seed;
@@ -207,7 +209,18 @@ export class SimulationEngine {
     this.rng = new Rng(seed);
     this.active.clear();
     this.pendingEvents = [];
+    this.sensorFaults.clear();
     this.initialise();
+  }
+
+  /**
+   * Inject an instrument fault on one tag: a step bias and/or a drift per minute, in the
+   * signal's canonical unit. The physical process is unaffected; only the reading is
+   * wrong. Used by evaluation scenarios ("misleading telemetry"); not reachable from the UI.
+   */
+  setSensorFault(tag: string, fault: { bias?: number; driftPerMin?: number } | null): void {
+    if (!fault) this.sensorFaults.delete(tag);
+    else this.sensorFaults.set(tag, { bias: fault.bias ?? 0, driftPerMin: fault.driftPerMin ?? 0, startT: this.s.t });
   }
 
   private initialise(): void {
@@ -499,6 +512,8 @@ export class SimulationEngine {
 
     const emit = (tag: string, value: number, sigma: number, min = -Infinity) => {
       let val = Math.max(min, value + sigma * rng.gauss());
+      const sf = this.sensorFaults.get(tag);
+      if (sf) val += sf.bias + (sf.driftPerMin * (this.s.t - sf.startT)) / 60;
       const unit = SOURCE_UNIT_OVERRIDES[tag];
       if (unit === 'psi') val *= 14.5038;
       else if (unit === 'degF') val = val * 1.8 + 32;

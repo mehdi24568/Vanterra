@@ -196,8 +196,10 @@ describe('reset, repeatability and safety', () => {
     const root = join(process.cwd(), 'src');
     const offenders: string[] = [];
     for (const f of readdirSync(root, { recursive: true }) as string[]) {
-      if (!/\.(ts|tsx)$/.test(f) || f.endsWith('.test.ts') || /^(simulation|adapters)[\\/]/.test(f)) continue;
-      if (/setControlParameter|applyControl/.test(readFileSync(join(root, f), 'utf8'))) offenders.push(f);
+      // The simulator, its adapter and the evaluation harness (which drives the simulated
+      // world) may write controller settings; the engines, runtime and UI may not.
+      if (!/\.(ts|tsx)$/.test(f) || f.endsWith('.test.ts') || /^(simulation|adapters|eval)[\\/]/.test(f)) continue;
+      if (/setControlParameter|applyControl|engineeringWrite|setSensorFault/.test(readFileSync(join(root, f), 'utf8'))) offenders.push(f);
     }
     expect(offenders).toEqual([]);
   });

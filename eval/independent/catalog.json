@@ -1,0 +1,1560 @@
+{
+  "note": "Facts about the simulated facility for independent scenario authors. Times are seconds; nominal values are a reading after 120 s of normal operation.",
+  "areas": [
+    {
+      "id": "A100",
+      "name": "TANK FARM"
+    },
+    {
+      "id": "A200",
+      "name": "PUMP HOUSE"
+    },
+    {
+      "id": "A300",
+      "name": "PROCESS HALL"
+    },
+    {
+      "id": "A400",
+      "name": "PACKAGING LINE"
+    },
+    {
+      "id": "A500",
+      "name": "COOLING PLANT"
+    },
+    {
+      "id": "A600",
+      "name": "POWER & UTILITIES"
+    }
+  ],
+  "assets": [
+    {
+      "id": "TK-101",
+      "name": "Feed Tank A",
+      "category": "tank",
+      "area": "A100",
+      "signals": [
+        {
+          "id": "TK-101.LEVEL",
+          "name": "Tank level",
+          "unit": "%",
+          "nominal": 69.84
+        },
+        {
+          "id": "TK-101.TEMP",
+          "name": "Bulk temperature",
+          "unit": "°C",
+          "nominal": 68.06
+        }
+      ]
+    },
+    {
+      "id": "TK-102",
+      "name": "Feed Tank B (reserve)",
+      "category": "tank",
+      "area": "A100",
+      "signals": [
+        {
+          "id": "TK-102.LEVEL",
+          "name": "Tank level",
+          "unit": "%",
+          "nominal": 80.95
+        }
+      ]
+    },
+    {
+      "id": "P-101",
+      "name": "Feed Pump A",
+      "category": "pump",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "P-101.VIB",
+          "name": "Bearing vibration (DE, RMS)",
+          "unit": "mm/s",
+          "nominal": 2.06
+        },
+        {
+          "id": "P-101.BRG_TEMP",
+          "name": "Bearing temperature (DE)",
+          "unit": "°C",
+          "nominal": 56.05
+        },
+        {
+          "id": "P-101.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "M-101",
+      "name": "Feed Pump A Motor",
+      "category": "motor",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "M-101.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 85.78
+        },
+        {
+          "id": "M-101.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 68.02
+        },
+        {
+          "id": "M-101.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 50.84
+        },
+        {
+          "id": "M-101.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "P-102",
+      "name": "Feed Pump B",
+      "category": "pump",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "P-102.VIB",
+          "name": "Bearing vibration (DE, RMS)",
+          "unit": "mm/s",
+          "nominal": 0.15
+        },
+        {
+          "id": "P-102.BRG_TEMP",
+          "name": "Bearing temperature (DE)",
+          "unit": "°C",
+          "nominal": 24.33
+        },
+        {
+          "id": "P-102.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 0
+        }
+      ]
+    },
+    {
+      "id": "M-102",
+      "name": "Feed Pump B Motor",
+      "category": "motor",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "M-102.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 0.02
+        },
+        {
+          "id": "M-102.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 24.48
+        },
+        {
+          "id": "M-102.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 0
+        },
+        {
+          "id": "M-102.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 0
+        }
+      ]
+    },
+    {
+      "id": "LS-601",
+      "name": "Lube Oil Skid",
+      "category": "utility",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "LS-601.OIL_P",
+          "name": "Supply header pressure",
+          "unit": "bar",
+          "nominal": 2.4
+        },
+        {
+          "id": "LS-601.OIL_TEMP",
+          "name": "Supply temperature",
+          "unit": "°C",
+          "nominal": 44.67
+        }
+      ]
+    },
+    {
+      "id": "PL-100",
+      "name": "Suction Header",
+      "category": "pipeline",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "PL-100.PRESS",
+          "name": "Suction pressure",
+          "unit": "bar",
+          "nominal": 1.09
+        }
+      ]
+    },
+    {
+      "id": "PL-110",
+      "name": "Discharge Header",
+      "category": "pipeline",
+      "area": "A200",
+      "signals": [
+        {
+          "id": "PL-110.PRESS",
+          "name": "Discharge pressure",
+          "unit": "bar",
+          "nominal": 6.21
+        },
+        {
+          "id": "PL-110.FLOW",
+          "name": "Feed flow",
+          "unit": "m³/h",
+          "nominal": 119.92
+        },
+        {
+          "id": "PL-110.FLOW_SP",
+          "name": "Feed flow demand",
+          "unit": "m³/h",
+          "nominal": 119.57
+        }
+      ]
+    },
+    {
+      "id": "HX-201",
+      "name": "Process Cooler",
+      "category": "heat_exchanger",
+      "area": "A300",
+      "signals": [
+        {
+          "id": "HX-201.T_OUT",
+          "name": "Process outlet temperature",
+          "unit": "°C",
+          "nominal": 34.92
+        },
+        {
+          "id": "HX-201.DP",
+          "name": "Tube-side differential pressure",
+          "unit": "bar",
+          "nominal": 1.09
+        }
+      ]
+    },
+    {
+      "id": "PL-120",
+      "name": "Reactor Feed Line",
+      "category": "pipeline",
+      "area": "A300",
+      "signals": [
+        {
+          "id": "PL-120.PRESS",
+          "name": "Line pressure",
+          "unit": "bar",
+          "nominal": 4.92
+        }
+      ]
+    },
+    {
+      "id": "RX-301",
+      "name": "Mixing Reactor",
+      "category": "reactor",
+      "area": "A300",
+      "signals": [
+        {
+          "id": "RX-301.LEVEL",
+          "name": "Vessel level",
+          "unit": "%",
+          "nominal": 61.6
+        },
+        {
+          "id": "RX-301.TEMP",
+          "name": "Batch temperature",
+          "unit": "°C",
+          "nominal": 44.42
+        }
+      ]
+    },
+    {
+      "id": "M-301",
+      "name": "Agitator Motor",
+      "category": "motor",
+      "area": "A300",
+      "signals": [
+        {
+          "id": "M-301.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 54.38
+        },
+        {
+          "id": "M-301.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 68.22
+        },
+        {
+          "id": "M-301.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 31.78
+        },
+        {
+          "id": "M-301.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "PL-130",
+      "name": "Product Transfer Line",
+      "category": "pipeline",
+      "area": "A300",
+      "signals": [
+        {
+          "id": "PL-130.FLOW",
+          "name": "Transfer flow",
+          "unit": "m³/h",
+          "nominal": 120.69
+        },
+        {
+          "id": "PL-130.PRESS",
+          "name": "Line pressure",
+          "unit": "bar",
+          "nominal": 1.93
+        }
+      ]
+    },
+    {
+      "id": "FL-310",
+      "name": "Rotary Filler",
+      "category": "production",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "FL-310.RATE",
+          "name": "Fill rate",
+          "unit": "u/min",
+          "nominal": 239.05
+        },
+        {
+          "id": "FL-310.RATE_SP",
+          "name": "Fill rate target",
+          "unit": "u/min",
+          "nominal": 240
+        },
+        {
+          "id": "FL-310.AIR_P",
+          "name": "Pneumatic supply pressure",
+          "unit": "bar",
+          "nominal": 6.61
+        },
+        {
+          "id": "FL-310.AVAIL",
+          "name": "Availability (5 min)",
+          "unit": "%",
+          "nominal": 100
+        }
+      ]
+    },
+    {
+      "id": "CV-320",
+      "name": "Transfer Conveyor A",
+      "category": "conveyor",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "CV-320.SPEED",
+          "name": "Belt speed",
+          "unit": "m/s",
+          "nominal": 0.8
+        },
+        {
+          "id": "CV-320.VIB",
+          "name": "Drive vibration (RMS)",
+          "unit": "mm/s",
+          "nominal": 1.74
+        }
+      ]
+    },
+    {
+      "id": "M-320",
+      "name": "Conveyor A Drive Motor",
+      "category": "motor",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "M-320.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 21.76
+        },
+        {
+          "id": "M-320.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 68.02
+        },
+        {
+          "id": "M-320.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 13.16
+        },
+        {
+          "id": "M-320.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "PK-330",
+      "name": "Case Packer",
+      "category": "production",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "PK-330.RATE",
+          "name": "Pack rate",
+          "unit": "c/min",
+          "nominal": 20.21
+        },
+        {
+          "id": "PK-330.AVAIL",
+          "name": "Availability (5 min)",
+          "unit": "%",
+          "nominal": 100
+        }
+      ]
+    },
+    {
+      "id": "CV-340",
+      "name": "Transfer Conveyor B",
+      "category": "conveyor",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "CV-340.SPEED",
+          "name": "Belt speed",
+          "unit": "m/s",
+          "nominal": 0.8
+        },
+        {
+          "id": "CV-340.VIB",
+          "name": "Drive vibration (RMS)",
+          "unit": "mm/s",
+          "nominal": 1.71
+        }
+      ]
+    },
+    {
+      "id": "M-340",
+      "name": "Conveyor B Drive Motor",
+      "category": "motor",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "M-340.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 21.87
+        },
+        {
+          "id": "M-340.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 68.33
+        },
+        {
+          "id": "M-340.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 13.22
+        },
+        {
+          "id": "M-340.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "PZ-350",
+      "name": "Palletiser",
+      "category": "production",
+      "area": "A400",
+      "signals": [
+        {
+          "id": "PZ-350.RATE",
+          "name": "Pallet rate",
+          "unit": "p/h",
+          "nominal": 19.91
+        },
+        {
+          "id": "PZ-350.AVAIL",
+          "name": "Availability (5 min)",
+          "unit": "%",
+          "nominal": 100
+        }
+      ]
+    },
+    {
+      "id": "CT-401",
+      "name": "Cooling Tower",
+      "category": "cooling",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "CT-401.FAN_CURRENT",
+          "name": "Fan motor current",
+          "unit": "A",
+          "nominal": 38.01
+        },
+        {
+          "id": "CT-401.BASIN_TEMP",
+          "name": "Basin water temperature",
+          "unit": "°C",
+          "nominal": 24
+        },
+        {
+          "id": "CT-401.FAN_VIB",
+          "name": "Fan gearbox vibration (RMS)",
+          "unit": "mm/s",
+          "nominal": 2.44
+        },
+        {
+          "id": "CT-401.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "P-401",
+      "name": "Cooling Water Pump",
+      "category": "pump",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "P-401.VIB",
+          "name": "Bearing vibration (DE, RMS)",
+          "unit": "mm/s",
+          "nominal": 2.12
+        },
+        {
+          "id": "P-401.BRG_TEMP",
+          "name": "Bearing temperature (DE)",
+          "unit": "°C",
+          "nominal": 54.66
+        },
+        {
+          "id": "P-401.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "M-401",
+      "name": "Cooling Water Pump Motor",
+      "category": "motor",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "M-401.CURRENT",
+          "name": "Stator current",
+          "unit": "A",
+          "nominal": 64.13
+        },
+        {
+          "id": "M-401.WIND_TEMP",
+          "name": "Winding temperature",
+          "unit": "°C",
+          "nominal": 68.08
+        },
+        {
+          "id": "M-401.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 38.04
+        },
+        {
+          "id": "M-401.STATUS",
+          "name": "Operating status",
+          "unit": "",
+          "nominal": 1
+        }
+      ]
+    },
+    {
+      "id": "CH-402",
+      "name": "Trim Chiller",
+      "category": "cooling",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "CH-402.COMP_CURRENT",
+          "name": "Compressor current",
+          "unit": "A",
+          "nominal": 69.49
+        },
+        {
+          "id": "CH-402.LOAD",
+          "name": "Capacity utilisation",
+          "unit": "%",
+          "nominal": 25.1
+        },
+        {
+          "id": "CH-402.POWER",
+          "name": "Electrical power",
+          "unit": "kW",
+          "nominal": 40.53
+        }
+      ]
+    },
+    {
+      "id": "PL-400",
+      "name": "CW Circulation Line",
+      "category": "pipeline",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "PL-400.PRESS",
+          "name": "Pump discharge pressure",
+          "unit": "bar",
+          "nominal": 3.36
+        }
+      ]
+    },
+    {
+      "id": "PL-410",
+      "name": "CW Supply Line",
+      "category": "pipeline",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "PL-410.TEMP",
+          "name": "Supply temperature",
+          "unit": "°C",
+          "nominal": 22.01
+        },
+        {
+          "id": "PL-410.FLOW",
+          "name": "Cooling water flow",
+          "unit": "m³/h",
+          "nominal": 199.63
+        }
+      ]
+    },
+    {
+      "id": "PL-420",
+      "name": "CW Return Line",
+      "category": "pipeline",
+      "area": "A500",
+      "signals": [
+        {
+          "id": "PL-420.TEMP",
+          "name": "Return temperature",
+          "unit": "°C",
+          "nominal": 41.67
+        }
+      ]
+    },
+    {
+      "id": "TX-501",
+      "name": "Distribution Transformer",
+      "category": "electrical",
+      "area": "A600",
+      "signals": [
+        {
+          "id": "TX-501.LOAD",
+          "name": "Active load",
+          "unit": "kW",
+          "nominal": 339.06
+        },
+        {
+          "id": "TX-501.OIL_TEMP",
+          "name": "Top-oil temperature",
+          "unit": "°C",
+          "nominal": 58.11
+        },
+        {
+          "id": "TX-501.LV_VOLT",
+          "name": "LV terminal voltage (L-L)",
+          "unit": "V",
+          "nominal": 399.28
+        }
+      ]
+    },
+    {
+      "id": "MCC-510",
+      "name": "Motor Control Centre A",
+      "category": "electrical",
+      "area": "A600",
+      "signals": [
+        {
+          "id": "MCC-510.VOLT",
+          "name": "Bus voltage (L-L)",
+          "unit": "V",
+          "nominal": 397.84
+        },
+        {
+          "id": "MCC-510.CURRENT",
+          "name": "Incomer current",
+          "unit": "A",
+          "nominal": 323.51
+        },
+        {
+          "id": "MCC-510.BUS_TEMP",
+          "name": "Incomer joint temperature",
+          "unit": "°C",
+          "nominal": 42.11
+        }
+      ]
+    },
+    {
+      "id": "MCC-520",
+      "name": "Motor Control Centre B",
+      "category": "electrical",
+      "area": "A600",
+      "signals": [
+        {
+          "id": "MCC-520.VOLT",
+          "name": "Bus voltage (L-L)",
+          "unit": "V",
+          "nominal": 397.6
+        },
+        {
+          "id": "MCC-520.CURRENT",
+          "name": "Incomer current",
+          "unit": "A",
+          "nominal": 244.48
+        },
+        {
+          "id": "MCC-520.BUS_TEMP",
+          "name": "Incomer joint temperature",
+          "unit": "°C",
+          "nominal": 42.18
+        }
+      ]
+    },
+    {
+      "id": "AC-610",
+      "name": "Plant Air Compressor",
+      "category": "utility",
+      "area": "A600",
+      "signals": [
+        {
+          "id": "AC-610.DISCH_P",
+          "name": "Discharge pressure",
+          "unit": "bar",
+          "nominal": 7.01
+        },
+        {
+          "id": "AC-610.CURRENT",
+          "name": "Motor current",
+          "unit": "A",
+          "nominal": 61.18
+        },
+        {
+          "id": "AC-610.DISCH_TEMP",
+          "name": "Discharge temperature",
+          "unit": "°C",
+          "nominal": 78.41
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "from": "TK-101",
+      "to": "PL-100",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "TK-102",
+      "to": "PL-100",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "PL-100",
+      "to": "P-101",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "PL-100",
+      "to": "P-102",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "P-101",
+      "to": "PL-110",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "P-102",
+      "to": "PL-110",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "PL-110",
+      "to": "HX-201",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "HX-201",
+      "to": "PL-120",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "PL-120",
+      "to": "RX-301",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "RX-301",
+      "to": "PL-130",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "PL-130",
+      "to": "FL-310",
+      "type": "process",
+      "medium": "process fluid"
+    },
+    {
+      "from": "FL-310",
+      "to": "CV-320",
+      "type": "process",
+      "medium": "product units"
+    },
+    {
+      "from": "CV-320",
+      "to": "PK-330",
+      "type": "process",
+      "medium": "product units"
+    },
+    {
+      "from": "PK-330",
+      "to": "CV-340",
+      "type": "process",
+      "medium": "product units"
+    },
+    {
+      "from": "CV-340",
+      "to": "PZ-350",
+      "type": "process",
+      "medium": "product units"
+    },
+    {
+      "from": "M-101",
+      "to": "P-101",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "M-102",
+      "to": "P-102",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "M-301",
+      "to": "RX-301",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "M-320",
+      "to": "CV-320",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "M-340",
+      "to": "CV-340",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "M-401",
+      "to": "P-401",
+      "type": "mechanical",
+      "medium": "shaft"
+    },
+    {
+      "from": "CT-401",
+      "to": "P-401",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "P-401",
+      "to": "PL-400",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "PL-400",
+      "to": "CH-402",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "CH-402",
+      "to": "PL-410",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "PL-410",
+      "to": "HX-201",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "HX-201",
+      "to": "PL-420",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "PL-420",
+      "to": "CT-401",
+      "type": "cooling",
+      "medium": "cooling water"
+    },
+    {
+      "from": "TX-501",
+      "to": "MCC-510",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "TX-501",
+      "to": "MCC-520",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "M-101",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "M-102",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "M-401",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "CT-401",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "CH-402",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-510",
+      "to": "LS-601",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "M-301",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "M-320",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "M-340",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "FL-310",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "PK-330",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "PZ-350",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "MCC-520",
+      "to": "AC-610",
+      "type": "electrical",
+      "medium": "400 V supply"
+    },
+    {
+      "from": "LS-601",
+      "to": "P-101",
+      "type": "utility",
+      "medium": "lube oil"
+    },
+    {
+      "from": "LS-601",
+      "to": "P-102",
+      "type": "utility",
+      "medium": "lube oil"
+    },
+    {
+      "from": "LS-601",
+      "to": "P-401",
+      "type": "utility",
+      "medium": "lube oil"
+    },
+    {
+      "from": "AC-610",
+      "to": "FL-310",
+      "type": "utility",
+      "medium": "compressed air"
+    },
+    {
+      "from": "AC-610",
+      "to": "PK-330",
+      "type": "utility",
+      "medium": "compressed air"
+    },
+    {
+      "from": "AC-610",
+      "to": "PZ-350",
+      "type": "utility",
+      "medium": "compressed air"
+    }
+  ],
+  "ot": {
+    "zones": [
+      {
+        "id": "Z-CTL",
+        "name": "Control network",
+        "level": "L1",
+        "subnet": "10.20.1.0/24",
+        "description": "Controllers and their field I/O."
+      },
+      {
+        "id": "Z-SUP",
+        "name": "Supervisory network",
+        "level": "L2",
+        "subnet": "10.20.2.0/24",
+        "description": "Operator HMI, SCADA server and engineering workstation."
+      },
+      {
+        "id": "Z-OPS",
+        "name": "Site operations",
+        "level": "L3",
+        "subnet": "10.20.3.0/24",
+        "description": "Process historian."
+      },
+      {
+        "id": "Z-DMZ",
+        "name": "Industrial DMZ",
+        "level": "DMZ",
+        "subnet": "10.20.9.0/24",
+        "description": "Boundary firewall and the remote-access jump host."
+      },
+      {
+        "id": "Z-ENT",
+        "name": "Enterprise network",
+        "level": "L4",
+        "subnet": "10.10.0.0/16",
+        "description": "Business network. Must never reach Levels 1–2 directly."
+      }
+    ],
+    "devices": [
+      {
+        "id": "PLC-200",
+        "name": "Pump house controller",
+        "kind": "plc",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "PLC-300",
+        "name": "Process controller",
+        "kind": "plc",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "PLC-400",
+        "name": "Packaging line controller",
+        "kind": "plc",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "PLC-500",
+        "name": "Cooling plant controller",
+        "kind": "plc",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "PLC-600",
+        "name": "Utilities controller",
+        "kind": "plc",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "SW-101",
+        "name": "Control network switch",
+        "kind": "switch",
+        "zone": "Z-CTL"
+      },
+      {
+        "id": "HMI-01",
+        "name": "Operator HMI",
+        "kind": "hmi",
+        "zone": "Z-SUP"
+      },
+      {
+        "id": "SCADA-01",
+        "name": "SCADA server",
+        "kind": "scada",
+        "zone": "Z-SUP"
+      },
+      {
+        "id": "EWS-01",
+        "name": "Engineering workstation",
+        "kind": "ews",
+        "zone": "Z-SUP"
+      },
+      {
+        "id": "SW-201",
+        "name": "Supervisory switch",
+        "kind": "switch",
+        "zone": "Z-SUP"
+      },
+      {
+        "id": "HIST-01",
+        "name": "Process historian",
+        "kind": "historian",
+        "zone": "Z-OPS"
+      },
+      {
+        "id": "FW-01",
+        "name": "OT boundary firewall",
+        "kind": "firewall",
+        "zone": "Z-DMZ"
+      },
+      {
+        "id": "JMP-01",
+        "name": "Remote-access jump host",
+        "kind": "jump_host",
+        "zone": "Z-DMZ"
+      },
+      {
+        "id": "ENT-01",
+        "name": "Enterprise network",
+        "kind": "enterprise",
+        "zone": "Z-ENT"
+      }
+    ],
+    "conduits": [
+      {
+        "id": "C-01",
+        "fromZone": "Z-SUP",
+        "toZone": "Z-CTL",
+        "protocols": [
+          "EtherNet/IP",
+          "Engineering"
+        ],
+        "description": "HMI and SCADA polling; engineering access from the workstation."
+      },
+      {
+        "id": "C-02",
+        "fromZone": "Z-SUP",
+        "toZone": "Z-OPS",
+        "protocols": [
+          "OPC UA"
+        ],
+        "description": "SCADA to historian data collection."
+      },
+      {
+        "id": "C-03",
+        "fromZone": "Z-DMZ",
+        "toZone": "Z-SUP",
+        "protocols": [
+          "RDP"
+        ],
+        "description": "Jump host to engineering workstation, for remote vendor support."
+      },
+      {
+        "id": "C-04",
+        "fromZone": "Z-ENT",
+        "toZone": "Z-DMZ",
+        "protocols": [
+          "RDP",
+          "HTTPS"
+        ],
+        "description": "Enterprise users to the jump host."
+      }
+    ],
+    "controls": [
+      {
+        "plcId": "PLC-200",
+        "assetId": "TK-101",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-200",
+        "assetId": "P-101",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-200",
+        "assetId": "P-102",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-200",
+        "assetId": "M-101",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-200",
+        "assetId": "M-102",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-200",
+        "assetId": "LS-601",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-300",
+        "assetId": "HX-201",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-300",
+        "assetId": "RX-301",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-300",
+        "assetId": "M-301",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "FL-310",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "CV-320",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "M-320",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "PK-330",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "CV-340",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "M-340",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-400",
+        "assetId": "PZ-350",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-500",
+        "assetId": "CT-401",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-500",
+        "assetId": "P-401",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-500",
+        "assetId": "M-401",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-500",
+        "assetId": "CH-402",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-600",
+        "assetId": "AC-610",
+        "kind": "controls"
+      },
+      {
+        "plcId": "PLC-600",
+        "assetId": "TX-501",
+        "kind": "monitors"
+      },
+      {
+        "plcId": "PLC-600",
+        "assetId": "MCC-510",
+        "kind": "monitors"
+      },
+      {
+        "plcId": "PLC-600",
+        "assetId": "MCC-520",
+        "kind": "monitors"
+      }
+    ],
+    "parameters": [
+      {
+        "id": "PLC-500:CT401_FAN_SPEED_SP",
+        "plcId": "PLC-500",
+        "name": "Cooling-tower fan speed setpoint",
+        "unit": "%",
+        "nominal": 100,
+        "affects": [
+          "CT-401"
+        ],
+        "physicallyModelled": true,
+        "description": "Speed reference to the fan drive. Lower speed means less airflow and less heat rejected."
+      },
+      {
+        "id": "PLC-500:CH402_LEAVING_T_SP",
+        "plcId": "PLC-500",
+        "name": "Chiller leaving-water temperature setpoint",
+        "unit": "°C",
+        "nominal": 14,
+        "affects": [
+          "CH-402"
+        ],
+        "physicallyModelled": false,
+        "description": "Not wired into the process model in this simulation."
+      },
+      {
+        "id": "PLC-200:FEED_FLOW_SP",
+        "plcId": "PLC-200",
+        "name": "Feed flow setpoint",
+        "unit": "m³/h",
+        "nominal": 120,
+        "affects": [
+          "P-101",
+          "P-102"
+        ],
+        "physicallyModelled": false,
+        "description": "Not wired into the process model in this simulation (rate changes use the operations channel)."
+      },
+      {
+        "id": "PLC-400:FL310_FILL_TARGET",
+        "plcId": "PLC-400",
+        "name": "Filler fill target",
+        "unit": "g",
+        "nominal": 500,
+        "affects": [
+          "FL-310"
+        ],
+        "physicallyModelled": false,
+        "description": "Not wired into the process model in this simulation."
+      }
+    ],
+    "identities": [
+      {
+        "id": "op.shift",
+        "role": "operator",
+        "description": "Control-room operator on shift (role account).",
+        "usualHosts": [
+          "HMI-01"
+        ]
+      },
+      {
+        "id": "eng.controls",
+        "role": "controls_engineer",
+        "description": "Site controls engineer (role account).",
+        "usualHosts": [
+          "EWS-01"
+        ]
+      },
+      {
+        "id": "vendor.remote",
+        "role": "vendor_support",
+        "description": "Cooling-plant vendor support account, used through the jump host.",
+        "usualHosts": [
+          "JMP-01",
+          "EWS-01"
+        ]
+      },
+      {
+        "id": "svc.historian",
+        "role": "service",
+        "description": "Historian collection service.",
+        "usualHosts": [
+          "SCADA-01",
+          "HIST-01"
+        ]
+      }
+    ],
+    "changeRecords": [
+      {
+        "id": "CHG-1042",
+        "title": "Cooling-tower fan drive energy tuning",
+        "plcId": "PLC-500",
+        "parameterIds": [
+          "PLC-500:CT401_FAN_SPEED_SP"
+        ],
+        "identity": "eng.controls",
+        "sourceHost": "EWS-01",
+        "windowStart": "2026-01-12T06:00:00.000Z",
+        "windowEnd": "2026-01-12T10:00:00.000Z",
+        "allowedRange": [
+          55,
+          100
+        ],
+        "approvedBy": "Shift manager (simulated)"
+      },
+      {
+        "id": "CHG-1038",
+        "title": "Packaging recipe update",
+        "plcId": "PLC-400",
+        "parameterIds": [
+          "PLC-400:FL310_FILL_TARGET"
+        ],
+        "identity": "eng.controls",
+        "sourceHost": "EWS-01",
+        "windowStart": "2026-01-13T06:00:00.000Z",
+        "windowEnd": "2026-01-13T08:00:00.000Z",
+        "allowedRange": [
+          480,
+          520
+        ],
+        "approvedBy": "Production manager (simulated)"
+      }
+    ],
+    "simulationClockStarts": "2026-01-12T06:00:00Z (scenarios begin after 120 s of normal operation)"
+  },
+  "builtInScenarios": [
+    {
+      "id": "pump-bearing",
+      "kind": "anomaly",
+      "name": "Feed pump bearing degradation",
+      "whatHappensPhysically": "Progressive mechanical wear in feed pump P-101 over ~90 s."
+    },
+    {
+      "id": "cooling-fan",
+      "kind": "anomaly",
+      "name": "Cooling tower fan trip",
+      "whatHappensPhysically": "The CT-401 fan trips; heat rejection collapses and propagates into the process."
+    },
+    {
+      "id": "mcc-sag",
+      "kind": "anomaly",
+      "name": "MCC-520 supply voltage depression",
+      "whatHappensPhysically": "A developing high-resistance joint at the MCC-520 incomer depresses bus voltage."
+    },
+    {
+      "id": "reduced-rate",
+      "kind": "normal",
+      "name": "Throughput change to 70 %",
+      "whatHappensPhysically": "Planned rate reduction. Baselines are re-learned; no anomalies are expected."
+    },
+    {
+      "id": "full-rate",
+      "kind": "normal",
+      "name": "Throughput change to 100 %",
+      "whatHappensPhysically": "Planned return to nominal rate. Baselines are re-learned; no anomalies are expected."
+    },
+    {
+      "id": "pump-changeover",
+      "kind": "normal",
+      "name": "Feed pump duty changeover",
+      "whatHappensPhysically": "Routine duty/standby swap between P-101 and P-102 (also a valid response to a P-101 problem)."
+    },
+    {
+      "id": "clear-faults",
+      "kind": "normal",
+      "name": "Clear injected faults",
+      "whatHappensPhysically": "Simulated repair: removes all injected faults and lets the process recover."
+    },
+    {
+      "id": "ot-remote-access",
+      "kind": "cyber",
+      "name": "Suspicious remote engineering access",
+      "whatHappensPhysically": "Repeated failed vendor logons on the jump host, then a remote session to the engineering workstation outside any approved window, a read of the cooling-plant controller, and an enterprise host reaching the HMI directly. No setting is changed."
+    },
+    {
+      "id": "cp-fan-setpoint",
+      "kind": "cyber_physical",
+      "name": "Unapproved fan-speed change",
+      "whatHappensPhysically": "A vendor account reaches the engineering workstation through the jump host outside any approved window and lowers the cooling-tower fan speed setpoint on PLC-500 to 35 %. The process responds to the new setting."
+    },
+    {
+      "id": "cp-approved-tuning",
+      "kind": "cyber_physical",
+      "name": "Approved fan-drive tuning",
+      "whatHappensPhysically": "The controls engineer applies approved change CHG-1042 from the engineering workstation inside its window, lowering the fan speed setpoint to 60 %. The change is authorised; its thermal effect on the process is still real."
+    }
+  ]
+}

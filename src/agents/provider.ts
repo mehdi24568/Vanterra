@@ -68,6 +68,8 @@ export interface LlmProvider {
   /** True for test doubles. Surfaces in every report and in the interface. */
   readonly testDouble: boolean;
   complete<T>(request: LlmRequest<T>): Promise<LlmResponse>;
+  /** Optional readiness check (local providers: is the server up and the model present?). */
+  health?(): Promise<{ ok: boolean; reason: string | null }>;
 }
 
 /** USD per million tokens. Source: Anthropic price list as cached on 2026-11-03. */

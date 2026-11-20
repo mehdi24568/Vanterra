@@ -17,6 +17,7 @@
     "test:watch": "vitest",
     "eval": "vitest run --config vitest.eval.config.ts --project eval --silent=false",
     "capture": "node scripts/capture-screenshots.mjs",
+    "record-demo": "node scripts/record-demo.mjs",
     "eval:live": "vitest run --config vitest.eval.config.ts --project live --silent=false",
     "check": "tsc --noEmit && eslint . && vitest run"
   },

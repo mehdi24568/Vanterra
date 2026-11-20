@@ -19,6 +19,7 @@ import type { LlmProvider } from '../src/agents/provider';
 import type { RunEvent } from '../src/agents/report';
 import { ScriptedProvider } from '../src/agents/testing/scriptedProvider';
 import { AnthropicProvider } from './anthropicProvider';
+import { OllamaProvider } from './ollamaProvider';
 import type { Effort } from './anthropicProvider';
 
 export interface AiStatus {
@@ -86,8 +87,21 @@ export function configureAi(env: Env) {
     } else {
       reason = 'No API key configured. Set ANTHROPIC_API_KEY in .env.local and restart the server.';
     }
+  } else if (providerName === 'ollama') {
+    // Local inference: no key, no cost. CPU inference is slow, so the bounds are wider
+    // unless set explicitly.
+    const local = env.ATLAS_LLM_MODEL?.trim() || 'qwen3:4b';
+    provider = new OllamaProvider({
+      baseURL: (env.ATLAS_OLLAMA_URL?.trim() || 'http://127.0.0.1:11434').replace(/\/$/, ''),
+      model: local,
+      numCtx: positive(env.ATLAS_OLLAMA_NUM_CTX, 16384),
+      keepAlive: env.ATLAS_OLLAMA_KEEP_ALIVE?.trim() || '10m',
+    });
+    limits.agentTimeoutMs = positive(env.ATLAS_LLM_AGENT_TIMEOUT_S, 900) * 1000;
+    limits.runDeadlineMs = positive(env.ATLAS_LLM_RUN_DEADLINE_S, 3600) * 1000;
+    return { providerName, provider, reason, model: local, effort, limits, price: { input: 0, output: 0 } };
   } else {
-    reason = `Unknown ATLAS_LLM_PROVIDER "${providerName}". Supported: anthropic, none.`;
+    reason = `Unknown ATLAS_LLM_PROVIDER "${providerName}". Supported: anthropic, ollama, none.`;
   }
   return { providerName, provider, reason, model, effort, limits, price };
 }
@@ -133,8 +147,19 @@ export function createAiService(env: Env) {
       req.on('error', reject);
     });
 
+  /** Current status; providers with a health check (local models) are probed each time. */
+  async function currentStatus(): Promise<AiStatus> {
+    if (!provider?.health) return status;
+    const h = await provider.health();
+    return { ...status, available: h.ok, reason: h.reason };
+  }
+
   async function investigate(req: IncomingMessage, res: ServerResponse): Promise<void> {
     if (!provider) return json(res, 503, { error: 'ai_unavailable', message: reason });
+    if (provider.health) {
+      const h = await provider.health();
+      if (!h.ok) return json(res, 503, { error: 'ai_unavailable', message: h.reason });
+    }
     if (activeRuns >= MAX_CONCURRENT_RUNS) return json(res, 429, { error: 'busy', message: 'Another investigation is still running. Try again shortly.' });
 
     let body: string;
@@ -184,7 +209,10 @@ export function createAiService(env: Env) {
 
   function handle(req: IncomingMessage, res: ServerResponse, next: () => void): void {
     const url = (req.url ?? '').split('?')[0];
-    if (url === '/api/ai/status' && req.method === 'GET') return json(res, 200, status);
+    if (url === '/api/ai/status' && req.method === 'GET') {
+      void currentStatus().then((s) => json(res, 200, s));
+      return;
+    }
     if (url === '/api/ai/investigate' && req.method === 'POST') {
       void investigate(req, res);
       return;
@@ -193,7 +221,7 @@ export function createAiService(env: Env) {
     next();
   }
 
-  return { status, handle };
+  return { status, currentStatus, handle };
 }
 
 /** Vite plugin: mounts the service on both the dev server and `vite preview`. */

@@ -1,5 +1,5 @@
 import type { FacilityModel, ScenarioInfo } from '../core/types';
-import type { OtModel } from '../cyber/types';
+import type { OtModel, SecurityRecord } from '../cyber/types';
 import { CYBER_SCENARIOS, CyberSimulation } from '../simulation/CyberSimulation';
 import { FACILITY } from '../simulation/facility';
 import { OT_MODEL } from '../simulation/otModel';
@@ -95,5 +95,20 @@ export class SimulationAdapter implements ClockedAdapter, ScenarioControl, Secur
 
   operatingPoint() {
     return this.engine.operatingPoint;
+  }
+
+  // ------------------------------------------------- scenario-language hooks ---
+  // Used by the evaluation harness to compose scenarios. Not reachable from the UI.
+
+  setSensorFault(tag: string, fault: { bias?: number; driftPerMin?: number } | null): void {
+    this.engine.setSensorFault(tag, fault);
+  }
+
+  injectSecurity(records: SecurityRecord[]): void {
+    this.cyber.inject(records);
+  }
+
+  engineeringWrite(write: { plcId: string; parameterId: string; oldValue: number; newValue: number; identity: string; srcHost: string }): void {
+    this.cyber.engineeringWrite(write);
   }
 }
