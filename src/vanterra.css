@@ -973,6 +973,11 @@
 }
 
 @media (max-width: 1100px) {
+  /* Seven workbench tabs scroll sideways on narrow screens; fade the edge as a cue. */
+  .investigation__nav {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
   .overview-grid {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: 'attention' 'areas' 'demos' 'changes' 'activity';
