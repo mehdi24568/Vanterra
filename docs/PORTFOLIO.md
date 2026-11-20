@@ -6,12 +6,29 @@ Everything below describes implemented and tested work. The one unvalidated capa
 
 Vanterra is a cyber-physical intelligence platform that investigates industrial incidents across process telemetry and the OT network. It links events only through declared control relationships and states what the evidence does and does not support. A bounded five-agent LLM review sits on top, and only a human can confirm a cause.
 
+## Positioning for consulting and finance
+
+What Vanterra shows, in the terms those roles use:
+
+| Consulting / finance skill | Where it is in Vanterra |
+| --- | --- |
+| Hypothesis-driven problem solving | Every incident gets competing explanations, each *supported*, *possible* or *not supported*, with the criteria met and not met |
+| Separating fact from assumption | "What we know for certain" versus "what the evidence suggests", in the product and in every AI answer |
+| Executive communication (answer first) | The plain-language briefing leads with the answer to "should this become a cyber investigation?", then the support |
+| Risk and controls | Approved versus unapproved changes against change records: the same control that SOX IT general controls test for change management |
+| Model risk management | The AI cannot confirm anything; every answer is checked against the evidence, rejected answers are kept for review, and its performance was measured on real runs, including where it failed |
+| Quantitative rigour | Counterfactual twin simulations for ground truth; 10-seed and blind-authored evaluations with honest error reporting (80/90 before a fix, 90/90 after) |
+
+**CV bullet for a consulting or finance application:** Built Vanterra, an evidence-based incident investigation platform (TypeScript, React, local LLMs). It separates facts from interpretations, tests competing explanations against explicit criteria, and gives non-specialists a direct answer with the evidence behind it. Designed its AI controls like a model-risk framework: grounded citations, rejection of overconfident or unsupported answers, human-only sign-off, and measured live performance.
+
+**Interview line:** "The hard part was not the AI; it was deciding what the evidence allows you to say. Vanterra never says 'attack'. The strongest thing it can say is 'an unapproved change is supported; intent is not established'. That discipline is what I'd bring to a client's risk or incident review."
+
 ## CV bullets
 
 - Designed and built Vanterra, a cyber-physical incident investigation platform (TypeScript, React, Three.js): six statistical detectors and graph correlation under physical propagation rules over an 84-signal plant simulation. It adds a simulated Purdue-model OT network with five detection rules, verified MITRE ATT&CK for ICS context, and a 3D digital twin with an OT layer.
 - Built a deterministic cyber-physical assessment that links cyber events to physical incidents only through declared controller relationships, temporal precedence and expected physical signatures. Across 10 seeds it reached the correct conclusion in 60/60 runs, with 0 physical faults wrongly attributed to cyber activity, including deliberately misleading cases.
 - Validated it against 18 blind-authored scenarios in 8 categories (90 runs). The first run scored 80/90 and exposed a real defect: an approved change could mask a later unapproved change to the same setting. After the fix and a regression test, it scored 90/90.
-- Integrated a bounded five-agent investigation workflow that runs on the Claude API or on a local model through Ollama (no key, no cost): zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 135 automated tests in total. Ran it for real on a local 4B model on a CPU-only laptop, which exposed and led me to fix three reliability defects the stub tests could not reveal.
+- Integrated a bounded five-agent investigation workflow that runs on the Claude API or on a local model through Ollama (no key, no cost): zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 158 automated tests in total. Ran it for real on a local 4B model on a CPU-only laptop, which exposed and led me to fix three reliability defects the stub tests could not reveal.
 
 *(After a live run, add measured citation validity and the unsupported-claim rate to the third bullet.)*
 

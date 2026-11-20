@@ -26,7 +26,7 @@ import type { SweepReport } from '../sonar/SonarEngine';
 import type { SpatialEngine } from '../spatial/SpatialEngine';
 import type { FocusState, LayerState, SceneFeed, ViewState } from '../spatial/types';
 import { AiService } from './AiService';
-import type { AiAvailability, AiRun } from './AiService';
+import type { AiAvailability, AiRun, AskMessage } from './AiService';
 import { AtlasCore } from './AtlasCore';
 import { createStore, shallowEqual } from './store';
 import type { OtModel } from '../cyber/types';
@@ -83,7 +83,7 @@ export interface ScanInfo {
 }
 
 export type RightPanel = 'asset' | 'incidents' | 'anomalies' | 'investigation';
-export type InvestigationTab = 'overview' | 'evidence' | 'hypotheses' | 'cyber' | 'ai' | 'impact' | 'checks';
+export type InvestigationTab = 'overview' | 'ask' | 'evidence' | 'hypotheses' | 'cyber' | 'ai' | 'impact' | 'checks';
 /** Top-level product areas. */
 export type AppView = 'overview' | 'spatial' | 'cyber';
 export type LeftTab = 'scenarios' | 'sonar' | 'layers';
@@ -715,6 +715,20 @@ export class AtlasRuntime implements SceneFeed {
 
   cancelAiInvestigation(incidentId: string): void {
     this.ai.cancel(incidentId);
+  }
+
+  askHistory(incidentId: string): AskMessage[] {
+    return this.ai.askHistory(incidentId);
+  }
+
+  /** A question answered by the deterministic engine, instantly and without a model. */
+  answerFromEngine(incidentId: string, question: string, answer: string | null, items: AskMessage['items'] = []): void {
+    this.ai.addEngineAnswer(incidentId, question, answer, items);
+  }
+
+  /** Operator-initiated: one question to the model, checked by the server before it is shown. */
+  askAi(incidentId: string, question: string): void {
+    void this.ai.ask(incidentId, question);
   }
 
   /** Ask the server again whether AI is configured (for example after a restart with a key). */

@@ -15,6 +15,7 @@ import { ANOMALY_KIND_LABEL, RELATION_LABEL } from '../core/types';
 import type { Anomaly, CriterionResult, HypothesisAssessment, Incident, PathStep } from '../core/types';
 import type { InvestigationTab } from '../runtime/AtlasRuntime';
 import { AiPanel } from './AiPanel';
+import { AskPanel } from './AskPanel';
 import { CyberPhysicalPanel, STANDING_SHORT as CP_STANDING } from './cyber';
 import { Sparkline, TrendChart } from './charts';
 import { useRuntime, useUi } from './context';
@@ -429,6 +430,7 @@ function Assessment({ incident }: { incident: Incident }) {
 
 const TABS: Array<{ id: InvestigationTab; label: string }> = [
   { id: 'overview', label: 'Overview' },
+  { id: 'ask', label: 'Ask' },
   { id: 'evidence', label: 'Evidence' },
   { id: 'hypotheses', label: 'Hypotheses' },
   { id: 'cyber', label: 'Cyber-physical' },
@@ -477,6 +479,7 @@ export function Investigation() {
     evidence: String(anomalies.length),
     hypotheses: String(incident.hypotheses.length),
     cyber: cpBadge,
+    ask: runtime.askHistory(incident.id).length ? String(runtime.askHistory(incident.id).length) : '',
     ai: !aiAvailable ? 'off' : aiRun?.state === 'running' ? '…' : aiRun?.report ? '✓' : '',
     impact: String(incident.impact.filter((i) => i.state === 'at_risk').length),
     checks: String(incident.recommendations.length),
@@ -493,6 +496,25 @@ export function Investigation() {
           <SeverityTag level={incident.severity} />
           <span className={`tag tag--status-${incident.status}`}>{incident.status}</span>
           <span className="investigation__spacer" />
+          {aiAvailable ? (
+            aiRun?.state === 'running' ? (
+              <button type="button" className="btn btn--ghost" onClick={() => runtime.cancelAiInvestigation(incident.id)}>
+                Stop AI agents
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn--agents"
+                title="Run the five AI agents on this incident now"
+                onClick={() => {
+                  runtime.runAiInvestigation(incident.id);
+                  runtime.setInvestigationTab('ai');
+                }}
+              >
+                {aiRun?.report ? 'Re-run AI agents' : 'Run AI agents'}
+              </button>
+            )
+          ) : null}
           <button type="button" className={`btn btn--ghost${incident.acknowledged ? ' is-active' : ''}`} onClick={() => runtime.acknowledge(incident.id)} disabled={incident.acknowledged}>
             {incident.acknowledged ? 'Acknowledged' : 'Acknowledge'}
           </button>
@@ -616,6 +638,7 @@ export function Investigation() {
         {tab === 'cyber' ? <CyberPhysicalPanel incident={incident} /> : null}
 
         {tab === 'ai' ? <AiPanel incident={incident} /> : null}
+        {tab === 'ask' ? <AskPanel incident={incident} /> : null}
 
         {tab === 'impact' ? <Impact incident={incident} /> : null}
 

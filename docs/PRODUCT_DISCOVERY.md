@@ -104,6 +104,22 @@ Partly present: generic evidence IDs, grounding, standings, the agent workflow a
 2. **Prototype B:** a "What caused this?" drill on the existing scenarios. The trainee picks an explanation and the evidence for it, then sees the ground truth and the deterministic assessment. The scoring logic exists in `src/eval`.
 3. Extend the briefing to the incident overview, not only the Cyber-physical tab.
 
+## 8b. Beyond plants: finance and consulting (exploration, nothing implemented)
+
+The core question, *"was it a system fault, an unapproved change, or a security event, and what does the evidence allow us to say?"*, is not specific to plants. The closest fit outside industry is **operational incidents in financial services**:
+
+| Vanterra concept | Financial-services equivalent |
+| --- | --- |
+| Equipment and process links | Services and their dependencies (payments, trading, core banking) |
+| Controller writes and change records | Production deployments and configuration changes against change tickets |
+| Security telemetry | Identity and access logs, privileged sessions |
+| "Should this become a cyber investigation?" | "Is this a major ICT incident, and does security need to be involved?" |
+| Standings with explicit criteria | An auditable root-cause record |
+
+Why this domain: EU financial entities must manage, classify and report ICT-related incidents and analyse their root causes under the Digital Operational Resilience Act (Regulation (EU) 2022/2554, applicable since January 2025), and change-management controls are a standard part of IT general controls in financial audits. Both reward an investigation that separates evidence from interpretation and leaves a defensible trail. That is a reasoned hypothesis, not validated demand.
+
+What it would take: a domain pack (service graph, change-ticket and access-log adapters, detection rules), new evidence types, and validation with practitioners. It is a consulting-style use as much as a product: an *evidence standard* for post-incident reviews. **Not started**; the industrial product stays the focus.
+
 ## 9. Sources
 
 - Dragos, *OT Cybersecurity Lessons Learned from the Frontlines*: https://www.dragos.com/blog/ot-cybersecurity-lessons-learned-frontlines

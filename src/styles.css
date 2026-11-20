@@ -11,7 +11,8 @@
   --line-strong: rgba(143, 169, 194, 0.4);
   --text: #dce4eb;
   --text-dim: #8d9aa8;
-  --text-faint: #58667a;
+  /* Contrast on --bg (WCAG 2): text 14.6:1, dim 6.8:1, faint 4.7:1. Enforced by src/ui/contrast.test.ts. */
+  --text-faint: #6f7e92;
   --cyan: #8fb4d9;
   --amber: #e5b94e;
   --orange: #ec8a3c;
@@ -490,6 +491,23 @@ h5 {
 .btn--primary:hover:not(:disabled) {
   background: #7fe6ff;
   color: #021018;
+}
+.btn--agents {
+  color: var(--ai);
+  border-color: rgba(180, 140, 255, 0.55);
+  background: rgba(180, 140, 255, 0.08);
+}
+.btn--agents:hover:not(:disabled) {
+  background: rgba(180, 140, 255, 0.18);
+  color: #e6dcff;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 .btn--ghost {
   border-color: var(--line);

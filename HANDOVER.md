@@ -14,9 +14,10 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Claude provider and AI service | yes | local API stub; browser failure path; cross-site request refusal | **no** (no API key) |
 | Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (slow: 19–45 min per call) |
 | Plain-language briefing ("In plain words", Cyber-physical tab) | yes | 6 tests: verdicts per case, evidence exists, no jargon or overreach, read-only; checked in the browser | n/a (deterministic); **not yet tested with users** |
+| Ask Vanterra (Ask tab): instant engine answers + checked model answers; "Run AI agents" button | yes | 8 tests (grounding, overreach with negation, repair, rejected drafts, failures); WCAG contrast test | **yes**: accepted, cited answer in 57 s on `qwen3:1.7b`, CPU |
 | Standalone desktop app | **no** | — | — (plan: docs/DESKTOP_ARCHITECTURE.md) |
 
-Verified on 2026-11-20: type-check and lint clean; 135 tests pass in 10 files; the build succeeds; `npm run eval` runs all four suites.
+Verified on 2026-11-20: type-check and lint clean; 158 tests pass in 12 files; the build succeeds; `npm run eval` runs all four suites.
 
 **Repository:** public on GitHub, [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main`. See docs/PUBLISHING.md.
 

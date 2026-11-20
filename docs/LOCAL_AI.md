@@ -72,8 +72,9 @@ Defaults for local mode now come from these measurements: 3600 s per call and 14
 
 | Model | Download | Context | Notes |
 | --- | --- | --- | --- |
-| **`qwen3:4b`** (used) | 2.3 GB | 256K | Structured output works; thinking is switched off |
-| `qwen2.5:3b` (lighter) | 1.9 GB | 32K | Less memory, so less paging on a busy 16 GB machine; weaker reasoning. Not measured |
+| **`qwen3:1.7b`** (default in the app now) | 1.3 GB | 32K | Fits in memory on a busy 16 GB laptop. Measured: 11.2 tokens/s on a short call; **Ask answers in about 1 minute** (2.5k-token input at 60 tokens/s, then 5–7 tokens/s). Weaker reasoning than 4B; the checks still apply |
+| `qwen3:4b` | 2.3 GB | 256K | Better reasoning; on this machine it paged and generated at 0.5–1.4 tokens/s during the agent runs |
+| `qwen2.5:3b` | 1.9 GB | 32K | Alternative; not measured |
 | 7–8B models | 4.7–5.2 GB | — | Not recommended on this hardware: the 4B model already pages |
 
 Sizes and context windows are from the official ollama.com library pages, read on 2026-11-20.

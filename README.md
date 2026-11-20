@@ -129,6 +129,13 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 
 ## AI review
 
+**Ask Vanterra.** Every incident has an **Ask** tab:
+- **Quick questions** ("What is going on?", "Should security be involved?", "What do we know for certain?", "What are we guessing?") are answered instantly by the deterministic engine, with no model.
+- **Your own questions** go to the configured model. The server then checks the answer before showing it: citations must be real evidence IDs (invented ones are removed), and claims of certainty, odds or intent are rejected unless they are clearly negated. An answer that cites no real evidence is rejected too, after one repair attempt. Rejected drafts are hidden but can be opened for review.
+- **Measured with `qwen3:1.7b` on a laptop CPU:** an accepted, cited answer to "Why did the cooling tower readings change, and who changed the fan setting?" in 57 s. The first live runs exposed two checker bugs (decorated citation IDs, a recorded "35%" read as a probability), now fixed with regression tests.
+
+**Run AI agents** in the incident header starts the five-agent review at any time; it can be stopped while running.
+
 Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator), backed by Claude or by a local Ollama model, review an incident in a code-controlled workflow: at most 2 calls per agent, 90 s per call, 240 s per run. They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
 
 ## Evaluation
@@ -151,7 +158,7 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 135 tests in 10 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 158 tests in 12 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 

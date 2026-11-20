@@ -44,12 +44,32 @@ export interface AiRun {
   testDouble: boolean;
 }
 
-const UNCHECKED: AiAvailability = { checked: false, available: false, provider: 'unknown', model: null, testDouble: false, reason: 'Checking…', maxModelCalls: 10 };
+/** One question and its answer in "Ask Vanterra". */
+export interface AskMessage {
+  id: number;
+  question: string;
+  /** engine: answered instantly from the deterministic assessment; model: answered by the AI and checked. */
+  source: 'engine' | 'model';
+  state: 'pending' | 'answered' | 'rejected' | 'failed';
+  answer: string | null;
+  items: { text: string; evidence: string[] }[];
+  evidence: string[];
+  basis: 'observed' | 'inferred' | 'not_in_evidence' | null;
+  notes: string[];
+  /** A draft that failed the checks: shown only on request, labelled as not an answer. */
+  rejectedDraft?: string | null;
+  model: string | null;
+  latencyMs: number;
+}
+
+const UNCHECKED: AiAvailability ={ checked: false, available: false, provider: 'unknown', model: null, testDouble: false, reason: 'Checking…', maxModelCalls: 10 };
 
 export class AiService {
   availability: AiAvailability = UNCHECKED;
   private runs = new Map<string, AiRun>();
   private controllers = new Map<string, AbortController>();
+  private asks = new Map<string, AskMessage[]>();
+  private askSeq = 0;
 
   constructor(
     private readonly core: AtlasCore,
@@ -71,6 +91,59 @@ export class AiService {
     for (const c of this.controllers.values()) c.abort();
     this.controllers.clear();
     this.runs.clear();
+    this.asks.clear();
+  }
+
+  askHistory(incidentId: string): AskMessage[] {
+    return this.asks.get(incidentId) ?? [];
+  }
+
+  private pushAsk(incidentId: string, m: Omit<AskMessage, 'id'>): AskMessage {
+    const msg: AskMessage = { id: ++this.askSeq, ...m };
+    this.asks.set(incidentId, [...this.askHistory(incidentId), msg]);
+    this.notify();
+    return msg;
+  }
+
+  /** An answer computed by the deterministic engine (no model). */
+  addEngineAnswer(incidentId: string, question: string, answer: string | null, items: AskMessage['items'] = []): void {
+    this.pushAsk(incidentId, { question, source: 'engine', state: 'answered', answer, items, evidence: [], basis: null, notes: [], model: null, latencyMs: 0 });
+  }
+
+  /** A free-form question for the model; the server checks the answer before returning it. */
+  async ask(incidentId: string, question: string): Promise<void> {
+    const incident = this.core.intelligence.get(incidentId);
+    const q = question.trim();
+    if (!incident || !q || !this.availability.available) return;
+    const msg = this.pushAsk(incidentId, { question: q, source: 'model', state: 'pending', answer: null, items: [], evidence: [], basis: null, notes: [], model: this.availability.model, latencyMs: 0 });
+    const started = performance.now();
+    try {
+      const res = await fetch('/api/ai/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ context: buildInvestigationContext(this.core, incident), question: q }),
+      });
+      const body = (await res.json()) as Partial<AskMessage> & { status?: AskMessage['state']; message?: string };
+      if (!res.ok) {
+        msg.state = 'failed';
+        msg.notes = [body.message ?? `The AI service answered ${res.status}.`];
+      } else {
+        msg.state = body.status ?? 'failed';
+        msg.answer = body.answer ?? null;
+        msg.evidence = body.evidence ?? [];
+        msg.basis = body.basis ?? null;
+        msg.notes = body.notes ?? [];
+        msg.rejectedDraft = body.rejectedDraft ?? null;
+        msg.model = body.model ?? msg.model;
+      }
+    } catch {
+      msg.state = 'failed';
+      msg.notes = ['The AI service could not be reached.'];
+    } finally {
+      msg.latencyMs = performance.now() - started;
+      this.asks.set(incidentId, [...this.askHistory(incidentId)]);
+      this.notify();
+    }
   }
 
   async refresh(): Promise<void> {

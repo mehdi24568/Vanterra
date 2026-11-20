@@ -13,6 +13,7 @@
  */
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Plugin } from 'vite';
+import { ASK_MAX_QUESTION, answerQuestion } from '../src/agents/ask';
 import { ContextSchema } from '../src/agents/context';
 import { DEFAULT_LIMITS, runInvestigation } from '../src/agents/orchestrator';
 import type { LlmProvider } from '../src/agents/provider';
@@ -242,8 +243,48 @@ export function createAiService(env: Env) {
     }
   }
 
+  /** One grounded question about one investigation (see src/agents/ask.ts). */
+  async function ask(req: IncomingMessage, res: ServerResponse): Promise<void> {
+    const foreign = rejectForeignRequest(req);
+    if (foreign) {
+      req.resume();
+      return json(res, foreign.code, { error: 'forbidden', message: foreign.message });
+    }
+    if (!provider) return json(res, 503, { error: 'ai_unavailable', message: reason });
+    if (provider.testDouble) return json(res, 503, { error: 'ai_unavailable', message: 'The scripted test double cannot answer questions; configure a real model.' });
+    if (provider.health) {
+      const h = await provider.health();
+      if (!h.ok) return json(res, 503, { error: 'ai_unavailable', message: h.reason });
+    }
+    let payload: { context?: unknown; question?: unknown };
+    try {
+      payload = JSON.parse(await readBody(req)) as typeof payload;
+    } catch (err) {
+      return json(res, err instanceof Error && err.message === 'too_large' ? 413 : 400, { error: 'bad_request', message: 'Request body is not valid JSON or is too large.' });
+    }
+    const question = typeof payload?.question === 'string' ? payload.question.trim() : '';
+    if (!question || question.length > ASK_MAX_QUESTION) return json(res, 400, { error: 'bad_request', message: `Ask a question of 1–${ASK_MAX_QUESTION} characters.` });
+    const parsed = ContextSchema.safeParse(payload?.context);
+    if (!parsed.success) return json(res, 400, { error: 'invalid_context', message: 'Investigation context rejected.' });
+
+    const controller = new AbortController();
+    let finished = false;
+    res.on('close', () => {
+      if (!finished) controller.abort();
+    });
+    const result = await answerQuestion(parsed.data, question, provider, { timeoutMs: limits.agentTimeoutMs, signal: controller.signal });
+    finished = true;
+    // Logged without the question or the answer.
+    console.info(`[atlas-ai] ask ${result.status} in ${result.latencyMs} ms, ${result.calls} call(s), ${result.evidence.length} citations`);
+    json(res, 200, result);
+  }
+
   function handle(req: IncomingMessage, res: ServerResponse, next: () => void): void {
     const url = (req.url ?? '').split('?')[0];
+    if (url === '/api/ai/ask' && req.method === 'POST') {
+      void ask(req, res);
+      return;
+    }
     if (url === '/api/ai/status' && req.method === 'GET') {
       void currentStatus().then((s) => json(res, 200, s));
       return;
