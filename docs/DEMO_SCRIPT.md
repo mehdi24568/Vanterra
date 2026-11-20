@@ -1,43 +1,55 @@
-# Demo recording package
+# Demo: script, shot list and recording
 
-**No video has been recorded.** This is the complete package for a 2½–3 minute demonstration: settings, preparation, storyboard and narration. Record with the Xbox Game Bar (Win + Alt + R) or OBS Studio on Windows, or QuickTime on macOS.
+**A video exists:** [`docs/demo/vanterra-demo.webm`](demo/vanterra-demo.webm), 82 s, 1280 × 800, VP9, 7.7 MB, with burned-in captions and no audio. It is a real capture: `scripts/record-demo.mjs` drives the running app in Edge, streams genuine frames through the DevTools screencast, and encodes them in the same browser. Regenerate it with:
 
-## Settings
+```
+npm run dev
+```
 
-| Setting | Value |
+```
+npm run record-demo
+```
+
+The run is repeatable: it uses the default seed (20260112), and the scenario launcher resets the simulation before starting the flagship scenario at ×4 speed.
+
+## 90-second script and shot list
+
+| # | Time | Shot (what is on screen) | Caption / narration |
+| --- | --- | --- | --- |
+| 0 | 0:00–0:03 | Title card | "VANTERRA. Cyber-physical intelligence, simulated environment." |
+| 1 | 0:03–0:09 | **Overview**, all normal: plant condition, incidents, cyber events, facility areas, scenario launcher | "Vanterra: a simulated plant and its OT network, investigated together." |
+| 2 | 0:09–0:13 | *Run scenario* on **C · Cyber-physical** | "A vendor account reaches the engineering workstation outside any approved change window…" |
+| 3 | 0:13–0:18 | **Cyber & OT**: zone map, the case appears | "…and lowers the cooling-tower fan speed on controller PLC-500 from 100 % to 35 %." |
+| 4 | 0:18–0:26 | The **unapproved change** event: evidence fields, rationale, limitations, ATT&CK context | "No approved change record matches: different account, value outside the approved range." |
+| 5 | 0:26–0:33 | **Overview**: a critical cyber-physical incident and the case in *Requires attention* | "Seconds later the process deviates. A critical incident opens at the cooling tower, from sensor data alone." |
+| 6 | 0:33–0:44 | **Workbench, Cyber-physical tab**, with the OT layer in 3D | "The link is declared, not guessed: PLC-500 controls CT-401. The change came first, and the expected signals moved." |
+| 7 | 0:44–0:53 | The explanations, scrolled | "Competing explanations are tested. An equipment fault is not supported: no trip, no high vibration." |
+| 8 | 0:53–1:01 | *What is not known* and *next steps* | "What remains unknown is stated: who used the account, and whether the change was malicious." |
+| 9 | 1:01–1:07 | Workbench **Overview**: rule-based, AI-assisted, human and cyber-physical verdicts | "Rule-based, AI-assisted, human and cyber-physical verdicts side by side." |
+| 10 | 1:07–1:12 | **Hypotheses** → *Mark confirmed* | "Vanterra recommends. Only a person confirms." |
+| 11 | 1:12–1:19 | Workbench **Overview** with the human verdict | "Conclusion: a control-system change is supported. Intent is not established." |
+| 12 | 1:19–1:22 | End card | "Investigate the physical and the digital together." |
+
+## Recording a narrated version yourself (optional)
+
+1. `npm run dev`, then open http://localhost:5173 at 1440 × 900 in a private window.
+2. Start a screen recorder: Win + Alt + R (Xbox Game Bar), or OBS.
+3. Follow the shot list. On the Overview, *Run scenario* on **C · Cyber-physical**, wait for the incident, then open it from *Requires attention*.
+4. Read the captions as narration. Without an API key or local model, say that AI review is not configured; never present the scripted test double as a model.
+
+## Stills for the README and portfolio
+
+All are real captures (`npm run capture`), 1440 × 900 unless noted, in `docs/screenshots/`:
+
+| File | Use |
 | --- | --- |
-| Viewport | 1440 × 900 browser window, zoom 100 % |
-| Seed | default (20260112), so the run matches the screenshots and the evaluation |
-| AI | Without a key the AI review shows "unavailable": say so. Never present the scripted test double as a model. |
-| Length | about 2 min 45 s |
-
-## Preparation
-
-1. `npm run dev`, then open http://localhost:5173 in a private window so the welcome card appears.
-2. Close other tabs and silence notifications. Do one dry run, then reload.
-
-## Storyboard and narration
-
-| # | Time | Screen | Action | Narration |
-| --- | --- | --- | --- | --- |
-| 1 | 0:00–0:12 | Welcome card | Hold | "Vanterra investigates industrial incidents across the process and the OT network together. The plant and network are simulated; the reasoning is real code." |
-| 2 | 0:12–0:25 | Overview, all normal | *Explore on my own* | "The overview answers whether the facility is normal and what needs attention. Every figure here is computed; there are no made-up risk scores." |
-| 3 | 0:25–0:45 | Overview | *Run scenario* on **C · Cyber-physical**; wait about 15 s | "Now a vendor account reaches the engineering workstation outside any approved window and changes a setting on the cooling-plant controller. Nothing is told to the detectors." |
-| 4 | 0:45–1:00 | Overview: two cyber-physical items | Point at the list | "Two things need attention: a critical incident at the cooling tower, found from process measurements alone, and a cyber case. Both are tagged cyber-physical. Why?" |
-| 5 | 1:00–1:25 | Cyber & OT → case → the unapproved change | Select CYB-0001, then CEV-0005 | "The OT view shows the zones and every step of the session. The fan speed setpoint went from 100 to 35 percent. A change record exists, for a different account and a range of 55 to 100, so the rule flags it. The ATT&CK reference is context, not a verdict." |
-| 6 | 1:25–2:00 | *Open cyber-physical assessment* → workbench, OT layer on in 3D | Scroll the explanations | "Here is the core of the product. The change is linked to the incident only because PLC-500 is declared to control the cooling tower. It came first, the four signals that parameter should move all moved, and nothing suggests a mechanical fault. So: a control-system change is supported, and whether it was malicious is not established." |
-| 7 | 2:00–2:20 | Overview → **A · Physical anomaly**, open the incident's Cyber-physical tab | Run, open | "Contrast: a pump bearing failure. No cyber evidence relates to it, and the assessment says so, adding that absence of evidence isn't evidence of absence." |
-| 8 | 2:20–2:45 | Workbench overview → Hypotheses → *Mark confirmed* | Confirm | "Rule-based, AI-assisted, human and cyber-physical verdicts sit side by side. The automated parts recommend; only a person confirms." |
-
-**Without an AI key** add one line at step 8: "With an API key, five agents also review the incident. Here AI isn't configured, and nothing else depends on it."
-
-## Before publishing the video
-
-- [ ] Nothing describes the plant or network as real.
-- [ ] No support score is called a probability, and no event is called an attack.
-- [ ] No terminal, `.env.local`, key or browser profile is on screen.
-- [ ] If AI appears, its state is stated truthfully.
-
-## Stills (real captures, `npm run capture`)
-
-`docs/screenshots/`: 01 welcome · 02 overview normal · 03 overview during the flagship · 04 cyber case · 05 cyber event · 06 cyber-physical workbench · 07 spatial with the OT layer · 08 workbench overview · 09 AI review state · 10 human verification · 11 physical fault without cyber evidence · 12 overview at 820 px · 13 Cyber & OT at 700 px.
+| `06-workbench-cyber-physical.png` | Hero image: the cyber-physical assessment |
+| `03-overview-cyber-physical.png` | Overview during the flagship scenario |
+| `05-cyber-event.png` | Evidence-level detail of the unapproved change |
+| `04-cyber-case.png` | Zone map and cyber case |
+| `07-spatial-ot-layer.png` | 3D twin with the OT layer |
+| `11-physical-no-cyber.png` | Contrast: a physical fault, no cyber attribution |
+| `08-workbench-overview.png`, `10-human-verification.png` | Verdicts side by side; human confirmation |
+| `02-overview-normal.png`, `01-welcome.png` | Normal state; first-run welcome |
+| `12-narrow-overview.png` (820 px), `13-narrow-cyber.png` (700 px) | Responsiveness |
+| `../architecture.svg` | Architecture diagram |

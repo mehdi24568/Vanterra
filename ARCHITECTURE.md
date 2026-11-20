@@ -329,3 +329,19 @@ The agents receive the events and this assessment in their context (`cyber` in `
 - **Workbench:** a `Cyber-physical` tab, plus a one-line cyber-physical verdict under the three-way assessment. Opening an incident on that tab turns on the 3D OT layer.
 - **OT layer** (`src/spatial/OtLayer.ts`): controller cabinets in their areas, control-room hosts, dashed control links to each controlled asset (declared only), and network links. Devices take the colour of recent event severity, and links to the focused incident are drawn at full strength.
 - **Design layer:** `src/vanterra.css`, with semantic colour tokens (physical severity warm, cyber azure, AI violet, confirmed green), dashed for "possible", solid for "supported". See docs/BRAND.md.
+## 22. Scenario language and local inference
+
+**Scenario language (evaluation only).** `SimulationAdapter` exposes three hooks:
+- `setSensorFault(tag, {bias, driftPerMin})` falsifies one reading without touching the process;
+- `injectSecurity(records)` adds security records that travel the normal security path;
+- `engineeringWrite(...)` records a controller audit entry and applies it to the process.
+
+`src/eval/independent.eval.ts` composes scenarios from these plus the built-in scenarios. They are not reachable from the engines, runtime or UI; `src/cyber/cyber.test.ts` fails if code outside `src/simulation`, `src/adapters` or `src/eval` references them.
+
+**Local inference.** `server/ollamaProvider.ts` implements `LlmProvider` over Ollama's `/api/chat`:
+- the agent's zod schema is converted with `z.toJSONSchema` and sent as `format`, so outputs are schema-constrained before Vanterra's own gates run;
+- temperature 0, and `think: false` for thinking models, so no chain-of-thought is produced;
+- a `health()` readiness check (server reachable, model pulled) drives `/api/ai/status`, so the UI says exactly why local AI is unavailable;
+- local mode defaults to longer bounds (900 s per call, 3600 s per run) and zero cost.
+
+The same five agents, schema gate, grounding gate (including causal overreach), audit and read-only guarantees apply to every provider.

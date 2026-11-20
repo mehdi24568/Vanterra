@@ -4,9 +4,11 @@
 
 ![Cyber-physical investigation: an unapproved controller change and the thermal deviation that followed](docs/screenshots/06-workbench-cyber-physical.png)
 
+▶ **[Watch the 82-second demo](docs/demo/vanterra-demo.webm)**: a real screen capture of the product running the flagship scenario, with captions. `npm run record-demo` regenerates it.
+
 > **Simulated, and honest about it.** The plant (32 assets, 84 signals) and its OT network (14 devices, 5 zones) are simulations. The detection, correlation, cyber-physical assessment, agent workflow and validation that act on that data are real code. Nothing connects to or controls real equipment or networks. [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) draws the line.
 
-> **AI status.** The optional five-agent LLM review is implemented on the Claude API and tested up to the network boundary against a local stub, but **it has not been run against a live model**: no API key was available. The deterministic investigation, including the full cyber-physical assessment, needs no model and no key.
+> **AI status.** The optional five-agent LLM review runs on either the Claude API or a **local model through Ollama, with no API key and no cost** ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)). Both providers are tested up to the network boundary against local stubs, but **neither has been run against a live model yet**: no key was used, and no local model has been downloaded. The deterministic investigation, including the full cyber-physical assessment, needs no model at all.
 
 ## Contents
 
@@ -49,6 +51,7 @@ Open http://localhost:5173 in a WebGL2 browser. Everything works offline with no
 | `npm run eval:live` | Live-model evaluation; needs an API key |
 | `npm run build` | Type-check and build a static bundle (no AI service) |
 | `npm run capture` | Regenerate `docs/screenshots/` from the running app |
+| `npm run record-demo` | Record the captioned demo video from the running app |
 | `npm run check` | Type-check, lint and test |
 
 ## Product tour
@@ -81,6 +84,10 @@ Three contrast cases show that the platform does not simply blame cyber:
 - **C′**, the same setpoint change made under its approved change record, gives *approved change supported*. Authorised is not the same as harmless.
 
 ## Architecture
+
+![Vanterra architecture, as implemented](docs/architecture.svg)
+
+The same flow, as text:
 
 ```
             ┌──────────────── simulation (the "world") ────────────────┐
@@ -118,7 +125,7 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 
 ## AI review
 
-Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator) review an incident in a code-controlled workflow: at most 2 calls per agent, 90 s per call, 240 s per run. They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
+Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator), backed by Claude or by a local Ollama model, review an incident in a code-controlled workflow: at most 2 calls per agent, 90 s per call, 240 s per run. They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
 
 ## Evaluation
 
@@ -132,14 +139,15 @@ Measured over 10 seeds (details, ground truth and caveats in [EVALUATION.md](EVA
 | Cyber false positives in 5 simulated hours of normal operation | 0 |
 | Cyber scenario B: expected detections fired | 50 / 50 |
 | Cyber-physical conclusions correct (6 cases × 10 seeds) | 60 / 60, with 0 wrongly attributed to cyber and 0 cyber causes missed |
+| **Independent, blind-authored scenarios** (18 × 5 new seeds) | first run 80 / 90; one product defect found and fixed; now 90 / 90, with 0 false cyber attributions |
 | Adversarial model answers reaching an accepted output | 0 / 99 |
 | Live-model reasoning quality, latency, cost | **not measured** |
 
-The scenarios were designed together with the rules. These results show that the system behaves as specified and is robust across seeds, not that it would generalise to unseen attacks or real plants.
+Most scenarios were designed together with the rules. To counter that, a separate agent with no access to the implementation wrote 18 scenarios and their ground truth, covering sensor faults, conflicting evidence, approved work that looks suspicious, and sequential faults. Its first run exposed a real defect: an approved change was masking a later unapproved one. That was fixed and is covered by a regression test. These results show the system behaves as specified on situations it was not tuned to. They do not show performance on real plants or against real adversaries.
 
 ## Testing
 
-`npm test` runs 118 tests in 8 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude provider against a local API stub.
+`npm test` runs 126 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude provider against a local API stub.
 
 ## Configuration
 
@@ -168,7 +176,8 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 - **Rules, not learned models.** The five cyber rules and the assessment criteria were written alongside the scenarios they are evaluated on.
 - **Flow summaries, not packets**; account names, not people. The assessment says so in every conclusion.
 - **One incident per asset at a time**, and hypotheses freeze after an operator intervention.
-- **No live LLM run**; no persistence; the AI service exists only with `npm run dev` or `npm run preview`.
+- **No live LLM run** with either provider; no persistence; the AI service exists only with `npm run dev` or `npm run preview`.
+- **The independent scenario author was another AI agent**, separated by information, not a human investigator.
 - **No real equipment or network can be reached or controlled**, by design.
 
 ## Further documentation
@@ -179,6 +188,8 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 | [EVALUATION.md](EVALUATION.md) | Methodology, ground truth, results, caveats, what is not measured |
 | [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) | Exactly what is simulated and what is real |
 | [docs/BRAND.md](docs/BRAND.md) | Name evaluation, identity, colour and terminology |
+| [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: hardware, model choice, setup |
+| [eval/independent/](eval/independent/) | Authoring brief, plant catalog and blind-authored scenarios |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo recording package |
 | [docs/PORTFOLIO.md](docs/PORTFOLIO.md) | Descriptions, CV text, interview explanation |
 | [docs/PUBLISHING.md](docs/PUBLISHING.md) | Steps to publish safely |

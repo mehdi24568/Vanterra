@@ -144,3 +144,12 @@ Found by testing and changed:
 Verified: 118 tests, type-check, lint, build; `npm run eval` (physical results unchanged; cyber-physical 60/60; 0 cyber false positives in 5 h; governance 0/99); browser at 1440, 820 and 700 px, including the flagship journey from Overview to Cyber & OT to the workbench.
 
 **Not verified:** any live LLM call.
+## Phase 9: preservation, independent evaluation, local AI, demo video
+
+- **Preservation:** moved out of the temporary session folder to a permanent project folder. Restored the parts the move skipped: `node_modules` (reinstalled) and portable npm (copied from the original). Portable Git 2.56.1 was installed into `.tools/git` after verifying its SHA-256 and code signature. `.gitignore` was hardened, files were scanned for secrets and personal data (only the deliberately fake test key matched), and everything was committed locally.
+- **Independent evaluation:** new simulator hooks for evaluation (instrument faults, injected security records, engineering writes); an authoring brief and plant catalog; 18 scenarios with ground truth written by a separate agent with no access to the implementation; and a harness scoring them on 5 new seeds. The first run scored 80/90. One product defect was fixed (an approved change masked a later unapproved one, IND-05; regression test added) and one metric error was corrected (IND-07). The final result is 90/90.
+- **Local AI:** hardware inspected (i5-1135G7, 15.7 GB RAM, Iris Xe, no usable GPU acceleration). Ollama 0.40.16 is installed, with no models. `server/ollamaProvider.ts` uses structured outputs and has a readiness check, with 7 stub tests. `qwen3:4b` is recommended, pending approval of its 2.5 GB download.
+- **Demo:** `scripts/record-demo.mjs` produced a real 82 s captioned capture (`docs/demo/vanterra-demo.webm`) without downloading anything.
+- **Portfolio:** `docs/architecture.svg` (as implemented), `docs/LOCAL_AI.md`, and updated README, EVALUATION, DEMO_SCRIPT and publishing notes.
+
+Verified: 126 tests, type-check, lint, build; all four offline evaluation suites.

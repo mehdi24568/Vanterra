@@ -6,6 +6,7 @@ This document reports what has been measured about ATLAS, how, and what has not 
 | --- | --- | --- |
 | Detection, correlation, origin, hypotheses, separation, false positives | `npm run eval` | **Measured** — 10 seeds, 160 scenario runs (single faults also have a fault-free twin each) |
 | Cyber detection, cyber false positives, cyber-physical conclusions | `npm run eval` | **Measured** — 10 seeds, 6 assessment cases, scenario B, 5 h normal operation |
+| Independent, blind-authored scenarios (18 scenarios × 5 new seeds) | `npm run eval` | **Measured** — first run 80/90, after one product fix 90/90 (§2c) |
 | Governance gate against adversarial model answers | `npm run eval` | **Measured** — 99 corrupted answers |
 | Agent-workflow mechanics | `npm run eval` | **Measured with the scripted test double** — says nothing about reasoning quality |
 | Live model: grounding, reasoning quality, latency, tokens, cost | `npm run eval:live` | **Not measured** — no API key has been available in this environment |
@@ -142,6 +143,55 @@ Run on 2026-11-20 (`eval/results/cyber.md`, from `src/eval/cyber.eval.ts`). Grou
 
 **How to read this.** The five rules and the assessment criteria were written together with these scenarios, so a perfect score shows that the logic does what it specifies across seeds, including the cases where the correct answer is "not cyber". It does not show performance against unseen attack techniques, real OT traffic, noisy or missing security logs, or adversaries who avoid the rules. The most important result is the zero in the "wrongly attributed" column, together with the cases designed to tempt it (A+B; trip, then a late change).
 
+## 2c. Independent evaluation — blind-authored scenarios
+
+The suites above share a weakness: the scenarios and the rules were written together. This suite reduces that leakage.
+
+### Method
+
+1. **Separated information.** A separate agent wrote the scenarios and their ground truth. It worked only from [`eval/independent/AUTHORING_BRIEF.md`](eval/independent/AUTHORING_BRIEF.md), which defines the scenario language and the product's documented conclusions and flags, and [`eval/independent/catalog.json`](eval/independent/catalog.json), which holds facts about the plant and OT network. It was instructed not to read `src/`, `server/`, tests, results or architecture documents, and it ran no code.
+2. **A scenario language, not scripts.** Scenarios compose timed physical faults, **instrument faults** (bias or drift on any signal; new for this suite), arbitrary security records, and engineering writes. The author therefore built situations the product's own scenarios never exercise.
+3. **Ground truth stored apart from outputs.** Truth lives in [`eval/independent/scenarios.json`](eval/independent/scenarios.json). System outputs are recorded separately in `eval/results/independent.json`, and the harness (`src/eval/independent.eval.ts`) only compares them.
+4. **Fresh seeds:** 20260112, 11, 23, 37, 41. Apart from the demo seed, none is used elsewhere.
+
+18 scenarios × 5 seeds = **90 runs**, in eight categories: mechanical failure without cyber evidence (2), reconnaissance without impact (2), coupled cyber-physical (3), sensor fault (2), authorised maintenance (2), suspicious but insufficient (2), conflicting evidence (3), and sequential independent faults (2). Among the traps:
+- a fan trip while an approved change window is open;
+- an operator writing an in-range value from the wrong host;
+- a vendor stepping the fan down in small in-range steps;
+- an attacker failing logons as the engineer while the real engineer does approved work;
+- a basin thermometer drifting low and hiding the effect of an unapproved change;
+- an out-of-scope program download before an unrelated pump fault.
+
+### Results
+
+| Metric | First run | After the fix below |
+|---|---|---|
+| Scenario runs fully matching the ground truth | 80 / 90 | **90 / 90** |
+| Expected physical incidents detected, correct origin | 90 / 90 | 90 / 90 |
+| Acceptable cyber-physical conclusion | 85 / 90 | 90 / 90 |
+| Forbidden conclusions reached | 5 (all IND-05) | 0 |
+| False cyber attribution (truth: no cyber cause) | 0 in 40 | 0 in 40 |
+| Missed cyber cause (truth: a change caused it) | 0 in 45 | 0 in 45 |
+| Uncertainty respected (truth allows only uncertain conclusions) | 20 / 20 | 20 / 20 |
+| Incident count within the truth's bounds | 90 / 90 | 90 / 90 |
+| Expected cyber flags raised / forbidden flags raised | 135 / 135, 0 | 135 / 135, 0 |
+| Ungrounded evidence IDs in assessments | 0 | 0 |
+| Hypotheses confirmed without an operator | 0 | 0 |
+
+**What the first run found.**
+
+- **IND-05, a product defect, fixed.** An approved change to 60 % started the deviation; the same engineer then pushed the setpoint to 40 %, below the approved floor of 55 %. The assessment concluded "approved change supported", which hid the unapproved escalation. The assessment now recognises a later unapproved change to the same setting during the incident. The conclusion becomes "control-system change supported (contributing cause)", with both explanations shown. A regression test was added in `src/cyber/cyber.test.ts`.
+- **IND-07, an error in the evaluation metric, corrected.** The product's conclusion was right. The harness's temporal check required *every* linked event to precede the onset, which failed a correct conclusion when the vendor's later step changes also linked to the incident. The metric now checks that the change the conclusion rests on preceded the first detection. The correction is commented in the harness.
+
+### What this does and does not establish
+
+- **It does establish** that, on situations written without knowledge of the rules, the system detected every expected incident with the correct origin. It never attributed a physical fault to cyber activity, never missed a real control change, and kept to uncertain conclusions whenever the truth required them.
+- **The author was another instance of the same model family**, separated by information rather than organisation. A human OT investigator writing scenarios would be a stronger test.
+- **The brief exposes the product's interface:** its seven conclusions and six flag names, which are documented features. It does not expose how they are computed.
+- **After the fix, IND-05 is no longer a blind test** of that behaviour. Only new scenarios can test it independently again.
+- **Sample size:** 18 scenarios × 5 seeds. The cyber records are deterministic, so seeds vary only physical noise and timing.
+- **Everything is simulated.** These results say nothing about real plants, real OT traffic or real adversaries.
+
 ## 3. Agent layer — governance gate, measured offline
 
 The schema gate and the grounding validator were given **99 corrupted answers**: 9 corruption types, applied to a valid answer from each of the 5 agents in each of the 3 scenarios, where the answer has the relevant field (`eval/results/agentic-offline.md`).
@@ -238,5 +288,5 @@ In the evaluation the injected fault stands in for a verified human verdict, sin
 ```
 npm run eval        # offline, about a minute, never calls a model
 npm run eval:live   # needs ANTHROPIC_API_KEY in .env.local; costs money
-npm test            # 118 unit, scenario, cyber and agent tests
+npm test            # 126 unit, scenario, cyber, agent and provider tests
 ```

@@ -1,6 +1,8 @@
 # Publishing the repository
 
-The repository has been prepared locally but **not published**. git was not installed on the machine where it was built, and no GitHub account, visibility or licence had been chosen. Those are the owner's decisions.
+**Status:** a local Git repository exists, with commits on `main`. Git is the portable install in `.tools/git` (put `.tools\git\cmd` on PATH). It is **not yet pushed**: GitHub sign-in is required. The intended visibility is **private**.
+
+**Licensing:** no `LICENSE` file is included. For a private repository that means all rights reserved, which is fine. Before making it public, choose a licence: MIT or Apache-2.0 if you want reuse, or keep none if you want to show the work without granting rights.
 
 ## 1. Decide first
 

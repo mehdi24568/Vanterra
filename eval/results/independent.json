@@ -1,0 +1,5881 @@
+{
+  "generated": "2026-11-20T13:17:01.500Z",
+  "seeds": [
+    20260112,
+    11,
+    23,
+    37,
+    41
+  ],
+  "metrics": {
+    "scenarios": 18,
+    "seeds": 5,
+    "runs": 90,
+    "scenarioRunsPassed": 90,
+    "truthIncidents": 90,
+    "incidentDetected": 90,
+    "originCorrect": 90,
+    "conclusionCorrect": 90,
+    "forbiddenConclusion": 0,
+    "falseCyberAttribution": 0,
+    "noCyberTruthCases": 40,
+    "missedCyberCause": 0,
+    "cyberTruthCases": 45,
+    "uncertaintyRespected": 20,
+    "uncertainTruthCases": 20,
+    "incidentCountOk": 90,
+    "flagsExpected": 135,
+    "flagsFound": 135,
+    "forbiddenFlagsFired": 0,
+    "notableCyberCorrect": 90,
+    "ungroundedEvidence": 0,
+    "temporalViolations": 0,
+    "autoConfirmed": 0
+  },
+  "perScenario": [
+    {
+      "id": "IND-01",
+      "category": "mechanical_no_cyber",
+      "title": "Feed pump bearing wear, an operator password typo and a duty changeover",
+      "passed": 5,
+      "runs": 5,
+      "observed": "P-101:physical_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-02",
+      "category": "mechanical_no_cyber",
+      "title": "Cooling-tower fan trip that mimics the fan-setpoint attack",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:physical_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "title": "Vendor account guessed at the jump host, then a read-only sweep of every controller",
+      "passed": 5,
+      "runs": 5,
+      "observed": "no incident",
+      "findings": []
+    },
+    {
+      "id": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "title": "Enterprise host reaches straight into the HMI and controllers during planned rate changes",
+      "passed": 5,
+      "runs": 5,
+      "observed": "no incident",
+      "findings": []
+    },
+    {
+      "id": "IND-05",
+      "category": "coupled_cyber_physical",
+      "title": "Approved engineer goes below the approved fan-speed floor",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:control_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-06",
+      "category": "coupled_cyber_physical",
+      "title": "Operator trims fan speed from the HMI with no change record",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:control_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-07",
+      "category": "coupled_cyber_physical",
+      "title": "Vendor walks the fan speed down in small, in-range steps",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:control_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-08",
+      "category": "sensor_fault",
+      "title": "Fan current transmitter fails low just after a vendor read of PLC-500",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:possible_relationship",
+      "findings": []
+    },
+    {
+      "id": "IND-09",
+      "category": "sensor_fault",
+      "title": "Bearing temperature transmitter drift prompts an unnecessary pump swap",
+      "passed": 5,
+      "runs": 5,
+      "observed": "P-101:insufficient_evidence",
+      "findings": []
+    },
+    {
+      "id": "IND-10",
+      "category": "authorized_maintenance",
+      "title": "Approved fan tuning to the lowest permitted speed",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:authorized_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-11",
+      "category": "authorized_maintenance",
+      "title": "Approved fan tuning while the engineer's account is attacked at the jump host",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:authorized_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-12",
+      "category": "suspicious_insufficient",
+      "title": "Direct DMZ traffic to the pump controller, then a bearing failure",
+      "passed": 5,
+      "runs": 5,
+      "observed": "P-101:possible_relationship",
+      "findings": []
+    },
+    {
+      "id": "IND-13",
+      "category": "suspicious_insufficient",
+      "title": "Failed vendor logons at the jump host, then the cooling fan trips",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:correlated_not_causal",
+      "findings": []
+    },
+    {
+      "id": "IND-14",
+      "category": "conflicting_evidence",
+      "title": "Unapproved fan cut followed by an independent fan trip",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:multiple_plausible",
+      "findings": []
+    },
+    {
+      "id": "IND-15",
+      "category": "conflicting_evidence",
+      "title": "Out-of-scope logic download to the pump controller, then bearing wear",
+      "passed": 5,
+      "runs": 5,
+      "observed": "P-101:possible_relationship",
+      "findings": []
+    },
+    {
+      "id": "IND-16",
+      "category": "conflicting_evidence",
+      "title": "Unapproved fan cut hidden by a basin thermometer drifting low",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:control_change_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-17",
+      "category": "sequential_independent",
+      "title": "Vendor fan-speed attack, then an unrelated feed-pump bearing failure",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:control_change_supported, P-101:physical_supported",
+      "findings": []
+    },
+    {
+      "id": "IND-18",
+      "category": "sequential_independent",
+      "title": "Approved tuning and a premature recipe change, then an MCC-520 joint fault",
+      "passed": 5,
+      "runs": 5,
+      "observed": "CT-401:authorized_change_supported, MCC-520:physical_supported",
+      "findings": []
+    }
+  ],
+  "runs": [
+    {
+      "scenario": "IND-01",
+      "category": "mechanical_no_cyber",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "CH-402",
+              "RX-301",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-01",
+      "category": "mechanical_no_cyber",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-01",
+      "category": "mechanical_no_cyber",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-01",
+      "category": "mechanical_no_cyber",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "CH-402",
+              "RX-301",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-01",
+      "category": "mechanical_no_cyber",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-02",
+      "category": "mechanical_no_cyber",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-02",
+      "category": "mechanical_no_cyber",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-02",
+      "category": "mechanical_no_cyber",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-02",
+      "category": "mechanical_no_cyber",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-02",
+      "category": "mechanical_no_cyber",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "seed": 11,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "seed": 23,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "seed": 37,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-03",
+      "category": "cyber_recon_no_impact",
+      "seed": 41,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "CONDUIT",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "seed": 11,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "CONDUIT",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "seed": 23,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "CONDUIT",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "seed": 37,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "CONDUIT",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-04",
+      "category": "cyber_recon_no_impact",
+      "seed": 41,
+      "outputs": {
+        "incidents": [],
+        "cyberRules": [
+          "CONDUIT",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-05",
+      "category": "coupled_cyber_physical",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 3,
+            "minLeadS": -44,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-05",
+      "category": "coupled_cyber_physical",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 3,
+            "minLeadS": -44,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-05",
+      "category": "coupled_cyber_physical",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 3,
+            "minLeadS": -44,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-05",
+      "category": "coupled_cyber_physical",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 3,
+            "minLeadS": -44,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-05",
+      "category": "coupled_cyber_physical",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 3,
+            "minLeadS": -44,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-06",
+      "category": "coupled_cyber_physical",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-06",
+      "category": "coupled_cyber_physical",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-06",
+      "category": "coupled_cyber_physical",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-06",
+      "category": "coupled_cyber_physical",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-06",
+      "category": "coupled_cyber_physical",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-07",
+      "category": "coupled_cyber_physical",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "CH-402",
+              "MCC-510",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 4,
+            "minLeadS": -118,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-07",
+      "category": "coupled_cyber_physical",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "CH-402",
+              "MCC-510",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 4,
+            "minLeadS": -118,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-07",
+      "category": "coupled_cyber_physical",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "CH-402",
+              "MCC-510",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 4,
+            "minLeadS": -118,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-07",
+      "category": "coupled_cyber_physical",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "CH-402",
+              "MCC-510",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 4,
+            "minLeadS": -118,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-07",
+      "category": "coupled_cyber_physical",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "CH-402",
+              "MCC-510",
+              "TX-501"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 4,
+            "minLeadS": -118,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 4,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-08",
+      "category": "sensor_fault",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "warning",
+            "assets": [
+              "CT-401"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 50,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-08",
+      "category": "sensor_fault",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "warning",
+            "assets": [
+              "CT-401"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 50,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-08",
+      "category": "sensor_fault",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "warning",
+            "assets": [
+              "CT-401"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 50,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-08",
+      "category": "sensor_fault",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "warning",
+            "assets": [
+              "CT-401"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 50,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-08",
+      "category": "sensor_fault",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "warning",
+            "assets": [
+              "CT-401"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 50,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "CONTROLLER-READ"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-09",
+      "category": "sensor_fault",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101"
+            ],
+            "standing": "insufficient_evidence",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-09",
+      "category": "sensor_fault",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101"
+            ],
+            "standing": "insufficient_evidence",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-09",
+      "category": "sensor_fault",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101"
+            ],
+            "standing": "insufficient_evidence",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-09",
+      "category": "sensor_fault",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101"
+            ],
+            "standing": "insufficient_evidence",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-09",
+      "category": "sensor_fault",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "warning",
+            "assets": [
+              "P-101"
+            ],
+            "standing": "insufficient_evidence",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 0,
+        "flagsFound": 0,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-10",
+      "category": "authorized_maintenance",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-10",
+      "category": "authorized_maintenance",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-10",
+      "category": "authorized_maintenance",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-10",
+      "category": "authorized_maintenance",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-10",
+      "category": "authorized_maintenance",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "CONTROLLER-READ",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 0,
+        "cases": 0
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-11",
+      "category": "authorized_maintenance",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-11",
+      "category": "authorized_maintenance",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-11",
+      "category": "authorized_maintenance",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-11",
+      "category": "authorized_maintenance",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-11",
+      "category": "authorized_maintenance",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "APPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-12",
+      "category": "suspicious_insufficient",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 1,
+            "minLeadS": 56,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "CONDUIT"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-12",
+      "category": "suspicious_insufficient",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "MCC-520",
+              "M-340"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 1,
+            "minLeadS": 56,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "CONDUIT"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-12",
+      "category": "suspicious_insufficient",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 1,
+            "minLeadS": 57,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "CONDUIT"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-12",
+      "category": "suspicious_insufficient",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 1,
+            "minLeadS": 57,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "CONDUIT"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-12",
+      "category": "suspicious_insufficient",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "MCC-520",
+              "M-340"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 1,
+            "minLeadS": 58,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "CONDUIT"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-13",
+      "category": "suspicious_insufficient",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "correlated_not_causal",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-13",
+      "category": "suspicious_insufficient",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "correlated_not_causal",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-13",
+      "category": "suspicious_insufficient",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "correlated_not_causal",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-13",
+      "category": "suspicious_insufficient",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "correlated_not_causal",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-13",
+      "category": "suspicious_insufficient",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "correlated_not_causal",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 1,
+        "flagsFound": 1,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-14",
+      "category": "conflicting_evidence",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "multiple_plausible",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-14",
+      "category": "conflicting_evidence",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "multiple_plausible",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-14",
+      "category": "conflicting_evidence",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "multiple_plausible",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-14",
+      "category": "conflicting_evidence",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "multiple_plausible",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-14",
+      "category": "conflicting_evidence",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "RX-301"
+            ],
+            "standing": "multiple_plausible",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-15",
+      "category": "conflicting_evidence",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "MCC-520",
+              "M-340"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 31,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-15",
+      "category": "conflicting_evidence",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 31,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-15",
+      "category": "conflicting_evidence",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 32,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-15",
+      "category": "conflicting_evidence",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 31,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-15",
+      "category": "conflicting_evidence",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "HX-201",
+              "RX-301",
+              "CH-402",
+              "PL-420",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "MCC-520",
+              "M-340"
+            ],
+            "standing": "possible_relationship",
+            "linkedEvents": 2,
+            "minLeadS": 32,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": true,
+            "uncertaintyRespected": true,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-16",
+      "category": "conflicting_evidence",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 3,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-16",
+      "category": "conflicting_evidence",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 3,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-16",
+      "category": "conflicting_evidence",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 3,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-16",
+      "category": "conflicting_evidence",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 3,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-16",
+      "category": "conflicting_evidence",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "AUTH-BURST",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 3,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 3,
+        "flagsFound": 3,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-17",
+      "category": "sequential_independent",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "RX-301",
+              "M-301",
+              "PL-130",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "PL-100",
+              "TK-101"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-17",
+      "category": "sequential_independent",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "M-101",
+              "PL-120",
+              "PL-110",
+              "RX-301",
+              "M-301",
+              "PL-130",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "PL-100",
+              "TK-101"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-17",
+      "category": "sequential_independent",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "M-101",
+              "HX-201"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "PL-120",
+              "PL-110",
+              "RX-301",
+              "M-301",
+              "PL-130",
+              "PL-100",
+              "TK-101",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-340",
+              "M-320",
+              "MCC-520"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-17",
+      "category": "sequential_independent",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "RX-301",
+              "M-301",
+              "PL-130",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "MCC-520",
+              "M-320",
+              "M-340"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "PL-100",
+              "TK-101"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-17",
+      "category": "sequential_independent",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "TX-501",
+              "CH-402",
+              "PL-410",
+              "PL-420",
+              "HX-201",
+              "M-101",
+              "PL-110",
+              "PL-120",
+              "RX-301",
+              "M-301",
+              "PL-130",
+              "FL-310",
+              "PK-330",
+              "PZ-350",
+              "M-320",
+              "M-340",
+              "MCC-520"
+            ],
+            "standing": "control_change_supported",
+            "linkedEvents": 2,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "P-101",
+            "lead": "bearing_wear",
+            "severity": "critical",
+            "assets": [
+              "P-101",
+              "PL-100",
+              "TK-101"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "FIRST-SEEN",
+          "ENG-SESSION",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 2,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-18",
+      "category": "sequential_independent",
+      "seed": 20260112,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "MCC-520",
+            "lead": "mcc_joint",
+            "severity": "critical",
+            "assets": [
+              "MCC-520",
+              "M-301",
+              "AC-610",
+              "M-340",
+              "M-320"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "APPROVED-CHANGE",
+          "FIRST-SEEN",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-18",
+      "category": "sequential_independent",
+      "seed": 11,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "MCC-520",
+            "lead": "mcc_joint",
+            "severity": "critical",
+            "assets": [
+              "MCC-520",
+              "AC-610",
+              "M-301",
+              "M-320",
+              "M-340"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "APPROVED-CHANGE",
+          "FIRST-SEEN",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-18",
+      "category": "sequential_independent",
+      "seed": 23,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "MCC-520",
+            "lead": "mcc_joint",
+            "severity": "critical",
+            "assets": [
+              "MCC-520",
+              "AC-610",
+              "M-301",
+              "M-320",
+              "M-340"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "APPROVED-CHANGE",
+          "FIRST-SEEN",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-18",
+      "category": "sequential_independent",
+      "seed": 37,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "MCC-520",
+            "lead": "mcc_joint",
+            "severity": "critical",
+            "assets": [
+              "MCC-520",
+              "AC-610",
+              "M-301",
+              "M-340",
+              "M-320"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "APPROVED-CHANGE",
+          "FIRST-SEEN",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    },
+    {
+      "scenario": "IND-18",
+      "category": "sequential_independent",
+      "seed": 41,
+      "outputs": {
+        "incidents": [
+          {
+            "id": "INC-0001",
+            "origin": "CT-401",
+            "lead": "tower_airflow_loss",
+            "severity": "critical",
+            "assets": [
+              "CT-401",
+              "MCC-510",
+              "CH-402",
+              "TX-501"
+            ],
+            "standing": "authorized_change_supported",
+            "linkedEvents": 1,
+            "minLeadS": 1,
+            "precedenceShown": true,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          },
+          {
+            "id": "INC-0002",
+            "origin": "MCC-520",
+            "lead": "mcc_joint",
+            "severity": "critical",
+            "assets": [
+              "MCC-520",
+              "M-301",
+              "AC-610",
+              "M-320",
+              "M-340"
+            ],
+            "standing": "physical_supported",
+            "linkedEvents": 0,
+            "minLeadS": null,
+            "precedenceShown": false,
+            "ungroundedEvidence": [],
+            "confirmedWithoutOperator": false
+          }
+        ],
+        "cyberRules": [
+          "APPROVED-CHANGE",
+          "FIRST-SEEN",
+          "UNAPPROVED-CHANGE"
+        ],
+        "notableCyber": 1,
+        "cases": 1
+      },
+      "score": {
+        "truthInc": [
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0001"
+          },
+          {
+            "found": true,
+            "originCorrect": true,
+            "conclusionCorrect": true,
+            "forbidden": false,
+            "falseCyberAttribution": false,
+            "missedCyberCause": false,
+            "truthUncertain": false,
+            "uncertaintyRespected": null,
+            "matchedId": "INC-0002"
+          }
+        ],
+        "countOk": true,
+        "extraIncidents": 0,
+        "extraCyberAttribution": 0,
+        "flagsExpected": 2,
+        "flagsFound": 2,
+        "forbiddenFired": 0,
+        "notableOk": true,
+        "ungrounded": 0,
+        "temporalViolations": 0,
+        "autoConfirmed": 0,
+        "pass": true,
+        "findings": []
+      }
+    }
+  ]
+}

@@ -134,8 +134,23 @@ export function assessCyberPhysical(inc: Incident, anomalies: Anomaly[], cyber: 
   const access = linked.filter((e) => e.ruleId !== 'UNAPPROVED-CHANGE' && e.ruleId !== 'APPROVED-CHANGE' && (onsetT - e.t) / 1000 >= -LATENCY_S);
   const coincident = notable.filter((e) => !links.some((l) => l.eventId === e.id) && Math.abs(e.t - onsetT) <= 120_000);
 
+  // An approved change that explains the onset does not excuse a later unapproved change
+  // to the same setting during the incident: that change deepened the deviation and must
+  // not be hidden behind the approval. (Found by the independent evaluation, IND-05.)
+  const escalation =
+    consistent && best.e.ruleId === 'APPROVED-CHANGE'
+      ? changes.find((c) => c.e.ruleId === 'UNAPPROVED-CHANGE' && c.affectsOrigin && c.e.parameterId === best.e.parameterId && c.e.t > best.e.t)
+      : undefined;
+  const sameDirection =
+    !!escalation &&
+    typeof escalation.e.evidence.newValue === 'number' &&
+    typeof best?.e.evidence.newValue === 'number' &&
+    typeof best?.e.evidence.oldValue === 'number' &&
+    Math.sign(escalation.e.evidence.newValue - best.e.evidence.newValue) === Math.sign(best.e.evidence.newValue - best.e.evidence.oldValue);
+
   let standing: CpStanding;
   if (consistent && faultSigns.length > 0) standing = 'multiple_plausible';
+  else if (escalation && sameDirection) standing = 'control_change_supported';
   else if (consistent) standing = best.e.ruleId === 'APPROVED-CHANGE' ? 'authorized_change_supported' : 'control_change_supported';
   else if (access.length > 0) standing = 'possible_relationship';
   else if (coincident.length > 0) standing = 'correlated_not_causal';
@@ -187,6 +202,30 @@ export function assessCyberPhysical(inc: Incident, anomalies: Anomaly[], cyber: 
     });
   }
 
+  if (escalation && best) {
+    const plc = escalation.e.deviceIds.find((d) => controllers.has(d));
+    explanations.push({
+      key: 'control_change',
+      title: `Unapproved change on ${escalation.e.destination} during the incident, after the approved change`,
+      status: sameDirection && faultSigns.length === 0 ? 'supported' : 'possible',
+      criteria: [
+        { description: `${plc} controls the origin equipment (declared relationship)`, observed: true, evidence: [escalation.e.id] },
+        { description: `Same setting as the approved change (${escalation.param?.name ?? escalation.e.parameterId})`, observed: true, evidence: [escalation.e.id, best.e.id] },
+        {
+          description: `Made ${Math.round((escalation.e.t - best.e.t) / 1000)} s after the approved change, ${Math.round(-escalation.leadS)} s after the first detection: it cannot have started the deviation, but it acts on it`,
+          observed: true,
+          evidence: [escalation.e.id],
+        },
+        {
+          description: `Moves the setting further in the same direction (${String(best.e.evidence.newValue)} → ${String(escalation.e.evidence.newValue)}), outside what the change record approved`,
+          observed: sameDirection,
+          evidence: [escalation.e.id],
+        },
+        { description: 'No trip or high vibration contradicts a commanded change', observed: faultSigns.length === 0, evidence: faultSigns.map((a) => a.id) },
+      ],
+    });
+  }
+
   if (notable.length > 0 || access.length > 0) {
     const unlinked = notable.filter((e) => !links.some((l) => l.eventId === e.id));
     explanations.push({
@@ -211,10 +250,11 @@ export function assessCyberPhysical(inc: Incident, anomalies: Anomaly[], cyber: 
   const nextSteps: string[] = [];
   const plc = best?.e.destination ?? [...controllers][0];
   if (standing === 'control_change_supported' && best) {
-    nextSteps.push(`Confirm with the account owner whether the ${best.e.identity} session that changed ${plc} was theirs.`);
+    const cause = escalation && sameDirection ? escalation : best;
+    nextSteps.push(`Confirm with the account owner whether the ${cause.e.identity} session that changed ${plc} was theirs${cause === escalation ? ', and why the setting went beyond the approved range' : ''}.`);
     nextSteps.push(`Compare ${plc} settings and program with the last approved configuration.`);
     nextSteps.push('Preserve engineering-workstation and jump-host logs before anything is restored.');
-    nextSteps.push(`Decide, through change control, whether to restore ${best.param?.name ?? 'the setting'}. ATLAS does not change equipment.`);
+    nextSteps.push(`Decide, through change control, whether to restore ${cause.param?.name ?? 'the setting'}. Vanterra does not change equipment.`);
   } else if (standing === 'authorized_change_supported' && best) {
     nextSteps.push(`Confirm with the owner of ${best.e.changeRecordId} that this physical effect was expected.`);
     nextSteps.push('Decide, through change control, whether the new setting should stay.');
@@ -231,7 +271,10 @@ export function assessCyberPhysical(inc: Incident, anomalies: Anomaly[], cyber: 
   return {
     incidentId: inc.id,
     standing,
-    headline: STANDING_TEXT[standing],
+    headline:
+      escalation && sameDirection && standing === 'control_change_supported'
+        ? 'An approved change started the deviation, and a later unapproved change to the same setting deepened it. Evidence supports an unapproved control-system change as a contributing cause. Whether it was malicious is not established.'
+        : STANDING_TEXT[standing],
     onsetT,
     consideredEventIds: considered.map((e) => e.id),
     links,

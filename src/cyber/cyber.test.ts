@@ -141,6 +141,24 @@ describe('epistemic discipline', () => {
     expect(cc.criteria.find((k) => k.description.startsWith('The change preceded'))!.observed).toBe(false);
   });
 
+  // Regression (found by the independent evaluation, IND-05): an approved change started
+  // the deviation, then the same setting was pushed below the approved range.
+  it('does not hide a later unapproved change behind an approved one that started the deviation', () => {
+    const rig = boot();
+    const write = { plcId: 'PLC-500', parameterId: 'PLC-500:CT401_FAN_SPEED_SP', identity: 'eng.controls', srcHost: 'EWS-01' };
+    rig.adapter.engineeringWrite({ ...write, oldValue: 100, newValue: 60 });
+    rig.run(60);
+    rig.adapter.engineeringWrite({ ...write, oldValue: 60, newValue: 40 });
+    rig.run(60);
+    expect(rules(rig)).toEqual(expect.arrayContaining(['APPROVED-CHANGE', 'UNAPPROVED-CHANGE']));
+    const a = rig.core.assessIncident(byOrigin(rig, 'CT-401')!.id)!;
+    expect(a.standing).toBe('control_change_supported');
+    expect(a.headline).toMatch(/deepened it/);
+    expect(a.explanations.find((x) => x.key === 'authorized_change')?.status).toBe('supported');
+    expect(a.explanations.find((x) => x.key === 'control_change')?.status).toBe('supported');
+    expect(a.nextSteps.join(' ')).toMatch(/beyond the approved range/);
+  });
+
   it('an independent equipment fault keeps the physical explanation open even when a change came first', () => {
     const rig = boot();
     rig.adapter.trigger('cp-fan-setpoint');
