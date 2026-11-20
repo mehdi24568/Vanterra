@@ -7,25 +7,28 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Capability | Implemented | Tested | Live-validated |
 | --- | --- | --- | --- |
 | Physical pipeline: detection, correlation, hypotheses, impact, checks | yes | unit and scenario tests; 10-seed evaluation | n/a (deterministic) |
-| OT model, security telemetry, five cyber rules, cases, ATT&CK context | yes | 14 cyber tests; 10-seed evaluation (0 false positives in 5 h) | n/a |
-| Cyber-physical assessment (7 conclusions, unknowns, next steps) | yes | 60/60 evaluation runs correct | n/a |
-| Overview, Spatial with OT layer, workbench, Cyber & OT, demo launcher | yes | browser at 1440 × 900, 820 px and 700 px; 13 scripted captures | n/a |
+| OT model, security telemetry, five cyber rules, cases, ATT&CK context | yes | 15 cyber tests; 10-seed evaluation (0 false positives in 5 h) | n/a |
+| Cyber-physical assessment (7 conclusions, unknowns, next steps) | yes | 60/60 evaluation runs correct; independent blind-authored evaluation 90/90 (80/90 before the IND-05 fix) | n/a |
+| Overview, Spatial with OT layer, workbench, Cyber & OT, demo launcher | yes | browser at 1440 × 900, 820 px, 768 px and 700 px; 13 scripted captures; 82 s screen-capture demo | n/a |
 | Agent layer with cyber context and causal-overreach gate | yes | test double; adversarial gate (0/99) | **no** |
 | Claude provider and AI service | yes | local API stub; browser failure path | **no** |
+| Ollama provider (local, free) | yes | local stub of the Ollama API, including a full five-agent run | **no** (no model downloaded) |
 
-Verified on 2026-11-20: type-check and lint clean; 118 tests pass; the build succeeds; `npm run eval` runs all three suites.
+Verified on 2026-11-20: type-check and lint clean; 126 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
+
+**Repository:** private GitHub repository `mehdi24568/vanterra`, branch `main`. See docs/PUBLISHING.md.
 
 ## 2. Open items that need the owner
 
-1. **Live LLM validation** needs an API key, which the owner does not plan to buy. The product is complete without it. If a key becomes available: put it in `.env.local`, run `npm run eval:live`, and update EVALUATION.md §4–5.
-2. **Publishing:** visibility, licence and account are the owner's decisions (docs/PUBLISHING.md).
-3. **Folder:** the project lives in a folder the app created for this session. Move it to a permanent location before relying on it.
+1. **Live LLM validation.** The free route is local: approve `ollama pull qwen3:4b` (about 2.5 GB), then run `npm run eval:live` with `ATLAS_LLM_PROVIDER=ollama` (docs/LOCAL_AI.md) and update EVALUATION.md §4–5. The Claude route needs an API key, which the owner does not plan to buy. The product is complete without either.
+2. **Licence:** none is included (all rights reserved). Choose one before making the repository public (docs/PUBLISHING.md).
+3. **Visibility:** the repository is private. Making it public is the owner's decision.
 
 ## 3. Roadmap
 
-1. Free local inference: an OpenAI-compatible `LlmProvider` for a local model server (for example Ollama), after checking that a small model can produce the strict structured outputs. Downloading a model needs the owner's approval.
+1. Measure local inference: run the five-agent review on `qwen3:4b` and record schema pass rate, grounding failures and latency on this hardware (CPU only).
 2. More cyber scenarios: communication loss (loss of view), program download, and a session through an unexpected path. Each needs a rule test and an evaluation case.
-3. Unseen-case evaluation: new seeds, new fault types and new cyber sequences written separately from the rules.
+3. A second independent evaluation round, with scenarios written by a domain expert rather than an AI author, and without access to the scenario-language interface.
 4. Persistence of incidents, cases and verdicts; asset-model and OT-inventory import; a real data-source adapter behind the existing interfaces.
 5. Code splitting for the 1.2 MB bundle.
 

@@ -22,7 +22,7 @@ npm run check
 npm run eval
 ```
 
-`check` runs the type-check (strict), ESLint and the 100 tests. `eval` runs the offline evaluation over 10 seeds in about a minute and rewrites `eval/results/`. If a change alters a result, update EVALUATION.md with the new numbers and the reason.
+`check` runs the type-check (strict), ESLint and the 126 tests. `eval` runs the offline evaluation suites (including the independent scenarios) and rewrites `eval/results/`. If a change alters a result, update EVALUATION.md with the new numbers and the reason.
 
 ## Rules the code relies on
 

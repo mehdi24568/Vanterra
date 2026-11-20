@@ -199,7 +199,7 @@ What a real deployment still needs that this prototype does not have: authentica
 
 ## 13. Testing
 
-`npm test` runs 100 tests in 7 files in about nine seconds:
+`npm test` runs 126 tests in 9 files:
 
 - **Unit:** telemetry normalisation, each detector, graph search and its rules, sonar mechanics.
 - **End to end, headless:** each scenario is run through the whole pipeline and asserted on what the engines concluded: first anomaly, incident membership, origin, leading hypothesis and its score band, rejected alternatives and the contradiction that rejected them.
@@ -209,6 +209,8 @@ What a real deployment still needs that this prototype does not have: authentica
 - **Boundary:** an external provider cannot confirm; a stale assessment is rejected.
 - **Agent layer** (`src/agents/workflow.test.ts`, scripted test double): context bounds, grounding validator, orchestration order and concurrency, timeouts, deadline, cancellation, authentication, network and configuration failure with deterministic fallback, malformed output and repair, invented evidence, conflicting conclusions, attempts to confirm, tampered and stale reports.
 - **Claude provider** (`server/atlasAi.test.ts`): the real provider class and the official SDK against a local HTTP stub of the Messages API: request shape, authentication header, retries on 429/5xx, error mapping, refusal, truncation, non-JSON output, timeout, abort. These prove the provider code, not the real service.
+- **Cyber layer** (`src/cyber/cyber.test.ts`): each cyber rule, case grouping, ATT&CK context, the cyber-physical standings including the misleading cases, the approved-then-unapproved escalation regression, read-only assessment, and a check that no code outside the simulator can write a controller setting.
+- **Ollama provider** (`server/ollamaProvider.test.ts`): request shape against a local stub of the Ollama API, health check, error mapping, configuration defaults, and a full five-agent run through the provider. Like the Claude tests, these prove the code, not a real model.
 
 Set `ATLAS_TRACE=1` and pass `--silent=false` to print each scenario's full timeline, hypotheses and criteria.
 

@@ -10,7 +10,8 @@ Vanterra is a cyber-physical intelligence platform that investigates industrial 
 
 - Designed and built Vanterra, a cyber-physical incident investigation platform (TypeScript, React, Three.js): six statistical detectors and graph correlation under physical propagation rules over an 84-signal plant simulation. It adds a simulated Purdue-model OT network with five detection rules, verified MITRE ATT&CK for ICS context, and a 3D digital twin with an OT layer.
 - Built a deterministic cyber-physical assessment that links cyber events to physical incidents only through declared controller relationships, temporal precedence and expected physical signatures. Across 10 seeds it reached the correct conclusion in 60/60 runs, with 0 physical faults wrongly attributed to cyber activity, including deliberately misleading cases.
-- Integrated a bounded five-agent investigation workflow on the Claude API: zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 118 automated tests in total.
+- Validated it against 18 blind-authored scenarios in 8 categories (90 runs). The first run scored 80/90 and exposed a real defect: an approved change could mask a later unapproved change to the same setting. After the fix and a regression test, it scored 90/90.
+- Integrated a bounded five-agent investigation workflow that runs on the Claude API or on a local model through Ollama (no key, no cost): zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 126 automated tests in total.
 
 *(After a live run, add measured citation validity and the unsupported-claim rate to the third bullet.)*
 
@@ -30,7 +31,7 @@ Vanterra is a cyber-physical intelligence platform that investigates industrial 
 
 **AI.** Five agents review the investigation in a code-controlled workflow. Every output passes a schema and a grounding check, which rejects invented IDs and unhedged attribution to an attacker. The AI is advisory: reports sit beside incidents and cannot confirm anything.
 
-**Evidence it works.** Counterfactual twin simulations give physical ground truth. The cyber-physical cases include deliberately misleading ones: unrelated suspicious access during a pump fault, and a setting change made after a fan had already tripped. 60 of 60 runs reached the right conclusion with zero false attributions. The caveat: the rules and scenarios were designed together, the environment is simulated, and the LLM layer has not been run against the live API.
+**Evidence it works.** Counterfactual twin simulations give physical ground truth. The cyber-physical cases include deliberately misleading ones: unrelated suspicious access during a pump fault, and a setting change made after a fan had already tripped. 60 of 60 runs reached the right conclusion with zero false attributions. Because the rules and those scenarios were designed together, I also ran 18 scenarios written blind from a brief. That run found one real defect, which I fixed. The caveats: the environment is simulated, the blind scenarios were written by an AI author rather than a domain expert, and the LLM layer has not been run against a live model (Claude or local).
 
 ## 60-second pitch
 

@@ -1,6 +1,6 @@
 # Publishing the repository
 
-**Status:** a local Git repository exists, with commits on `main`. Git is the portable install in `.tools/git` (put `.tools\git\cmd` on PATH). It is **not yet pushed**: GitHub sign-in is required. The intended visibility is **private**.
+**Status:** pushed to a **private** GitHub repository, `mehdi24568/vanterra`, branch `main` (tracking `origin/main`). Git is the portable install in `.tools/git` (put `.tools\git\cmd` on PATH). Authentication uses Git Credential Manager with the device-code flow, set in the repository's local config. Commits use the GitHub no-reply address. The steps below record how the repository was prepared, and what to check before making it public.
 
 **Licensing:** no `LICENSE` file is included. For a private repository that means all rights reserved, which is fine. Before making it public, choose a licence: MIT or Apache-2.0 if you want reuse, or keep none if you want to show the work without granting rights.
 
