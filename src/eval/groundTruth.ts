@@ -29,6 +29,13 @@ export const FAULTS: FaultTruth[] = [
   { scenario: 'mcc-sag', origin: 'MCC-520', leadTemplate: 'mcc_joint' },
 ];
 
+/**
+ * The flagship cyber-physical case for the live evaluation: an unapproved fan-speed
+ * setpoint change. Its physical mechanism is reduced tower airflow; the cyber-physical
+ * assessment (in the agents' context) supports a control-system change, intent unknown.
+ */
+export const CYBER_PHYSICAL_FLAGSHIP: FaultTruth = { scenario: 'cp-fan-setpoint', origin: 'CT-401', leadTemplate: 'tower_airflow_loss' };
+
 /** Ten seeds: the default demo seed plus nine others chosen in advance (not tuned). */
 export const EVAL_SEEDS = [20260112, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 

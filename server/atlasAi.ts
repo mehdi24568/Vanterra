@@ -107,6 +107,32 @@ export function configureAi(env: Env) {
   return { providerName, provider, reason, model, effort, limits, price };
 }
 
+/**
+ * Only the app's own page may start an investigation. Any website open in the same
+ * browser can send a "simple" cross-site POST (text/plain, no CORS preflight) to
+ * localhost, and the run would start even though the page could not read the answer:
+ * paid API calls with Claude, hours of CPU with a local model. Requiring JSON forces a
+ * preflight, which this server never approves, and a foreign Origin or a cross-site
+ * Sec-Fetch-Site header is refused outright.
+ */
+export function rejectForeignRequest(req: IncomingMessage): { code: number; message: string } | null {
+  const h = req.headers ?? {};
+  const type = String(h['content-type'] ?? '').split(';')[0].trim().toLowerCase();
+  if (type !== 'application/json') return { code: 415, message: 'Content-Type must be application/json.' };
+  const site = String(h['sec-fetch-site'] ?? '');
+  if (site && site !== 'same-origin' && site !== 'none') return { code: 403, message: 'Cross-site requests are not accepted.' };
+  if (h.origin) {
+    let host = '';
+    try {
+      host = new URL(String(h.origin)).host;
+    } catch {
+      /* unparseable origin: refused below */
+    }
+    if (!host || host !== h.host) return { code: 403, message: 'Cross-origin requests are not accepted.' };
+  }
+  return null;
+}
+
 export function createAiService(env: Env) {
   const { providerName, provider, reason, effort, limits, price } = configureAi(env);
 
@@ -156,6 +182,11 @@ export function createAiService(env: Env) {
   }
 
   async function investigate(req: IncomingMessage, res: ServerResponse): Promise<void> {
+    const foreign = rejectForeignRequest(req);
+    if (foreign) {
+      req.resume();
+      return json(res, foreign.code, { error: 'forbidden', message: foreign.message });
+    }
     if (!provider) return json(res, 503, { error: 'ai_unavailable', message: reason });
     if (provider.health) {
       const h = await provider.health();

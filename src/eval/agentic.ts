@@ -62,6 +62,11 @@ export function scoreReport(report: InvestigationReport, incident: Incident, tru
     unknownHypothesesInRawAnswers: count('unknown_hypothesis'),
     uncitedObservationsInRawAnswers: count('missing_citation'),
     certaintyOrProbabilityWording: count('certainty_language') + count('probability_language'),
+    causalOverreachInRawAnswers: count('causal_overreach'),
+    /** Every validation issue raised on any answer, by code: why answers were repaired or trimmed. */
+    issueCodes: issues.reduce<Record<string, number>>((acc, i) => ({ ...acc, [i.code]: (acc[i.code] ?? 0) + 1 }), {}),
+    /** Cyber events (CEV-…) cited in accepted output. */
+    cyberCitationsAccepted: Object.values(report.agents).flatMap((a) => a.cited).filter((id) => String(id).startsWith('CEV-')).length,
     schemaFailures: count('schema'),
     claimsChecked: report.governance.claims,
     claimsRejected: report.governance.claimsRejected,

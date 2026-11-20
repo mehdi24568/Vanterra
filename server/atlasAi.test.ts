@@ -20,11 +20,20 @@ import { createAiService } from './atlasAi';
 
 // ------------------------------------------------------------ HTTP service ---
 
-function call(service: ReturnType<typeof createAiService>, method: string, url: string, body?: unknown): Promise<{ status: number; headers: Record<string, string>; text: string }> {
+const SAME_ORIGIN = { host: 'localhost:5173', origin: 'http://localhost:5173', 'content-type': 'application/json', 'sec-fetch-site': 'same-origin' };
+
+function call(
+  service: ReturnType<typeof createAiService>,
+  method: string,
+  url: string,
+  body?: unknown,
+  requestHeaders: Record<string, string> = SAME_ORIGIN,
+): Promise<{ status: number; headers: Record<string, string>; text: string }> {
   return new Promise((resolve) => {
     const req = new PassThrough() as unknown as IncomingMessage;
     req.method = method;
     req.url = url;
+    req.headers = requestHeaders;
     const chunks: string[] = [];
     let status = 0;
     let headers: Record<string, string> = {};
@@ -87,6 +96,23 @@ describe('AI service', () => {
     expect((await call(on, 'POST', '/api/ai/investigate', { context: 'x'.repeat(500_000) })).status).toBe(413);
     expect((await call(on, 'GET', '/api/ai/nope')).status).toBe(404);
     expect((await call(on, 'GET', '/index.html')).status).toBe(-1);
+  });
+
+  // Security: a website open in the same browser must not be able to start a run
+  // (paid API calls, or hours of local CPU) with a simple cross-site POST.
+  it('refuses to start an investigation from another site', async () => {
+    const on = createAiService({ ATLAS_LLM_PROVIDER: 'scripted', ATLAS_ALLOW_SCRIPTED_PROVIDER: '1' });
+    const body = { context: context() };
+    const simplePost = { host: 'localhost:5173', origin: 'https://evil.example', 'content-type': 'text/plain', 'sec-fetch-site': 'cross-site' };
+    expect((await call(on, 'POST', '/api/ai/investigate', body, simplePost)).status).toBe(415);
+    expect((await call(on, 'POST', '/api/ai/investigate', body, { ...simplePost, 'content-type': 'application/json' })).status).toBe(403);
+    expect((await call(on, 'POST', '/api/ai/investigate', body, { host: 'localhost:5173', origin: 'https://evil.example', 'content-type': 'application/json' })).status).toBe(403);
+    expect((await call(on, 'POST', '/api/ai/investigate', body, { host: 'localhost:5173', origin: 'null', 'content-type': 'application/json' })).status).toBe(403);
+    // A same-origin request still works without the fetch-metadata header (older browsers);
+    // the full same-origin path is covered by the streaming test below.
+    expect((await call(on, 'POST', '/api/ai/investigate', body, { host: 'localhost:5173', 'content-type': 'application/json; charset=utf-8' })).status).toBe(200);
+    // Reading status stays open: it reveals no secrets and starts nothing.
+    expect((await call(on, 'GET', '/api/ai/status', undefined, { host: 'localhost:5173' })).status).toBe(200);
   });
 
   it('streams progress events and ends with a report', async () => {
