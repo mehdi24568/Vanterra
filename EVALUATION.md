@@ -288,5 +288,5 @@ In the evaluation the injected fault stands in for a verified human verdict, sin
 ```
 npm run eval        # offline, about a minute, never calls a model
 npm run eval:live   # needs ANTHROPIC_API_KEY in .env.local; costs money
-npm test            # 126 unit, scenario, cyber, agent and provider tests
+npm test            # 128 unit, scenario, cyber, agent and provider tests
 ```

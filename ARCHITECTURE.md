@@ -199,7 +199,7 @@ What a real deployment still needs that this prototype does not have: authentica
 
 ## 13. Testing
 
-`npm test` runs 126 tests in 9 files:
+`npm test` runs 128 tests in 9 files:
 
 - **Unit:** telemetry normalisation, each detector, graph search and its rules, sonar mechanics.
 - **End to end, headless:** each scenario is run through the whole pipeline and asserted on what the engines concluded: first anomaly, incident membership, origin, leading hypothesis and its score band, rejected alternatives and the contradiction that rejected them.

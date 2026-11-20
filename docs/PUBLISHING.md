@@ -1,8 +1,8 @@
 # Publishing the repository
 
-**Status:** pushed to a **private** GitHub repository, `mehdi24568/vanterra`, branch `main` (tracking `origin/main`). Git is the portable install in `.tools/git` (put `.tools\git\cmd` on PATH). Authentication uses Git Credential Manager with the device-code flow, set in the repository's local config. Commits use the GitHub no-reply address. The steps below record how the repository was prepared, and what to check before making it public.
+**Status:** **public** on GitHub at [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main` (tracking `origin/main`). Before it was made public, every commit in its history was scanned for keys, tokens, private keys, personal email addresses, local paths and `.env` files; only `.env.example` and the deliberately fake test key below were found. Git is the portable install in `.tools/git` (put `.tools\git\cmd` on PATH). Authentication uses Git Credential Manager with the device-code flow, set in the repository's local config. Commits use the GitHub no-reply address. The steps below record how the repository was prepared.
 
-**Licensing:** no `LICENSE` file is included. For a private repository that means all rights reserved, which is fine. Before making it public, choose a licence: MIT or Apache-2.0 if you want reuse, or keep none if you want to show the work without granting rights.
+**Licensing:** no `LICENSE` file is included, so the code is visible but all rights are reserved: others may read it, but have no permission to reuse it. Add MIT or Apache-2.0 if you want to allow reuse.
 
 ## 1. Decide first
 
@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | Visibility | public / private | Public is needed for a portfolio link |
 | Licence | e.g. MIT, Apache-2.0, or none ("all rights reserved") | No `LICENSE` file is included; add one if you choose a licence |
-| Repository name | suggested: `vanterra` | |
+| Repository name | `Vanterra` | |
 | Description | see docs/PORTFOLIO.md | |
 
 ## 2. Check before the first commit

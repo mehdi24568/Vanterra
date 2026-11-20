@@ -14,15 +14,14 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Claude provider and AI service | yes | local API stub; browser failure path | **no** |
 | Ollama provider (local, free) | yes | local stub of the Ollama API, including a full five-agent run | **no** (no model downloaded) |
 
-Verified on 2026-11-20: type-check and lint clean; 126 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
+Verified on 2026-11-20: type-check and lint clean; 128 tests pass in 9 files; the build succeeds; `npm run eval` runs all four suites.
 
-**Repository:** private GitHub repository `mehdi24568/vanterra`, branch `main`. See docs/PUBLISHING.md.
+**Repository:** public on GitHub, [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main`. See docs/PUBLISHING.md.
 
 ## 2. Open items that need the owner
 
 1. **Live LLM validation.** The free route is local: approve `ollama pull qwen3:4b` (about 2.5 GB), then run `npm run eval:live` with `ATLAS_LLM_PROVIDER=ollama` (docs/LOCAL_AI.md) and update EVALUATION.md §4–5. The Claude route needs an API key, which the owner does not plan to buy. The product is complete without either.
-2. **Licence:** none is included (all rights reserved). Choose one before making the repository public (docs/PUBLISHING.md).
-3. **Visibility:** the repository is private. Making it public is the owner's decision.
+2. **Licence:** none is included, so the public code is all rights reserved. Add MIT or Apache-2.0 to allow reuse (docs/PUBLISHING.md).
 
 ## 3. Roadmap
 

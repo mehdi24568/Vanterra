@@ -147,7 +147,7 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 126 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude provider against a local API stub.
+`npm test` runs 128 tests in 9 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 
