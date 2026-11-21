@@ -7,6 +7,7 @@
  */
 import type { ReactNode } from 'react';
 import { AGENT_INFO, AGENT_ORDER } from '../agents/agents';
+import { QUICK_REVIEW_QUESTION } from '../agents/ask';
 import { catalogueOf, evidenceKind } from '../agents/context';
 import type { EvidenceCatalogue } from '../agents/context';
 import type { GroundingIssue } from '../agents/grounding';
@@ -421,12 +422,23 @@ export function AiPanel({ incident }: { incident: Incident }) {
             </p>
             {ai.provider === 'ollama' ? (
               <p className="notice">
-                Runs on this computer’s local model ({ai.model ?? 'Ollama'}). On a laptop processor a full review takes several minutes per agent, longer if memory is short. For a quick answer, use the <button type="button" className="link-button" onClick={() => runtime.setInvestigationTab('ask')}>Ask</button> tab (about a minute).
+                Runs on this computer’s local model ({ai.model ?? 'Ollama'}). <strong>Quick AI review</strong> gives one checked answer in about a minute. The full five-agent review is deeper but takes several minutes per agent on a laptop processor, so tens of minutes in total, longer if memory is short.
               </p>
             ) : null}
             <div className="button-row">
-              <button type="button" className="btn btn--primary" onClick={() => runtime.runAiInvestigation(incident.id)} disabled={running}>
-                {running ? 'Investigating…' : report || run?.error ? 'Run again' : 'Run AI investigation'}
+              <button
+                type="button"
+                className={`btn ${ai.provider === 'ollama' ? 'btn--primary' : 'btn--ghost'}`}
+                title="One question to the AI: the best-supported explanation, what argues against it, and the two most useful checks. Answered in the Ask tab, checked against the evidence."
+                onClick={() => {
+                  runtime.askAi(incident.id, QUICK_REVIEW_QUESTION);
+                  runtime.setInvestigationTab('ask');
+                }}
+              >
+                Quick AI review
+              </button>
+              <button type="button" className={`btn ${ai.provider === 'ollama' ? 'btn--ghost' : 'btn--primary'}`} onClick={() => runtime.runAiInvestigation(incident.id)} disabled={running}>
+                {running ? 'Investigating…' : report || run?.error ? 'Run full review again' : 'Run full five-agent review'}
               </button>
               {running ? (
                 <button type="button" className="btn btn--ghost" onClick={() => runtime.cancelAiInvestigation(incident.id)}>

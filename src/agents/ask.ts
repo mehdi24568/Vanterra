@@ -18,6 +18,10 @@ import type { LlmProvider } from './provider';
 
 export const ASK_MAX_QUESTION = 500;
 
+/** "Quick AI review": one checked answer instead of the five-agent workflow (about a minute locally). */
+export const QUICK_REVIEW_QUESTION =
+  'Quick review: which explanation does the evidence support best, what argues against it, and what are the two most useful checks to do next?';
+
 export const AskAnswerSchema = z.strictObject({
   answer: z.string().min(1).max(1500),
   /** Evidence IDs from the context that the answer rests on. */

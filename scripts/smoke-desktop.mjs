@@ -28,12 +28,18 @@ result.aiStatus = await page.evaluate(async () => (await fetch('/api/ai/status')
 result.webgl2 = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2'));
 
 // First-run path: the welcome card's "Run the cyber-physical scenario" → incident → Ask.
-await page.locator('button', { hasText: 'Run the cyber-physical scenario' }).click();
+// A returning user has no welcome card: use the Overview's scenario C instead.
+const welcome = page.locator('button', { hasText: 'Run the cyber-physical scenario' });
+if (await welcome.isVisible({ timeout: 5000 }).catch(() => false)) await welcome.click();
+else await page.locator('button', { hasText: /run scenario/i }).nth(2).click();
 await page.locator('button', { hasText: 'INC-0001' }).first().waitFor({ timeout: 90_000 });
 await page.locator('button', { hasText: 'INC-0001' }).first().click();
 await page.locator('[role=tab]', { hasText: /^Ask/ }).click();
 await page.locator('button', { hasText: 'Should security be involved?' }).click();
 result.engineAnswer = await page.locator('.ask__msg--engine .ask__text').first().textContent();
+await page.locator('[role=tab]', { hasText: /^AI review/ }).click();
+result.aiTabButtons = await page.locator('.button-row button').allTextContents();
+await page.locator('[role=tab]', { hasText: /^Ask/ }).click();
 
 if (process.env.SMOKE_ASK_MODEL === '1') {
   await page.fill('#ask-input', 'What changed on the cooling tower, and when?');

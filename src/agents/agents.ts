@@ -138,10 +138,12 @@ export function buildAgentInput(agent: AgentId, ctx: InvestigationContext, prior
         facility: ctx.facility,
         incident,
         assets: ctx.assets.filter((a) => a.role !== 'at_risk'),
-        anomalies: ctx.anomalies,
+        // Identities and values, not detector internals: about a third less to read, which
+        // matters most for a local model on a CPU. Citable IDs are unchanged.
+        anomalies: compactAnomalies(ctx),
         signals: ctx.signals.filter((s) => affected.has(s.assetId) || s.state !== 'normal' || ctx.hypotheses.some((h) => h.criteria.some((c) => c.signalIds.includes(s.id)))),
         correlations: ctx.correlations,
-        cyberEvents: ctx.cyber?.events ?? [],
+        cyberEvents: (ctx.cyber?.events ?? []).map((e) => ({ id: e.id, onsetS: e.onsetS, ruleId: e.ruleId, severity: e.severity, title: e.title, identity: e.identity, changeRecordId: e.changeRecordId })),
         otDevices: ctx.cyber?.devices ?? [],
       };
     case 'impact_analyst':
