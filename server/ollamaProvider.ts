@@ -26,6 +26,7 @@ import { request as httpsRequest } from 'node:https';
 import { z } from 'zod';
 import { LlmError } from '../src/agents/provider';
 import type { LlmProvider, LlmRequest, LlmResponse } from '../src/agents/provider';
+import { ID_DESCRIPTION } from '../src/agents/schemas';
 
 export interface OllamaOptions {
   baseURL: string;
@@ -41,22 +42,54 @@ export interface OllamaOptions {
    */
   maxOutputTokens?: number;
   /**
-   * Upper bound on items per list in the JSON Schema sent to Ollama (`maxItems`). Ollama
-   * enforces it while generating, so a small model cannot write 15 observations at a few
-   * tokens per second. Vanterra's own validation is unchanged. Default 6; 0 disables.
+   * Bounds written into the JSON Schema sent to Ollama, which enforces them while the model
+   * generates, so a small model cannot spend many minutes on long lists and paragraphs at a
+   * few tokens per second on a CPU. Vanterra's own validation is unchanged.
+   * - Five-agent review steps: at most `maxListItems` items per list (default 4) and
+   *   `maxTextChars` characters per text field (default 320, about two sentences; the agents
+   *   are asked to stay under 300, so the cap only cuts a rambling answer).
+   * - Interactive questions (Ask, Quick AI review): lists up to 6 items and no text cap;
+   *   their answer is already bounded by its own output limit.
+   * 0 disables a bound.
    */
   maxListItems?: number;
+  maxTextChars?: number;
 }
 
 const THINKING_FAMILIES = /^(qwen3|deepseek-r1|gpt-oss|magistral)/i;
 
-/** Adds `maxItems` to every array in a JSON Schema that has no tighter limit. Returns a copy. */
-export function capArrays(schema: unknown, maxItems: number): unknown {
-  if (Array.isArray(schema)) return schema.map((s) => capArrays(s, maxItems));
+interface SchemaBounds {
+  maxItems: number;
+  maxLength: number;
+  /** IDs that exist in the investigation: ID fields may only take these values. */
+  ids?: string[];
+  /** Every `evidence` list must cite at least one ID (five-agent review steps). */
+  requireCitation?: boolean;
+}
+
+/**
+ * Bounds a JSON Schema for constrained generation. Returns a copy:
+ * - arrays get `maxItems`, free-text strings get `maxLength`;
+ * - ID fields (marked with ID_DESCRIPTION) become an `enum` of the citable IDs, so the
+ *   model cannot cite evidence that does not exist;
+ * - with `requireCitation`, every `evidence` list needs at least one ID.
+ */
+export function boundSchema(schema: unknown, bounds: SchemaBounds): unknown {
+  if (Array.isArray(schema)) return schema.map((s) => boundSchema(s, bounds));
   if (!schema || typeof schema !== 'object') return schema;
   const out: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(schema)) out[k] = capArrays(v, maxItems);
-  if (out.type === 'array' && (typeof out.maxItems !== 'number' || out.maxItems > maxItems)) out.maxItems = maxItems;
+  for (const [k, v] of Object.entries(schema)) out[k] = boundSchema(v, bounds);
+  if (bounds.maxItems > 0 && out.type === 'array' && (typeof out.maxItems !== 'number' || out.maxItems > bounds.maxItems)) out.maxItems = bounds.maxItems;
+  const isId = out.type === 'string' && out.description === ID_DESCRIPTION;
+  if (isId && bounds.ids?.length) {
+    out.enum = bounds.ids;
+  } else if (bounds.maxLength > 0 && out.type === 'string' && !isId && !('enum' in out) && !('const' in out) && (typeof out.maxLength !== 'number' || out.maxLength > bounds.maxLength)) {
+    out.maxLength = bounds.maxLength;
+  }
+  if (bounds.requireCitation && bounds.ids?.length && out.properties && typeof out.properties === 'object') {
+    const evidence = (out.properties as Record<string, Record<string, unknown>>).evidence;
+    if (evidence?.type === 'array' && typeof evidence.minItems !== 'number') evidence.minItems = 1;
+  }
   return out;
 }
 
@@ -169,8 +202,14 @@ export class OllamaProvider implements LlmProvider {
     const started = performance.now();
     const schema = z.toJSONSchema(request.schema as z.ZodType) as Record<string, unknown>;
     delete schema.$schema;
-    const listCap = this.options.maxListItems ?? 6;
-    const format = listCap > 0 ? capArrays(schema, listCap) : schema;
+    const interactive = request.priority === 'interactive';
+    const format = boundSchema(schema, {
+      maxItems: interactive ? Math.max(this.options.maxListItems ?? 4, 6) : (this.options.maxListItems ?? 4),
+      maxLength: interactive ? 0 : (this.options.maxTextChars ?? 320),
+      ids: request.citableIds,
+      // A review step must cite something; an Ask answer may honestly say "not in the evidence".
+      requireCitation: !interactive,
+    });
     const body = {
       model: this.model,
       stream: false,

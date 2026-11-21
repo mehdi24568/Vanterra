@@ -423,7 +423,7 @@ export function AiPanel({ incident }: { incident: Incident }) {
             </p>
             {ai.provider === 'ollama' ? (
               <p className="notice">
-                Runs on this computer’s local model ({ai.model ?? 'Ollama'}). <strong>Quick AI review</strong> gives one checked answer in about a minute. The full five-agent review is deeper but takes several minutes per agent on a laptop processor, so tens of minutes in total, longer if memory is short.
+                Runs on this computer’s local model ({ai.model ?? 'Ollama'}). <strong>Quick AI review</strong> gives one checked answer in about a minute. The full five-agent review is deeper but takes several minutes per agent on a laptop processor: about 20 minutes measured on a 16 GB laptop, longer if memory is short.
               </p>
             ) : null}
             <div className="button-row">

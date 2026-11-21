@@ -1,7 +1,7 @@
 {
   "name": "vanterra",
   "private": true,
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Vanterra - cyber-physical intelligence platform: process anomaly detection, simulated OT network detection, evidence-bound cyber-physical assessment, 3D digital twin and a bounded multi-agent LLM review (simulated environment)",
   "author": "Mehdi Majd",
   "homepage": "https://github.com/mehdi24568/Vanterra",

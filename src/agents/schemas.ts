@@ -13,7 +13,13 @@
  */
 import { z } from 'zod';
 
-const Id = z.string();
+/**
+ * Marks ID fields in the JSON Schema, so a provider that constrains generation (Ollama) can
+ * restrict them to the IDs that exist in the investigation (`LlmRequest.citableIds`).
+ */
+export const ID_DESCRIPTION = 'Evidence ID exactly as written in the investigation data';
+
+export const Id = z.string().describe(ID_DESCRIPTION);
 
 export const ClaimSchema = z.strictObject({
   statement: z.string(),

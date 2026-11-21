@@ -8,7 +8,7 @@
 
 > **Simulated, and honest about it.** The plant (32 assets, 84 signals) and its OT network (14 devices, 5 zones) are simulations. The detection, correlation, cyber-physical assessment, agent workflow and validation that act on that data are real code. Nothing connects to or controls real equipment or networks. [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) draws the line.
 
-> **AI status.** The optional five-agent LLM review runs on either the Claude API or a **local model through Ollama, with no API key and no cost** ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)). The local path has been **run for real** with `qwen3:4b` on a CPU-only 16 GB laptop: real agent calls inside real investigations, through the same validation gates, which rejected and repaired real model answers ([EVALUATION.md §4](EVALUATION.md#4-live-language-model)). On that hardware it is slow (19–45 min per agent call). The Claude provider has not been run against the live API (no key). The deterministic investigation, including the full cyber-physical assessment, needs no model at all.
+> **AI status.** The optional five-agent LLM review runs on either the Claude API or a **local model through Ollama, with no API key and no cost** ([docs/LOCAL_AI.md](docs/LOCAL_AI.md)). The local path has been **run for real** with `qwen3:4b` on a CPU-only 16 GB laptop: real agent calls inside real investigations, through the same validation gates, which rejected and repaired real model answers ([EVALUATION.md §4](EVALUATION.md#4-live-language-model)). Measured on that laptop with `qwen3:1.7b`: a Quick AI review in about 1.5–2 minutes, and a complete five-agent review in 20 minutes with 0 invented citations. The Claude provider has not been run against the live API (no key). The deterministic investigation, including the full cyber-physical assessment, needs no model at all.
 
 ## Contents
 
@@ -41,7 +41,7 @@ npm install
 npm run desktop:dist
 ```
 
-This produces `release/Vanterra-Setup-0.4.3.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+This produces `release/Vanterra-Setup-0.4.4.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
 
 For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 
@@ -149,7 +149,7 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 - **Your own questions** go to the configured model. The server then checks the answer before showing it: citations must be real evidence IDs (invented ones are removed), and claims of certainty, odds or intent are rejected unless they are clearly negated. An answer that cites no real evidence is rejected too, after one repair attempt. Rejected drafts are hidden but can be opened for review.
 - **Measured with `qwen3:1.7b` on a laptop CPU:** an accepted, cited answer to "Why did the cooling tower readings change, and who changed the fan setting?" in 57 s. The first live runs exposed two checker bugs (decorated citation IDs, a recorded "35%" read as a probability), now fixed with regression tests.
 
-**Quick AI review** (AI tab) gives one checked answer in about a minute on a local model: the best-supported explanation, what argues against it and the two most useful checks. **Run AI agents** in the incident header starts the full five-agent review at any time (slow on a laptop CPU: tens of minutes); it can be stopped while running.
+**Quick AI review** (AI tab) gives one checked answer in about a minute on a local model: the best-supported explanation, what argues against it and the two most useful checks. **Run AI agents** in the incident header starts the full five-agent review at any time (about 20 minutes on a laptop CPU); it can be stopped while running.
 
 Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator), backed by Claude or by a local Ollama model, review an incident in a code-controlled workflow: at most 2 calls per agent, 90 s per call, 240 s per run. They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
 
@@ -202,7 +202,7 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 - **Rules, not learned models.** The five cyber rules and the assessment criteria were written alongside the scenarios they are evaluated on.
 - **Flow summaries, not packets**; account names, not people. The assessment says so in every conclusion.
 - **One incident per asset at a time**, and hypotheses freeze after an operator intervention.
-- **Live AI evidence is a small local sample**: one 4B model on one CPU-only laptop, where an investigation takes hours. Claude has not been run live.
+- **Live AI evidence is a small local sample**: one complete scored investigation (flagship, `qwen3:1.7b`) plus partial runs, on one CPU-only laptop. Claude has not been run live.
 - **Not a desktop application yet**: it runs on a local development server and needs Node.js; no persistence. The AI service exists only with `npm run dev` or `npm run preview`. The plan is in [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 - **The independent scenario author was another AI agent**, separated by information, not a human investigator.
 - **No real equipment or network can be reached or controlled**, by design.

@@ -12,10 +12,10 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Overview, Spatial with OT layer, workbench, Cyber & OT, demo launcher | yes | browser at 1440 × 900, 820 px, 768 px and 700 px; 13 scripted captures; 82 s screen-capture demo | n/a |
 | Agent layer with cyber context and causal-overreach gate | yes | test double; adversarial gate (0/99) | **small local sample** (`qwen3:4b`, EVALUATION.md §4) |
 | Claude provider and AI service | yes | local API stub; browser failure path; cross-site request refusal | **no** (no API key) |
-| Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (slow: 19–45 min per call) |
+| Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (full review 20 min, Quick AI review 1.5–2 min) |
 | Plain-language briefing ("In plain words", Cyber-physical tab) | yes | 6 tests: verdicts per case, evidence exists, no jargon or overreach, read-only; checked in the browser | n/a (deterministic); **not yet tested with users** |
 | Ask Vanterra (Ask tab): instant engine answers + checked model answers; "Run AI agents" button | yes | 8 tests (grounding, overreach with negation, repair, rejected drafts, failures); WCAG contrast test | **yes**: accepted, cited answer in 57 s on `qwen3:1.7b`, CPU |
-| Windows desktop app (Electron, `app://`, no local server; Ollama auto-start; NSIS installer) | yes, 0.4.3 | bridge and runtime tests (6); packaged-app smoke test; no listening ports verified | **yes**: AI available in the packaged app with zero configuration |
+| Windows desktop app (Electron, `app://`, no local server; Ollama auto-start; NSIS installer) | yes, 0.4.4 | bridge and runtime tests (6); packaged-app smoke test; no listening ports verified | **yes**: AI available in the packaged app with zero configuration |
 
 Verified on 2026-11-21: type-check and lint clean; 164 tests pass in 14 files; the build succeeds; `npm run eval` runs all four suites.
 

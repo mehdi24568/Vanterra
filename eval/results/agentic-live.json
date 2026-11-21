@@ -1,0 +1,4669 @@
+{
+  "generated": "2026-11-21T11:49:58.352Z",
+  "provider": "ollama",
+  "model": "qwen3:1.7b",
+  "effort": "medium",
+  "complete": true,
+  "planned": 1,
+  "scores": [
+    {
+      "scenario": "cp-fan-setpoint",
+      "provider": "ollama",
+      "model": "qwen3:1.7b",
+      "testDouble": false,
+      "status": "complete",
+      "agents": {
+        "evidence_analyst": {
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 238478,
+          "error": null
+        },
+        "impact_analyst": {
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 148983,
+          "error": null
+        },
+        "hypothesis_analyst": {
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 461208,
+          "error": null
+        },
+        "investigation_planner": {
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 111611,
+          "error": null
+        },
+        "orchestrator": {
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 263322,
+          "error": null
+        }
+      },
+      "durationS": 1223.626,
+      "modelCalls": 5,
+      "repairs": 0,
+      "inputTokens": 24606,
+      "outputTokens": 3794,
+      "estimatedCostUsd": 0,
+      "citationsAccepted": 68,
+      "invalidCitationsInRawAnswers": 0,
+      "unknownAssetsInRawAnswers": 0,
+      "unknownHypothesesInRawAnswers": 0,
+      "uncitedObservationsInRawAnswers": 0,
+      "certaintyOrProbabilityWording": 0,
+      "causalOverreachInRawAnswers": 0,
+      "issueCodes": {},
+      "cyberCitationsAccepted": 8,
+      "schemaFailures": 0,
+      "claimsChecked": 34,
+      "claimsRejected": 0,
+      "unsupportedClaimRate": 0,
+      "figuresFlagged": 0,
+      "aiLead": "tower_airflow_loss",
+      "deterministicLead": "tower_airflow_loss",
+      "truthLead": "tower_airflow_loss",
+      "aiLeadMatchesTruth": true,
+      "deterministicLeadMatchesTruth": true,
+      "standing": "insufficient_evidence",
+      "truthStance": "supported",
+      "alternativesWithContradictions": 2,
+      "alternativesAssessed": 2,
+      "challengeToLeadingGiven": true,
+      "impactRecallOfDeterministicAtRisk": 0,
+      "impactAssetsBeyondDeterministic": 0,
+      "checks": 4,
+      "checksOnOrigin": 2,
+      "firstCheckOnOrigin": false,
+      "checksLinkedToHypotheses": 4,
+      "checksCitingEvidence": 4,
+      "disagreementsFound": 1,
+      "confirmedByAi": false,
+      "incidentUnchanged": true
+    }
+  ],
+  "reports": [
+    {
+      "schemaVersion": 1,
+      "runId": "RUN-mwqbskxw-e3um",
+      "incidentId": "INC-0001",
+      "incidentRevision": 43,
+      "evidenceSignature": "ANM-0001,ANM-0002,ANM-0003,ANM-0004,ANM-0005,ANM-0006,ANM-0007,ANM-0008,ANM-0009,ANM-0010,ANM-0011,ANM-0012,ANM-0013,ANM-0014,ANM-0015,ANM-0016,ANM-0017,ANM-0018,ANM-0019,ANM-0020",
+      "provider": "ollama",
+      "model": "qwen3:1.7b",
+      "testDouble": false,
+      "status": "complete",
+      "startedAt": "2026-11-21T11:29:34.724Z",
+      "durationMs": 1223626,
+      "plan": [
+        {
+          "agent": "evidence_analyst",
+          "selected": true,
+          "reason": "20 detections to examine"
+        },
+        {
+          "agent": "impact_analyst",
+          "selected": true,
+          "reason": "6 exposed assets downstream"
+        },
+        {
+          "agent": "hypothesis_analyst",
+          "selected": true,
+          "reason": "3 competing explanations to evaluate"
+        },
+        {
+          "agent": "investigation_planner",
+          "selected": true,
+          "reason": "Checks are always planned"
+        },
+        {
+          "agent": "orchestrator",
+          "selected": true,
+          "reason": "Final synthesis"
+        }
+      ],
+      "agents": {
+        "evidence_analyst": {
+          "agent": "evidence_analyst",
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 238478,
+          "usage": {
+            "inputTokens": 5216,
+            "outputTokens": 947
+          },
+          "output": {
+            "summary": "The incident shows abnormal current and vibration in the cooling tower, with cyber events indicating potential unauthorized changes to the system.",
+            "observations": [
+              {
+                "statement": "The cooling tower (CT-401) shows a baseline deviation in fan motor current (ANM-0002) and vibration (ANM-0003).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "statement": "The MCC-510 (motor control centre) shows a baseline deviation in current (ANM-0004) and a high load (ANM-0006).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0004",
+                  "ANM-0006"
+                ]
+              },
+              {
+                "statement": "The TX-501 (distribution transformer) shows a high load (ANM-0005) and a rising basin temperature (ANM-0007).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0005",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "statement": "The CH-402 (trim chiller) shows a high load (ANM-0006) and a high current (ANM-0008).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0006",
+                  "ANM-0008"
+                ]
+              }
+            ],
+            "sequence": [
+              {
+                "step": 1,
+                "assetId": "CT-401",
+                "description": "Abnormal fan motor current and vibration detected.",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "step": 2,
+                "assetId": "MCC-510",
+                "description": "Abnormal current and high load detected.",
+                "evidence": [
+                  "ANM-0004",
+                  "ANM-0006"
+                ]
+              },
+              {
+                "step": 3,
+                "assetId": "TX-501",
+                "description": "High load and rising basin temperature detected.",
+                "evidence": [
+                  "ANM-0005",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "step": 4,
+                "assetId": "CH-402",
+                "description": "High load and high current detected.",
+                "evidence": [
+                  "ANM-0006",
+                  "ANM-0008"
+                ]
+              }
+            ],
+            "interpretations": [
+              {
+                "statement": "The cyber events (CEV-0004, CEV-0005, CEV-0003) suggest unauthorized changes to the system.",
+                "basis": "inference",
+                "evidence": [
+                  "CEV-0004",
+                  "CEV-0005",
+                  "CEV-0003"
+                ]
+              }
+            ],
+            "gaps": [
+              {
+                "description": "The physical signatures of the cyber events are not fully observed. The exact impact on the physical equipment is unclear.",
+                "wouldClarify": "The physical effects of the cyber events and the cause-effect relationship between the cyber and physical systems are unknown.",
+                "relatedTo": [
+                  "CEV-0004",
+                  "CEV-0005",
+                  "CEV-0003"
+                ]
+              },
+              {
+                "description": "The OT devices (e.g., PLC-500) are not fully monitored for their operational state and control signals.",
+                "wouldClarify": "The operational state and control signals of the OT devices are not fully observed, making it difficult to determine the exact cause of the physical deviation.",
+                "relatedTo": [
+                  "PLC-500"
+                ]
+              }
+            ],
+            "evidenceQuality": "partial"
+          },
+          "issues": [],
+          "stats": {
+            "claims": 11,
+            "claimsRejected": 0,
+            "citations": 23,
+            "invalidCitations": 0,
+            "figuresFlagged": 0
+          },
+          "cited": [
+            "ANM-0002",
+            "ANM-0003",
+            "ANM-0004",
+            "ANM-0006",
+            "ANM-0005",
+            "ANM-0007",
+            "ANM-0008",
+            "CEV-0004",
+            "CEV-0005",
+            "CEV-0003",
+            "PLC-500"
+          ],
+          "error": null,
+          "skippedReason": null
+        },
+        "impact_analyst": {
+          "agent": "impact_analyst",
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 148983,
+          "usage": {
+            "inputTokens": 4198,
+            "outputTokens": 467
+          },
+          "output": {
+            "summary": "CT-401 is the direct abnormal asset, with anomalies in current and vibration. It depends on other assets (CH-402, PL-400, P-401) that are at_risk. The cascade involves high exposure to CH-402 and PL-410, with critical exposure to PL-410. The exposure is through cooling water pathways, with strong exposure to CH-402 and",
+            "directlyAbnormal": [
+              {
+                "assetId": "CT-401",
+                "note": "Abnormal current and vibration detected at 06:02:27.",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003",
+                  "ANM-0001",
+                  "ANM-0004"
+                ]
+              }
+            ],
+            "potentiallyAffected": [
+              {
+                "assetId": "CH-402",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402",
+                "exposure": "high",
+                "evidence": [
+                  "PL-410",
+                  "CH-402"
+                ]
+              },
+              {
+                "assetId": "PL-410",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402 → PL-410",
+                "exposure": "moderate",
+                "evidence": [
+                  "PL-410"
+                ]
+              }
+            ],
+            "cascades": [
+              {
+                "description": "Abnormal in CT-401 leads to high exposure in CH-402 via cooling water.",
+                "evidence": [
+                  "CH-402"
+                ]
+              },
+              {
+                "description": "Abnormal in CT-401 leads to moderate exposure in PL-410 via cooling water.",
+                "evidence": [
+                  "PL-410"
+                ]
+              }
+            ]
+          },
+          "issues": [],
+          "stats": {
+            "claims": 5,
+            "claimsRejected": 0,
+            "citations": 9,
+            "invalidCitations": 0,
+            "figuresFlagged": 0
+          },
+          "cited": [
+            "ANM-0002",
+            "ANM-0003",
+            "ANM-0001",
+            "ANM-0004",
+            "PL-410",
+            "CH-402"
+          ],
+          "error": null,
+          "skippedReason": null
+        },
+        "hypothesis_analyst": {
+          "agent": "hypothesis_analyst",
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 461208,
+          "usage": {
+            "inputTokens": 6689,
+            "outputTokens": 1118
+          },
+          "output": {
+            "assessments": [
+              {
+                "hypothesisKey": "tower_airflow_loss@CT-401",
+                "stance": "supported",
+                "rationale": "The evidence directly supports this hypothesis with strong support (90%) and clear physical signatures (fan current/vibration, basin temperature, chiller load). The fan trip and basin temperature rise are direct indicators of airflow loss, and the chiller load is a downstream consequence.",
+                "supporting": [
+                  {
+                    "statement": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003",
+                      "ANM-0001",
+                      "ANM-0007"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Cyber activity unrelated to this incident",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0001",
+                      "CEV-0002",
+                      "CEV-0003"
+                    ]
+                  }
+                ]
+              },
+              {
+                "hypothesisKey": "mcc_joint@MCC-510",
+                "stance": "contested",
+                "rationale": "This hypothesis is contested due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (20%) and the verification is limited.",
+                "supporting": [
+                  {
+                    "statement": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0016",
+                      "ANM-0018"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Equipment fault, independent of any configuration change",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0005"
+                    ]
+                  }
+                ]
+              },
+              {
+                "hypothesisKey": "chiller_fault@CH-402",
+                "stance": "unsupported",
+                "rationale": "This hypothesis is unsupported due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (0%) and the verification is limited.",
+                "supporting": [
+                  {
+                    "statement": "Capacity fault in CH-402 Trim Chiller",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0006",
+                      "ANM-0008",
+                      "ANM-0014",
+                      "ANM-0015"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Unrelated cyber activity",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0001",
+                      "CEV-0002",
+                      "CEV-0003"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+            "challengeToLeading": {
+              "statement": "A cyber event (CEV-0005) that modifies the PLC-500's cooling-tower fan speed setpoint would not produce the same physical signature as a fan failure. The observed deviation matches the expected signature of a fan failure, not a configuration change.",
+              "evidence": [
+                "CEV-0005",
+                "ANM-0002"
+              ]
+            },
+            "discriminators": [
+              {
+                "check": "Fan current/vibration (ANM-0002, ANM-0003, ANM-0001) are directly observed and match the expected signature of a fan failure.",
+                "separates": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "expectedIfFirst": "A configuration change would produce the same physical signature, but the observed deviation matches the expected signature of a fan failure."
+              },
+              {
+                "check": "Basin temperature (CT-401.BASIN_TEMP) is high and rising, indicating a physical deviation.",
+                "separates": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "expectedIfFirst": "A configuration change would not produce a physical deviation in basin temperature."
+              }
+            ],
+            "agreesWithDeterministicRanking": true,
+            "rankingNote": "The evidence is sufficient to support the tower airflow loss hypothesis, while the other hypotheses are contested due to lack of physical signatures and declared relationships."
+          },
+          "issues": [],
+          "stats": {
+            "claims": 11,
+            "claimsRejected": 0,
+            "citations": 19,
+            "invalidCitations": 0,
+            "figuresFlagged": 0
+          },
+          "cited": [
+            "ANM-0002",
+            "ANM-0003",
+            "ANM-0001",
+            "ANM-0007",
+            "CEV-0001",
+            "CEV-0002",
+            "CEV-0003",
+            "ANM-0016",
+            "ANM-0018",
+            "CEV-0005",
+            "ANM-0006",
+            "ANM-0008",
+            "ANM-0014",
+            "ANM-0015"
+          ],
+          "error": null,
+          "skippedReason": null
+        },
+        "investigation_planner": {
+          "agent": "investigation_planner",
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 111611,
+          "usage": {
+            "inputTokens": 2163,
+            "outputTokens": 695
+          },
+          "output": {
+            "checks": [
+              {
+                "priority": 1,
+                "action": "Inspect CT-401 fan starter at MCC-510 for trip indication and cause",
+                "rationale": "Identifies potential mechanical failure or overload causing the fan to trip, separating fan failure from a cyber event.",
+                "targetAssetId": "MCC-510",
+                "addressesHypotheses": [
+                  "mcc_joint@MCC-510",
+                  "tower_airflow_loss@CT-401"
+                ],
+                "resolvesGap": "Clarifies cause of fan trip, separating physical from cyber explanation.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "priority": 2,
+                "action": "Mechanically inspect CT-401 fan: gearbox, blades, obstruction",
+                "rationale": "Directly observes physical cause of deviation, separating fan failure from cyber event.",
+                "targetAssetId": "CT-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Clarifies physical cause of fan deviation, resolving ambiguity between cyber and physical causes.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0001"
+                ]
+              },
+              {
+                "priority": 3,
+                "action": "Cross-check CT-401.FAN_CURRENT, CT-401.FAN_VIB against local instruments",
+                "rationale": "Verifies physical signature matches expected fan failure, resolving ambiguity between cyber and physical causes.",
+                "targetAssetId": "CT-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Confirms physical signature matches fan failure, resolving uncertainty about cause.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "priority": 4,
+                "action": "Monitor P-401, PL-400, HX-201, PL-420 for knock-on effects",
+                "rationale": "Identifies potential cascading effects, separating physical from cyber explanation.",
+                "targetAssetId": "P-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Clarifies impact of fan failure on downstream systems, resolving ambiguity between physical and cyber causes.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "PL-400",
+                  "PL-420"
+                ]
+              }
+            ],
+            "sequencingNote": "Checks are ordered by priority to resolve evidence gaps and separate physical from cyber explanations."
+          },
+          "issues": [],
+          "stats": {
+            "claims": 4,
+            "claimsRejected": 0,
+            "citations": 7,
+            "invalidCitations": 0,
+            "figuresFlagged": 0
+          },
+          "cited": [
+            "ANM-0002",
+            "ANM-0003",
+            "ANM-0001",
+            "PL-400",
+            "PL-420"
+          ],
+          "error": null,
+          "skippedReason": null
+        },
+        "orchestrator": {
+          "agent": "orchestrator",
+          "status": "completed",
+          "attempts": 1,
+          "latencyMs": 263322,
+          "usage": {
+            "inputTokens": 6340,
+            "outputTokens": 567
+          },
+          "output": {
+            "conclusion": {
+              "statement": "The evidence is consistent with a physical deviation in the CT-401 Cooling Tower due to a fan failure, supported by direct observations of fan current and vibration. The cyber events suggest unauthorized configuration changes, but the physical signatures of the cyber events are not fully observed. The leading cause is ",
+              "evidence": [
+                "ANM-0002",
+                "ANM-0003",
+                "ANM-0001",
+                "ANM-0007"
+              ]
+            },
+            "standing": "insufficient_evidence",
+            "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+            "keyFindings": [
+              {
+                "statement": "The CT-401 Cooling Tower shows abnormal fan motor current and vibration, directly matching the expected signature of a fan failure.",
+                "basis": "observation",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003",
+                  "ANM-0001",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "statement": "The PLC-500 controls the CT-401 Cooling Tower, and a configuration change (CEV-0005) modified the fan speed setpoint, producing the observed physical deviation.",
+                "basis": "inference",
+                "evidence": [
+                  "CEV-0005",
+                  "ANM-0002"
+                ]
+              }
+            ],
+            "disagreements": [
+              {
+                "between": [
+                  "mcc_joint@MCC-510",
+                  "tower_airflow_loss@CT-401"
+                ],
+                "topic": "Physical signature of the cyber event",
+                "resolution": "The observed deviation matches the expected signature of a fan failure, not a configuration change. The physical signature is clear, and the cyber event is not supported by physical evidence."
+              }
+            ],
+            "openQuestions": [
+              "What is the exact cause of the fan failure?",
+              "What is the impact of the fan failure on downstream systems?",
+              "What is the exact nature of the cyber event (e.g., whether it was malicious)?"
+            ],
+            "limitations": [
+              "The physical signatures of the cyber events are not fully observed.",
+              "The operational state and control signals of the OT devices are not fully monitored.",
+              "The exact impact of the cyber event on the physical equipment is unclear."
+            ],
+            "humanVerification": "A human must verify the physical signatures of the cyber events and the operational state of the OT devices before any cause can be treated as established."
+          },
+          "issues": [],
+          "stats": {
+            "claims": 3,
+            "claimsRejected": 0,
+            "citations": 10,
+            "invalidCitations": 0,
+            "figuresFlagged": 0
+          },
+          "cited": [
+            "ANM-0002",
+            "ANM-0003",
+            "ANM-0001",
+            "ANM-0007",
+            "CEV-0005"
+          ],
+          "error": null,
+          "skippedReason": null
+        }
+      },
+      "disagreements": [
+        {
+          "between": [
+            "mcc_joint@MCC-510",
+            "tower_airflow_loss@CT-401"
+          ],
+          "topic": "Physical signature of the cyber event",
+          "resolution": "The observed deviation matches the expected signature of a fan failure, not a configuration change. The physical signature is clear, and the cyber event is not supported by physical evidence.",
+          "source": "orchestrator"
+        }
+      ],
+      "governance": {
+        "claims": 34,
+        "claimsRejected": 0,
+        "citations": 68,
+        "invalidCitations": 0,
+        "figuresFlagged": 0,
+        "modelCalls": 5,
+        "confirmedByAi": false
+      },
+      "usage": {
+        "inputTokens": 24606,
+        "outputTokens": 3794
+      },
+      "estimatedCostUsd": 0,
+      "audit": [
+        {
+          "seq": 1,
+          "agent": "evidence_analyst",
+          "attempt": 1,
+          "at": "2026-11-21T11:29:34.725Z",
+          "inputHash": "ae80e82f",
+          "inputBytes": 12575,
+          "input": {
+            "task": "Establish what the evidence shows, the sequence of events, and what is missing.",
+            "facility": {
+              "name": "Meridian Works · Unit 3",
+              "dataSource": "Local simulation"
+            },
+            "incident": {
+              "id": "INC-0001",
+              "revision": 43,
+              "status": "open",
+              "severity": "critical",
+              "title": "CT-401 Cooling Tower: abnormal current and vibration",
+              "openedAt": "06:02:30",
+              "ageS": 120,
+              "activeAnomalies": 15,
+              "assessmentFrozen": null
+            },
+            "assets": [
+              {
+                "id": "CT-401",
+                "name": "Cooling Tower",
+                "category": "cooling",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "critical",
+                "firstOnsetS": 0
+              },
+              {
+                "id": "MCC-510",
+                "name": "Motor Control Centre A",
+                "category": "electrical",
+                "area": "A600",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 2
+              },
+              {
+                "id": "TX-501",
+                "name": "Distribution Transformer",
+                "category": "electrical",
+                "area": "A600",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 3
+              },
+              {
+                "id": "CH-402",
+                "name": "Trim Chiller",
+                "category": "cooling",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "critical",
+                "firstOnsetS": 7
+              },
+              {
+                "id": "PL-410",
+                "name": "CW Supply Line",
+                "category": "pipeline",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 13
+              },
+              {
+                "id": "M-101",
+                "name": "Feed Pump A Motor",
+                "category": "motor",
+                "area": "A200",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "M-102",
+                "name": "Feed Pump B Motor",
+                "category": "motor",
+                "area": "A200",
+                "role": "context",
+                "operatingState": "standby",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "M-401",
+                "name": "Cooling Water Pump Motor",
+                "category": "motor",
+                "area": "A500",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "MCC-520",
+                "name": "Motor Control Centre B",
+                "category": "electrical",
+                "area": "A600",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              }
+            ],
+            "anomalies": [
+              {
+                "id": "ANM-0002",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 0,
+                "latest": 5.993,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0003",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_VIB",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 1,
+                "latest": 0.462,
+                "baselineMean": 2.402,
+                "unit": "mm/s"
+              },
+              {
+                "id": "ANM-0001",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "threshold_low",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 2,
+                "latest": 6.093,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0004",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 2,
+                "latest": 313.249,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0005",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 3,
+                "latest": 328.674,
+                "baselineMean": 337.661,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0007",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 6,
+                "latest": 32.25,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0006",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 7,
+                "latest": 100.275,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0008",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 9,
+                "latest": 149.776,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0009",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 10,
+                "latest": 32.926,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0010",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 13,
+                "latest": 22.889,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0011",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 27,
+                "latest": 371.087,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0012",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 30,
+                "latest": 32.894,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0013",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 31,
+                "latest": 366.329,
+                "baselineMean": 337.761,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0014",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 149.944,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0015",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 100.186,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0016",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 43,
+                "latest": 46.546,
+                "baselineMean": 42.138,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0017",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 57,
+                "latest": 24.881,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0018",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 64,
+                "latest": 47.477,
+                "baselineMean": 42.147,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0019",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 91,
+                "latest": 24.912,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0020",
+                "assetId": "TX-501",
+                "signalId": "TX-501.OIL_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 108,
+                "latest": 61.241,
+                "baselineMean": 58.318,
+                "unit": "°C"
+              }
+            ],
+            "signals": [
+              {
+                "id": "CT-401.FAN_CURRENT",
+                "assetId": "CT-401",
+                "name": "Fan motor current",
+                "unit": "A",
+                "latest": 5.805,
+                "baselineMean": 38.008,
+                "baselineStd": 0.35,
+                "zScore": -91.5,
+                "state": "abnormal",
+                "limits": "LL 5 / L 20 / H 46 / HH 52"
+              },
+              {
+                "id": "CT-401.BASIN_TEMP",
+                "assetId": "CT-401",
+                "name": "Basin water temperature",
+                "unit": "°C",
+                "latest": 32.917,
+                "baselineMean": 24.028,
+                "baselineStd": 0.3,
+                "zScore": 29.7,
+                "state": "abnormal",
+                "limits": "H 29 / HH 33"
+              },
+              {
+                "id": "CT-401.FAN_VIB",
+                "assetId": "CT-401",
+                "name": "Fan gearbox vibration (RMS)",
+                "unit": "mm/s",
+                "latest": 0.367,
+                "baselineMean": 2.402,
+                "baselineStd": 0.086,
+                "zScore": -22.5,
+                "state": "abnormal",
+                "limits": "H 5 / HH 8"
+              },
+              {
+                "id": "CT-401.STATUS",
+                "assetId": "CT-401",
+                "name": "Operating status",
+                "unit": "",
+                "latest": 1,
+                "baselineMean": null,
+                "baselineStd": null,
+                "zScore": null,
+                "state": "normal",
+                "limits": "HH 1.5"
+              },
+              {
+                "id": "MCC-510.VOLT",
+                "assetId": "MCC-510",
+                "name": "Bus voltage (L-L)",
+                "unit": "V",
+                "latest": 397.735,
+                "baselineMean": 397.88,
+                "baselineStd": 0.7,
+                "zScore": -0.3,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              },
+              {
+                "id": "MCC-510.CURRENT",
+                "assetId": "MCC-510",
+                "name": "Incomer current",
+                "unit": "A",
+                "latest": 370.049,
+                "baselineMean": 322.224,
+                "baselineStd": 3.5,
+                "zScore": 14,
+                "state": "abnormal",
+                "limits": "H 386 / HH 435"
+              },
+              {
+                "id": "MCC-510.BUS_TEMP",
+                "assetId": "MCC-510",
+                "name": "Incomer joint temperature",
+                "unit": "°C",
+                "latest": 47.631,
+                "baselineMean": 42.147,
+                "baselineStd": 0.7,
+                "zScore": 7.6,
+                "state": "abnormal",
+                "limits": "H 65 / HH 80"
+              },
+              {
+                "id": "TX-501.LOAD",
+                "assetId": "TX-501",
+                "name": "Active load",
+                "unit": "kW",
+                "latest": 364.446,
+                "baselineMean": 337.761,
+                "baselineStd": 3.5,
+                "zScore": 8.2,
+                "state": "abnormal",
+                "limits": "H 520 / HH 600"
+              },
+              {
+                "id": "TX-501.OIL_TEMP",
+                "assetId": "TX-501",
+                "name": "Top-oil temperature",
+                "unit": "°C",
+                "latest": 60.978,
+                "baselineMean": 58.318,
+                "baselineStd": 0.6,
+                "zScore": 4.9,
+                "state": "abnormal",
+                "limits": "H 80 / HH 92"
+              },
+              {
+                "id": "TX-501.LV_VOLT",
+                "assetId": "TX-501",
+                "name": "LV terminal voltage (L-L)",
+                "unit": "V",
+                "latest": 398.83,
+                "baselineMean": 398.963,
+                "baselineStd": 0.7,
+                "zScore": -0.3,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              },
+              {
+                "id": "CH-402.COMP_CURRENT",
+                "assetId": "CH-402",
+                "name": "Compressor current",
+                "unit": "A",
+                "latest": 149.812,
+                "baselineMean": 69.185,
+                "baselineStd": 1,
+                "zScore": 80.6,
+                "state": "abnormal",
+                "limits": "H 138 / HH 148"
+              },
+              {
+                "id": "CH-402.LOAD",
+                "assetId": "CH-402",
+                "name": "Capacity utilisation",
+                "unit": "%",
+                "latest": 100.27,
+                "baselineMean": 25.162,
+                "baselineStd": 0.5,
+                "zScore": 150.2,
+                "state": "abnormal",
+                "limits": "H 90 / HH 98"
+              },
+              {
+                "id": "CH-402.POWER",
+                "assetId": "CH-402",
+                "name": "Electrical power",
+                "unit": "kW",
+                "latest": 88.91,
+                "baselineMean": null,
+                "baselineStd": null,
+                "zScore": null,
+                "state": "not_analysed",
+                "limits": ""
+              },
+              {
+                "id": "PL-410.TEMP",
+                "assetId": "PL-410",
+                "name": "Supply temperature",
+                "unit": "°C",
+                "latest": 24.867,
+                "baselineMean": 22.02,
+                "baselineStd": 0.3,
+                "zScore": 9.5,
+                "state": "abnormal",
+                "limits": "H 24.5 / HH 27"
+              },
+              {
+                "id": "PL-410.FLOW",
+                "assetId": "PL-410",
+                "name": "Cooling water flow",
+                "unit": "m³/h",
+                "latest": 198.486,
+                "baselineMean": 200.017,
+                "baselineStd": 1.5,
+                "zScore": 0.2,
+                "state": "normal",
+                "limits": "LL 140 / L 170"
+              },
+              {
+                "id": "HX-201.T_OUT",
+                "assetId": "HX-201",
+                "name": "Process outlet temperature",
+                "unit": "°C",
+                "latest": 36.811,
+                "baselineMean": 35.102,
+                "baselineStd": 0.5,
+                "zScore": 3.5,
+                "state": "normal",
+                "limits": "H 38.5 / HH 42"
+              },
+              {
+                "id": "M-101.CURRENT",
+                "assetId": "M-101",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 86.614,
+                "baselineMean": 86.055,
+                "baselineStd": 0.8,
+                "zScore": 0,
+                "state": "normal",
+                "limits": "H 96.3 / HH 105.8"
+              },
+              {
+                "id": "M-102.CURRENT",
+                "assetId": "M-102",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 0,
+                "baselineMean": 0.018,
+                "baselineStd": 0.8,
+                "zScore": 0,
+                "state": "normal",
+                "limits": "H 96.3 / HH 105.8"
+              },
+              {
+                "id": "M-401.CURRENT",
+                "assetId": "M-401",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 64.432,
+                "baselineMean": 64.032,
+                "baselineStd": 0.6,
+                "zScore": 0.2,
+                "state": "normal",
+                "limits": "H 71.7 / HH 78.7"
+              },
+              {
+                "id": "MCC-520.VOLT",
+                "assetId": "MCC-520",
+                "name": "Bus voltage (L-L)",
+                "unit": "V",
+                "latest": 397.63,
+                "baselineMean": 397.924,
+                "baselineStd": 0.7,
+                "zScore": -0.2,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              },
+              {
+                "id": "M-101.POWER",
+                "assetId": "M-101",
+                "name": "Electrical power",
+                "unit": "kW",
+                "latest": 50.756,
+                "baselineMean": null,
+                "baselineStd": null,
+                "zScore": null,
+                "state": "not_analysed",
+                "limits": ""
+              },
+              {
+                "id": "M-102.POWER",
+                "assetId": "M-102",
+                "name": "Electrical power",
+                "unit": "kW",
+                "latest": 0.044,
+                "baselineMean": null,
+                "baselineStd": null,
+                "zScore": null,
+                "state": "not_analysed",
+                "limits": ""
+              },
+              {
+                "id": "M-401.POWER",
+                "assetId": "M-401",
+                "name": "Electrical power",
+                "unit": "kW",
+                "latest": 37.384,
+                "baselineMean": null,
+                "baselineStd": null,
+                "zScore": null,
+                "state": "not_analysed",
+                "limits": ""
+              }
+            ],
+            "correlations": [
+              {
+                "assetId": "CT-401",
+                "linkedAssetId": "CT-401",
+                "basis": "initial",
+                "hops": 0,
+                "lagS": 0,
+                "path": ""
+              },
+              {
+                "assetId": "MCC-510",
+                "linkedAssetId": "CT-401",
+                "basis": "dependency_path",
+                "hops": 1,
+                "lagS": 2,
+                "path": "MCC-510 → CT-401"
+              },
+              {
+                "assetId": "TX-501",
+                "linkedAssetId": "MCC-510",
+                "basis": "dependency_path",
+                "hops": 1,
+                "lagS": 3,
+                "path": "TX-501 → MCC-510"
+              },
+              {
+                "assetId": "CH-402",
+                "linkedAssetId": "CT-401",
+                "basis": "dependency_path",
+                "hops": 3,
+                "lagS": 7,
+                "path": "CH-402 ← PL-400 ← P-401 ← CT-401"
+              },
+              {
+                "assetId": "PL-410",
+                "linkedAssetId": "CH-402",
+                "basis": "dependency_path",
+                "hops": 1,
+                "lagS": 13,
+                "path": "PL-410 ← CH-402"
+              }
+            ],
+            "cyberEvents": [
+              {
+                "id": "CEV-0004",
+                "onsetS": -7,
+                "ruleId": "FIRST-SEEN",
+                "severity": "advisory",
+                "title": "First-seen Engineering connection EWS-01 → PLC-500",
+                "identity": null,
+                "changeRecordId": null
+              },
+              {
+                "id": "CEV-0005",
+                "onsetS": -1,
+                "ruleId": "UNAPPROVED-CHANGE",
+                "severity": "warning",
+                "title": "Unapproved setting change on PLC-500: Cooling-tower fan speed setpoint 100 → 35 %",
+                "identity": "vendor.remote",
+                "changeRecordId": null
+              },
+              {
+                "id": "CEV-0001",
+                "onsetS": -27,
+                "ruleId": "FIRST-SEEN",
+                "severity": "advisory",
+                "title": "First-seen RDP connection ENT-01 → JMP-01",
+                "identity": null,
+                "changeRecordId": null
+              },
+              {
+                "id": "CEV-0002",
+                "onsetS": -19,
+                "ruleId": "FIRST-SEEN",
+                "severity": "advisory",
+                "title": "First-seen RDP connection JMP-01 → EWS-01",
+                "identity": null,
+                "changeRecordId": null
+              },
+              {
+                "id": "CEV-0003",
+                "onsetS": -19,
+                "ruleId": "ENG-SESSION",
+                "severity": "warning",
+                "title": "Remote engineering session on EWS-01 outside an approved window",
+                "identity": "vendor.remote",
+                "changeRecordId": null
+              }
+            ],
+            "otDevices": [
+              {
+                "id": "EWS-01",
+                "name": "Engineering workstation",
+                "kind": "ews",
+                "zone": "Z-SUP",
+                "controls": []
+              },
+              {
+                "id": "PLC-500",
+                "name": "Cooling plant controller",
+                "kind": "plc",
+                "zone": "Z-CTL",
+                "controls": [
+                  "CT-401",
+                  "P-401",
+                  "M-401",
+                  "CH-402"
+                ]
+              },
+              {
+                "id": "ENT-01",
+                "name": "Enterprise network",
+                "kind": "enterprise",
+                "zone": "Z-ENT",
+                "controls": []
+              },
+              {
+                "id": "JMP-01",
+                "name": "Remote-access jump host",
+                "kind": "jump_host",
+                "zone": "Z-DMZ",
+                "controls": []
+              }
+            ]
+          },
+          "rawOutput": {
+            "summary": "The incident shows abnormal current and vibration in the cooling tower, with cyber events indicating potential unauthorized changes to the system.",
+            "observations": [
+              {
+                "statement": "The cooling tower (CT-401) shows a baseline deviation in fan motor current (ANM-0002) and vibration (ANM-0003).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "statement": "The MCC-510 (motor control centre) shows a baseline deviation in current (ANM-0004) and a high load (ANM-0006).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0004",
+                  "ANM-0006"
+                ]
+              },
+              {
+                "statement": "The TX-501 (distribution transformer) shows a high load (ANM-0005) and a rising basin temperature (ANM-0007).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0005",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "statement": "The CH-402 (trim chiller) shows a high load (ANM-0006) and a high current (ANM-0008).",
+                "basis": "inference",
+                "evidence": [
+                  "ANM-0006",
+                  "ANM-0008"
+                ]
+              }
+            ],
+            "sequence": [
+              {
+                "step": 1,
+                "assetId": "CT-401",
+                "description": "Abnormal fan motor current and vibration detected.",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "step": 2,
+                "assetId": "MCC-510",
+                "description": "Abnormal current and high load detected.",
+                "evidence": [
+                  "ANM-0004",
+                  "ANM-0006"
+                ]
+              },
+              {
+                "step": 3,
+                "assetId": "TX-501",
+                "description": "High load and rising basin temperature detected.",
+                "evidence": [
+                  "ANM-0005",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "step": 4,
+                "assetId": "CH-402",
+                "description": "High load and high current detected.",
+                "evidence": [
+                  "ANM-0006",
+                  "ANM-0008"
+                ]
+              }
+            ],
+            "interpretations": [
+              {
+                "statement": "The cyber events (CEV-0004, CEV-0005, CEV-0003) suggest unauthorized changes to the system.",
+                "basis": "inference",
+                "evidence": [
+                  "CEV-0004",
+                  "CEV-0005",
+                  "CEV-0003"
+                ]
+              }
+            ],
+            "gaps": [
+              {
+                "description": "The physical signatures of the cyber events are not fully observed. The exact impact on the physical equipment is unclear.",
+                "wouldClarify": "The physical effects of the cyber events and the cause-effect relationship between the cyber and physical systems are unknown.",
+                "relatedTo": [
+                  "CEV-0004",
+                  "CEV-0005",
+                  "CEV-0003"
+                ]
+              },
+              {
+                "description": "The OT devices (e.g., PLC-500) are not fully monitored for their operational state and control signals.",
+                "wouldClarify": "The operational state and control signals of the OT devices are not fully observed, making it difficult to determine the exact cause of the physical deviation.",
+                "relatedTo": [
+                  "PLC-500"
+                ]
+              }
+            ],
+            "evidenceQuality": "partial"
+          },
+          "error": null,
+          "issues": [],
+          "accepted": true,
+          "latencyMs": 238478,
+          "usage": {
+            "inputTokens": 5216,
+            "outputTokens": 947
+          }
+        },
+        {
+          "seq": 2,
+          "agent": "impact_analyst",
+          "attempt": 1,
+          "at": "2026-11-21T11:29:34.726Z",
+          "inputHash": "7c900264",
+          "inputBytes": 9860,
+          "input": {
+            "task": "Separate abnormal assets from exposed ones and describe how the problem could cascade.",
+            "facility": {
+              "name": "Meridian Works · Unit 3",
+              "dataSource": "Local simulation"
+            },
+            "incident": {
+              "id": "INC-0001",
+              "title": "CT-401 Cooling Tower: abnormal current and vibration",
+              "severity": "critical",
+              "status": "open"
+            },
+            "origin": {
+              "assetId": "CT-401",
+              "score": 1,
+              "rationale": [
+                "Earliest abnormal onset in the incident (06:02:27).",
+                "4 of 4 other affected assets lie on dependency paths leading away from it."
+              ],
+              "alternatives": [
+                {
+                  "assetId": "CH-402",
+                  "score": 0.78
+                },
+                {
+                  "assetId": "PL-410",
+                  "score": 0.57
+                }
+              ]
+            },
+            "assets": [
+              {
+                "id": "CT-401",
+                "name": "Cooling Tower",
+                "category": "cooling",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "critical",
+                "firstOnsetS": 0
+              },
+              {
+                "id": "MCC-510",
+                "name": "Motor Control Centre A",
+                "category": "electrical",
+                "area": "A600",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 2
+              },
+              {
+                "id": "TX-501",
+                "name": "Distribution Transformer",
+                "category": "electrical",
+                "area": "A600",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 3
+              },
+              {
+                "id": "CH-402",
+                "name": "Trim Chiller",
+                "category": "cooling",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "critical",
+                "firstOnsetS": 7
+              },
+              {
+                "id": "PL-410",
+                "name": "CW Supply Line",
+                "category": "pipeline",
+                "area": "A500",
+                "role": "affected",
+                "operatingState": "running",
+                "health": "warning",
+                "firstOnsetS": 13
+              },
+              {
+                "id": "P-401",
+                "name": "Cooling Water Pump",
+                "category": "pump",
+                "area": "A500",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "PL-400",
+                "name": "CW Circulation Line",
+                "category": "pipeline",
+                "area": "A500",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "HX-201",
+                "name": "Process Cooler",
+                "category": "heat_exchanger",
+                "area": "A300",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "PL-420",
+                "name": "CW Return Line",
+                "category": "pipeline",
+                "area": "A500",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "PL-120",
+                "name": "Reactor Feed Line",
+                "category": "pipeline",
+                "area": "A300",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "RX-301",
+                "name": "Mixing Reactor",
+                "category": "reactor",
+                "area": "A300",
+                "role": "at_risk",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "M-101",
+                "name": "Feed Pump A Motor",
+                "category": "motor",
+                "area": "A200",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "M-102",
+                "name": "Feed Pump B Motor",
+                "category": "motor",
+                "area": "A200",
+                "role": "context",
+                "operatingState": "standby",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "M-401",
+                "name": "Cooling Water Pump Motor",
+                "category": "motor",
+                "area": "A500",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              },
+              {
+                "id": "MCC-520",
+                "name": "Motor Control Centre B",
+                "category": "electrical",
+                "area": "A600",
+                "role": "context",
+                "operatingState": "running",
+                "health": "nominal",
+                "firstOnsetS": null
+              }
+            ],
+            "relations": [
+              {
+                "id": "R008",
+                "from": "HX-201",
+                "to": "PL-120",
+                "type": "process",
+                "medium": "process fluid"
+              },
+              {
+                "id": "R009",
+                "from": "PL-120",
+                "to": "RX-301",
+                "type": "process",
+                "medium": "process fluid"
+              },
+              {
+                "id": "R021",
+                "from": "M-401",
+                "to": "P-401",
+                "type": "mechanical",
+                "medium": "shaft"
+              },
+              {
+                "id": "R022",
+                "from": "CT-401",
+                "to": "P-401",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R023",
+                "from": "P-401",
+                "to": "PL-400",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R024",
+                "from": "PL-400",
+                "to": "CH-402",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R025",
+                "from": "CH-402",
+                "to": "PL-410",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R026",
+                "from": "PL-410",
+                "to": "HX-201",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R027",
+                "from": "HX-201",
+                "to": "PL-420",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R028",
+                "from": "PL-420",
+                "to": "CT-401",
+                "type": "cooling",
+                "medium": "cooling water"
+              },
+              {
+                "id": "R029",
+                "from": "TX-501",
+                "to": "MCC-510",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R030",
+                "from": "TX-501",
+                "to": "MCC-520",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R031",
+                "from": "MCC-510",
+                "to": "M-101",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R032",
+                "from": "MCC-510",
+                "to": "M-102",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R033",
+                "from": "MCC-510",
+                "to": "M-401",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R034",
+                "from": "MCC-510",
+                "to": "CT-401",
+                "type": "electrical",
+                "medium": "400 V supply"
+              },
+              {
+                "id": "R035",
+                "from": "MCC-510",
+                "to": "CH-402",
+                "type": "electrical",
+                "medium": "400 V supply"
+              }
+            ],
+            "projectedImpact": [
+              {
+                "assetId": "MCC-510",
+                "state": "affected",
+                "exposurePct": 0,
+                "hops": 0,
+                "path": ""
+              },
+              {
+                "assetId": "TX-501",
+                "state": "affected",
+                "exposurePct": 0,
+                "hops": 0,
+                "path": ""
+              },
+              {
+                "assetId": "CH-402",
+                "state": "affected",
+                "exposurePct": 61,
+                "hops": 3,
+                "path": "CT-401 → P-401 → PL-400 → CH-402"
+              },
+              {
+                "assetId": "PL-410",
+                "state": "affected",
+                "exposurePct": 52,
+                "hops": 4,
+                "path": "CT-401 → P-401 → PL-400 → CH-402 → PL-410"
+              },
+              {
+                "assetId": "P-401",
+                "state": "at_risk",
+                "exposurePct": 85,
+                "hops": 1,
+                "path": "CT-401 → P-401"
+              },
+              {
+                "assetId": "PL-400",
+                "state": "at_risk",
+                "exposurePct": 72,
+                "hops": 2,
+                "path": "CT-401 → P-401 → PL-400"
+              },
+              {
+                "assetId": "HX-201",
+                "state": "at_risk",
+                "exposurePct": 44,
+                "hops": 5,
+                "path": "CT-401 → P-401 → PL-400 → CH-402 → PL-410 → HX-201"
+              },
+              {
+                "assetId": "PL-420",
+                "state": "at_risk",
+                "exposurePct": 38,
+                "hops": 6,
+                "path": "CT-401 → P-401 → PL-400 → CH-402 → PL-410 → HX-201 → PL-420"
+              },
+              {
+                "assetId": "PL-120",
+                "state": "at_risk",
+                "exposurePct": 34,
+                "hops": 6,
+                "path": "CT-401 → P-401 → PL-400 → CH-402 → PL-410 → HX-201 → PL-120"
+              },
+              {
+                "assetId": "RX-301",
+                "state": "at_risk",
+                "exposurePct": 29,
+                "hops": 7,
+                "path": "CT-401 → P-401 → PL-400 → CH-402 → PL-410 → HX-201 → PL-120 → RX-301"
+              }
+            ],
+            "anomalies": [
+              {
+                "id": "ANM-0002",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 0,
+                "latest": 5.993,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0003",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_VIB",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 1,
+                "latest": 0.462,
+                "baselineMean": 2.402,
+                "unit": "mm/s"
+              },
+              {
+                "id": "ANM-0001",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "threshold_low",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 2,
+                "latest": 6.093,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0004",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 2,
+                "latest": 313.249,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0005",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 3,
+                "latest": 328.674,
+                "baselineMean": 337.661,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0007",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 6,
+                "latest": 32.25,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0006",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 7,
+                "latest": 100.275,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0008",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 9,
+                "latest": 149.776,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0009",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 10,
+                "latest": 32.926,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0010",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 13,
+                "latest": 22.889,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0011",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 27,
+                "latest": 371.087,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0012",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 30,
+                "latest": 32.894,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0013",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 31,
+                "latest": 366.329,
+                "baselineMean": 337.761,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0014",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 149.944,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0015",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 100.186,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0016",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 43,
+                "latest": 46.546,
+                "baselineMean": 42.138,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0017",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 57,
+                "latest": 24.881,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0018",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 64,
+                "latest": 47.477,
+                "baselineMean": 42.147,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0019",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 91,
+                "latest": 24.912,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0020",
+                "assetId": "TX-501",
+                "signalId": "TX-501.OIL_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 108,
+                "latest": 61.241,
+                "baselineMean": 58.318,
+                "unit": "°C"
+              }
+            ]
+          },
+          "rawOutput": {
+            "summary": "CT-401 is the direct abnormal asset, with anomalies in current and vibration. It depends on other assets (CH-402, PL-400, P-401) that are at_risk. The cascade involves high exposure to CH-402 and PL-410, with critical exposure to PL-410. The exposure is through cooling water pathways, with strong exposure to CH-402 and",
+            "directlyAbnormal": [
+              {
+                "assetId": "CT-401",
+                "note": "Abnormal current and vibration detected at 06:02:27.",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003",
+                  "ANM-0001",
+                  "ANM-0004"
+                ]
+              }
+            ],
+            "potentiallyAffected": [
+              {
+                "assetId": "CH-402",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402",
+                "exposure": "high",
+                "evidence": [
+                  "PL-410",
+                  "CH-402"
+                ]
+              },
+              {
+                "assetId": "PL-410",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402 → PL-410",
+                "exposure": "moderate",
+                "evidence": [
+                  "PL-410"
+                ]
+              }
+            ],
+            "cascades": [
+              {
+                "description": "Abnormal in CT-401 leads to high exposure in CH-402 via cooling water.",
+                "evidence": [
+                  "CH-402"
+                ]
+              },
+              {
+                "description": "Abnormal in CT-401 leads to moderate exposure in PL-410 via cooling water.",
+                "evidence": [
+                  "PL-410"
+                ]
+              }
+            ]
+          },
+          "error": null,
+          "issues": [],
+          "accepted": true,
+          "latencyMs": 148983,
+          "usage": {
+            "inputTokens": 4198,
+            "outputTokens": 467
+          }
+        },
+        {
+          "seq": 3,
+          "agent": "hypothesis_analyst",
+          "attempt": 1,
+          "at": "2026-11-21T11:36:02.192Z",
+          "inputHash": "22abea46",
+          "inputBytes": 18189,
+          "input": {
+            "task": "Evaluate the competing explanations, challenge the leading one, and name what would separate them.",
+            "facility": {
+              "name": "Meridian Works · Unit 3",
+              "dataSource": "Local simulation"
+            },
+            "incident": {
+              "id": "INC-0001",
+              "revision": 43,
+              "status": "open",
+              "severity": "critical",
+              "title": "CT-401 Cooling Tower: abnormal current and vibration",
+              "openedAt": "06:02:30",
+              "ageS": 120,
+              "activeAnomalies": 15,
+              "assessmentFrozen": null
+            },
+            "origin": {
+              "assetId": "CT-401",
+              "score": 1,
+              "rationale": [
+                "Earliest abnormal onset in the incident (06:02:27).",
+                "4 of 4 other affected assets lie on dependency paths leading away from it."
+              ],
+              "alternatives": [
+                {
+                  "assetId": "CH-402",
+                  "score": 0.78
+                },
+                {
+                  "assetId": "PL-410",
+                  "score": 0.57
+                }
+              ]
+            },
+            "hypotheses": [
+              {
+                "key": "tower_airflow_loss@CT-401",
+                "title": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                "focalAssetId": "CT-401",
+                "mechanism": "Without forced draught the tower rejects far less heat. Basin temperature climbs, the trim chiller loads up until it saturates, and warmer cooling water then reaches the process.",
+                "supportPct": 90,
+                "band": "strong",
+                "criteria": [
+                  {
+                    "id": "fan",
+                    "role": "supports",
+                    "description": "Fan reports a trip, or fan current / vibration has collapsed",
+                    "weight": 3,
+                    "observed": true,
+                    "detail": "CT-401.FAN_CURRENT low (5.80 A, baseline 38.0); CT-401.FAN_VIB low (0.43 mm/s, baseline 2.40)",
+                    "anomalyIds": [
+                      "ANM-0002",
+                      "ANM-0003",
+                      "ANM-0001"
+                    ],
+                    "signalIds": [
+                      "CT-401.FAN_CURRENT",
+                      "CT-401.FAN_VIB"
+                    ]
+                  },
+                  {
+                    "id": "basin",
+                    "role": "supports",
+                    "description": "Basin water temperature is high or rising",
+                    "weight": 3,
+                    "observed": true,
+                    "detail": "CT-401.BASIN_TEMP high (33.0 °C, baseline 24.0)",
+                    "anomalyIds": [
+                      "ANM-0007",
+                      "ANM-0009",
+                      "ANM-0012"
+                    ],
+                    "signalIds": [
+                      "CT-401.BASIN_TEMP"
+                    ]
+                  },
+                  {
+                    "id": "chiller",
+                    "role": "supports",
+                    "description": "Downstream chiller is loading up",
+                    "weight": 1.5,
+                    "observed": true,
+                    "detail": "CH-402.LOAD high (100 %, baseline 25.2); CH-402.COMP_CURRENT high (151 A, baseline 69.2)",
+                    "anomalyIds": [
+                      "ANM-0006",
+                      "ANM-0008",
+                      "ANM-0014",
+                      "ANM-0015"
+                    ],
+                    "signalIds": [
+                      "CH-402.LOAD",
+                      "CH-402.COMP_CURRENT"
+                    ]
+                  },
+                  {
+                    "id": "cws",
+                    "role": "supports",
+                    "description": "Cooling-water supply temperature is high or rising",
+                    "weight": 1.5,
+                    "observed": true,
+                    "detail": "PL-410.TEMP high (24.9 °C, baseline 22.0)",
+                    "anomalyIds": [
+                      "ANM-0010",
+                      "ANM-0017",
+                      "ANM-0019"
+                    ],
+                    "signalIds": [
+                      "PL-410.TEMP"
+                    ]
+                  },
+                  {
+                    "id": "process",
+                    "role": "supports",
+                    "description": "Process cooler outlet temperature is high or rising",
+                    "weight": 1,
+                    "observed": false,
+                    "detail": "Not detected on HX-201.T_OUT",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "HX-201.T_OUT"
+                    ]
+                  }
+                ],
+                "unknowns": [
+                  "Ambient wet-bulb temperature is not measured, so a weather-driven rise cannot be excluded by the engine."
+                ],
+                "verification": "Local inspection of the fan drive: starter trip flag, gearbox, blades."
+              },
+              {
+                "key": "mcc_joint@MCC-510",
+                "title": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                "focalAssetId": "MCC-510",
+                "mechanism": "A deteriorating bolted joint or contact adds series resistance: voltage is lost across it and dissipated as heat at the joint. Constant-power loads downstream draw more current to compensate.",
+                "supportPct": 20,
+                "band": "weak",
+                "criteria": [
+                  {
+                    "id": "volt_low",
+                    "role": "supports",
+                    "description": "Bus voltage at this board is low",
+                    "weight": 3,
+                    "observed": false,
+                    "detail": "Not detected on MCC-510.VOLT",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "MCC-510.VOLT"
+                    ]
+                  },
+                  {
+                    "id": "joint_hot",
+                    "role": "supports",
+                    "description": "Incomer joint temperature is high or rising",
+                    "weight": 3,
+                    "observed": true,
+                    "detail": "MCC-510.BUS_TEMP rising (43.7 °C, baseline 42.1, since cleared)",
+                    "anomalyIds": [
+                      "ANM-0016",
+                      "ANM-0018"
+                    ],
+                    "signalIds": [
+                      "MCC-510.BUS_TEMP"
+                    ]
+                  },
+                  {
+                    "id": "consumers",
+                    "role": "supports",
+                    "description": "Two or more consumers fed from this board draw more current",
+                    "weight": 2,
+                    "observed": false,
+                    "detail": "Not detected on M-101.CURRENT, M-102.CURRENT, M-401.CURRENT",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "M-101.CURRENT",
+                      "M-102.CURRENT",
+                      "M-401.CURRENT"
+                    ]
+                  },
+                  {
+                    "id": "localised",
+                    "role": "supports",
+                    "description": "Voltage at the transformer and at the neighbouring board is normal (the drop is local to this board)",
+                    "weight": 2,
+                    "observed": true,
+                    "detail": "TX-501.LV_VOLT 398 V (0.1σ from baseline); MCC-520.VOLT 398 V (-0.6σ from baseline)",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "TX-501.LV_VOLT",
+                      "MCC-520.VOLT"
+                    ]
+                  },
+                  {
+                    "id": "upstream_low",
+                    "role": "contradicts",
+                    "description": "Voltage is also low at the transformer terminals (an upstream cause)",
+                    "weight": 3,
+                    "observed": false,
+                    "detail": "Not detected on TX-501.LV_VOLT",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "TX-501.LV_VOLT"
+                    ]
+                  },
+                  {
+                    "id": "volt_normal",
+                    "role": "contradicts",
+                    "description": "Bus voltage at this board is within its baseline (no voltage is being lost across the joint)",
+                    "weight": 3,
+                    "observed": true,
+                    "detail": "MCC-510.VOLT 397 V (-0.1σ from baseline)",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "MCC-510.VOLT"
+                    ]
+                  }
+                ],
+                "unknowns": [
+                  "No thermal imaging or per-phase voltages; the joint temperature is a single-point measurement."
+                ],
+                "verification": "Thermographic survey of the incomer and a micro-ohm test of the joint, with the board made safe."
+              },
+              {
+                "key": "chiller_fault@CH-402",
+                "title": "Capacity fault in CH-402 Trim Chiller",
+                "focalAssetId": "CH-402",
+                "mechanism": "A chiller that trips or unloads stops trimming the supply temperature; cooling water leaves it warmer while the chiller itself draws little power.",
+                "supportPct": 0,
+                "band": "weak",
+                "criteria": [
+                  {
+                    "id": "cws",
+                    "role": "supports",
+                    "description": "Cooling-water supply temperature is high or rising",
+                    "weight": 3,
+                    "observed": true,
+                    "detail": "PL-410.TEMP high (24.9 °C, baseline 22.0)",
+                    "anomalyIds": [
+                      "ANM-0010",
+                      "ANM-0017",
+                      "ANM-0019"
+                    ],
+                    "signalIds": [
+                      "PL-410.TEMP"
+                    ]
+                  },
+                  {
+                    "id": "unloaded",
+                    "role": "supports",
+                    "description": "Chiller load or compressor current has dropped",
+                    "weight": 3,
+                    "observed": false,
+                    "detail": "Not detected on CH-402.LOAD, CH-402.COMP_CURRENT",
+                    "anomalyIds": [],
+                    "signalIds": [
+                      "CH-402.LOAD",
+                      "CH-402.COMP_CURRENT"
+                    ]
+                  },
+                  {
+                    "id": "loaded",
+                    "role": "contradicts",
+                    "description": "Chiller is running at high load (it is responding, not failing)",
+                    "weight": 2,
+                    "observed": true,
+                    "detail": "CH-402.LOAD high (100 %, baseline 25.2); CH-402.COMP_CURRENT high (151 A, baseline 69.2)",
+                    "anomalyIds": [
+                      "ANM-0006",
+                      "ANM-0008",
+                      "ANM-0014",
+                      "ANM-0015"
+                    ],
+                    "signalIds": [
+                      "CH-402.LOAD",
+                      "CH-402.COMP_CURRENT"
+                    ]
+                  },
+                  {
+                    "id": "inlet_hot",
+                    "role": "contradicts",
+                    "description": "Water arriving from the tower is already too warm",
+                    "weight": 2,
+                    "observed": true,
+                    "detail": "CT-401.BASIN_TEMP high (33.0 °C, baseline 24.0)",
+                    "anomalyIds": [
+                      "ANM-0007",
+                      "ANM-0009",
+                      "ANM-0012"
+                    ],
+                    "signalIds": [
+                      "CT-401.BASIN_TEMP"
+                    ]
+                  }
+                ],
+                "unknowns": [
+                  "Refrigerant-side pressures and the chiller alarm log are not available to the engine."
+                ],
+                "verification": "Chiller controller alarm history and refrigerant circuit readings."
+              }
+            ],
+            "anomalies": [
+              {
+                "id": "ANM-0002",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 0,
+                "latest": 5.993,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0003",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_VIB",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 1,
+                "latest": 0.462,
+                "baselineMean": 2.402,
+                "unit": "mm/s"
+              },
+              {
+                "id": "ANM-0001",
+                "assetId": "CT-401",
+                "signalId": "CT-401.FAN_CURRENT",
+                "kind": "threshold_low",
+                "direction": "low",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 2,
+                "latest": 6.093,
+                "baselineMean": 38.008,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0004",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 2,
+                "latest": 313.249,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0005",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "low",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 3,
+                "latest": 328.674,
+                "baselineMean": 337.661,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0007",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "warning",
+                "status": "cleared",
+                "onsetS": 6,
+                "latest": 32.25,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0006",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 7,
+                "latest": 100.275,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0008",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 9,
+                "latest": 149.776,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0009",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 10,
+                "latest": 32.926,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0010",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 13,
+                "latest": 22.889,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0011",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.CURRENT",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 27,
+                "latest": 371.087,
+                "baselineMean": 322.224,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0012",
+                "assetId": "CT-401",
+                "signalId": "CT-401.BASIN_TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 30,
+                "latest": 32.894,
+                "baselineMean": 24.028,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0013",
+                "assetId": "TX-501",
+                "signalId": "TX-501.LOAD",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 31,
+                "latest": 366.329,
+                "baselineMean": 337.761,
+                "unit": "kW"
+              },
+              {
+                "id": "ANM-0014",
+                "assetId": "CH-402",
+                "signalId": "CH-402.COMP_CURRENT",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 149.944,
+                "baselineMean": 69.185,
+                "unit": "A"
+              },
+              {
+                "id": "ANM-0015",
+                "assetId": "CH-402",
+                "signalId": "CH-402.LOAD",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "critical",
+                "status": "active",
+                "onsetS": 37,
+                "latest": 100.186,
+                "baselineMean": 25.162,
+                "unit": "%"
+              },
+              {
+                "id": "ANM-0016",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "rate_of_change",
+                "direction": "rising",
+                "severity": "advisory",
+                "status": "cleared",
+                "onsetS": 43,
+                "latest": 46.546,
+                "baselineMean": 42.138,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0017",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 57,
+                "latest": 24.881,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0018",
+                "assetId": "MCC-510",
+                "signalId": "MCC-510.BUS_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 64,
+                "latest": 47.477,
+                "baselineMean": 42.147,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0019",
+                "assetId": "PL-410",
+                "signalId": "PL-410.TEMP",
+                "kind": "threshold_high",
+                "direction": "high",
+                "severity": "warning",
+                "status": "active",
+                "onsetS": 91,
+                "latest": 24.912,
+                "baselineMean": 22.02,
+                "unit": "°C"
+              },
+              {
+                "id": "ANM-0020",
+                "assetId": "TX-501",
+                "signalId": "TX-501.OIL_TEMP",
+                "kind": "baseline_deviation",
+                "direction": "high",
+                "severity": "advisory",
+                "status": "active",
+                "onsetS": 108,
+                "latest": 61.241,
+                "baselineMean": 58.318,
+                "unit": "°C"
+              }
+            ],
+            "signals": [
+              {
+                "id": "CT-401.FAN_CURRENT",
+                "assetId": "CT-401",
+                "name": "Fan motor current",
+                "unit": "A",
+                "latest": 5.805,
+                "baselineMean": 38.008,
+                "baselineStd": 0.35,
+                "zScore": -91.5,
+                "state": "abnormal",
+                "limits": "LL 5 / L 20 / H 46 / HH 52"
+              },
+              {
+                "id": "CT-401.BASIN_TEMP",
+                "assetId": "CT-401",
+                "name": "Basin water temperature",
+                "unit": "°C",
+                "latest": 32.917,
+                "baselineMean": 24.028,
+                "baselineStd": 0.3,
+                "zScore": 29.7,
+                "state": "abnormal",
+                "limits": "H 29 / HH 33"
+              },
+              {
+                "id": "CT-401.FAN_VIB",
+                "assetId": "CT-401",
+                "name": "Fan gearbox vibration (RMS)",
+                "unit": "mm/s",
+                "latest": 0.367,
+                "baselineMean": 2.402,
+                "baselineStd": 0.086,
+                "zScore": -22.5,
+                "state": "abnormal",
+                "limits": "H 5 / HH 8"
+              },
+              {
+                "id": "MCC-510.VOLT",
+                "assetId": "MCC-510",
+                "name": "Bus voltage (L-L)",
+                "unit": "V",
+                "latest": 397.735,
+                "baselineMean": 397.88,
+                "baselineStd": 0.7,
+                "zScore": -0.3,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              },
+              {
+                "id": "MCC-510.BUS_TEMP",
+                "assetId": "MCC-510",
+                "name": "Incomer joint temperature",
+                "unit": "°C",
+                "latest": 47.631,
+                "baselineMean": 42.147,
+                "baselineStd": 0.7,
+                "zScore": 7.6,
+                "state": "abnormal",
+                "limits": "H 65 / HH 80"
+              },
+              {
+                "id": "TX-501.LV_VOLT",
+                "assetId": "TX-501",
+                "name": "LV terminal voltage (L-L)",
+                "unit": "V",
+                "latest": 398.83,
+                "baselineMean": 398.963,
+                "baselineStd": 0.7,
+                "zScore": -0.3,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              },
+              {
+                "id": "CH-402.COMP_CURRENT",
+                "assetId": "CH-402",
+                "name": "Compressor current",
+                "unit": "A",
+                "latest": 149.812,
+                "baselineMean": 69.185,
+                "baselineStd": 1,
+                "zScore": 80.6,
+                "state": "abnormal",
+                "limits": "H 138 / HH 148"
+              },
+              {
+                "id": "CH-402.LOAD",
+                "assetId": "CH-402",
+                "name": "Capacity utilisation",
+                "unit": "%",
+                "latest": 100.27,
+                "baselineMean": 25.162,
+                "baselineStd": 0.5,
+                "zScore": 150.2,
+                "state": "abnormal",
+                "limits": "H 90 / HH 98"
+              },
+              {
+                "id": "PL-410.TEMP",
+                "assetId": "PL-410",
+                "name": "Supply temperature",
+                "unit": "°C",
+                "latest": 24.867,
+                "baselineMean": 22.02,
+                "baselineStd": 0.3,
+                "zScore": 9.5,
+                "state": "abnormal",
+                "limits": "H 24.5 / HH 27"
+              },
+              {
+                "id": "HX-201.T_OUT",
+                "assetId": "HX-201",
+                "name": "Process outlet temperature",
+                "unit": "°C",
+                "latest": 36.811,
+                "baselineMean": 35.102,
+                "baselineStd": 0.5,
+                "zScore": 3.5,
+                "state": "normal",
+                "limits": "H 38.5 / HH 42"
+              },
+              {
+                "id": "M-101.CURRENT",
+                "assetId": "M-101",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 86.614,
+                "baselineMean": 86.055,
+                "baselineStd": 0.8,
+                "zScore": 0,
+                "state": "normal",
+                "limits": "H 96.3 / HH 105.8"
+              },
+              {
+                "id": "M-102.CURRENT",
+                "assetId": "M-102",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 0,
+                "baselineMean": 0.018,
+                "baselineStd": 0.8,
+                "zScore": 0,
+                "state": "normal",
+                "limits": "H 96.3 / HH 105.8"
+              },
+              {
+                "id": "M-401.CURRENT",
+                "assetId": "M-401",
+                "name": "Stator current",
+                "unit": "A",
+                "latest": 64.432,
+                "baselineMean": 64.032,
+                "baselineStd": 0.6,
+                "zScore": 0.2,
+                "state": "normal",
+                "limits": "H 71.7 / HH 78.7"
+              },
+              {
+                "id": "MCC-520.VOLT",
+                "assetId": "MCC-520",
+                "name": "Bus voltage (L-L)",
+                "unit": "V",
+                "latest": 397.63,
+                "baselineMean": 397.924,
+                "baselineStd": 0.7,
+                "zScore": -0.2,
+                "state": "normal",
+                "limits": "LL 368 / L 380 / H 420 / HH 430"
+              }
+            ],
+            "evidenceAnalyst": {
+              "summary": "The incident shows abnormal current and vibration in the cooling tower, with cyber events indicating potential unauthorized changes to the system.",
+              "interpretations": [
+                {
+                  "statement": "The cyber events (CEV-0004, CEV-0005, CEV-0003) suggest unauthorized changes to the system.",
+                  "basis": "inference",
+                  "evidence": [
+                    "CEV-0004",
+                    "CEV-0005",
+                    "CEV-0003"
+                  ]
+                }
+              ],
+              "gaps": [
+                {
+                  "description": "The physical signatures of the cyber events are not fully observed. The exact impact on the physical equipment is unclear.",
+                  "wouldClarify": "The physical effects of the cyber events and the cause-effect relationship between the cyber and physical systems are unknown.",
+                  "relatedTo": [
+                    "CEV-0004",
+                    "CEV-0005",
+                    "CEV-0003"
+                  ]
+                },
+                {
+                  "description": "The OT devices (e.g., PLC-500) are not fully monitored for their operational state and control signals.",
+                  "wouldClarify": "The operational state and control signals of the OT devices are not fully observed, making it difficult to determine the exact cause of the physical deviation.",
+                  "relatedTo": [
+                    "PLC-500"
+                  ]
+                }
+              ],
+              "evidenceQuality": "partial"
+            },
+            "cyberPhysical": {
+              "standing": "control_change_supported",
+              "headline": "Evidence supports an unapproved control-system change as the cause of the physical deviation. Whether the change was malicious is not established.",
+              "links": [
+                {
+                  "eventId": "CEV-0004",
+                  "relation": "PLC-500 controls CT-401",
+                  "leadS": 7
+                },
+                {
+                  "eventId": "CEV-0005",
+                  "relation": "PLC-500 controls CT-401",
+                  "leadS": 1
+                }
+              ],
+              "explanations": [
+                {
+                  "key": "equipment",
+                  "title": "Equipment fault, independent of any configuration change",
+                  "status": "not_supported",
+                  "criteria": [
+                    {
+                      "description": "Physical mechanism from the rule-based engine: Loss of airflow at CT-401 Cooling Tower (fan failure) (strong evidence support). A commanded change would produce the same mechanism; the explanations differ in what started it.",
+                      "observed": true,
+                      "evidence": [
+                        "ANM-0002",
+                        "ANM-0003",
+                        "ANM-0001",
+                        "ANM-0007",
+                        "ANM-0009",
+                        "ANM-0012"
+                      ]
+                    },
+                    {
+                      "description": "A trip or high vibration on the origin equipment (independent sign of an equipment fault)",
+                      "observed": false,
+                      "evidence": []
+                    },
+                    {
+                      "description": "No configuration change explains the deviation",
+                      "observed": false,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "control_change",
+                  "title": "Unapproved configuration change on PLC-500",
+                  "status": "supported",
+                  "criteria": [
+                    {
+                      "description": "PLC-500 controls the origin equipment (declared relationship)",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    },
+                    {
+                      "description": "Parameter Cooling-tower fan speed setpoint is declared to act on CT-401",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    },
+                    {
+                      "description": "The change preceded the first detection (1 s before, plausible lag ≤ 600 s)",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005",
+                        "ANM-0002"
+                      ]
+                    },
+                    {
+                      "description": "Observed deviation matches the parameter's expected signature (4 of 4 expected signals)",
+                      "observed": true,
+                      "evidence": [
+                        "ANM-0001",
+                        "ANM-0002",
+                        "ANM-0003",
+                        "ANM-0006",
+                        "ANM-0007",
+                        "ANM-0009",
+                        "ANM-0012",
+                        "ANM-0015"
+                      ]
+                    },
+                    {
+                      "description": "No trip or high vibration contradicts a commanded change",
+                      "observed": true,
+                      "evidence": []
+                    }
+                  ]
+                },
+                {
+                  "key": "unrelated_cyber",
+                  "title": "Cyber activity unrelated to this incident",
+                  "status": "not_supported",
+                  "criteria": [
+                    {
+                      "description": "Cyber events in the investigation window without a declared relationship to the origin equipment",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0001",
+                        "CEV-0002",
+                        "CEV-0003"
+                      ]
+                    },
+                    {
+                      "description": "No event touched a controller of the origin equipment",
+                      "observed": false,
+                      "evidence": [
+                        "CEV-0004",
+                        "CEV-0005"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "unknowns": [
+                "Sensor validity is assumed: no redundant instruments are modelled, so a sensor fault cannot be excluded from telemetry alone.",
+                "Flow records summarise traffic; packet content is not captured.",
+                "Who operated vendor.remote is not established by the account name.",
+                "The program on PLC-500 has not been compared with a known-good copy."
+              ],
+              "events": [
+                {
+                  "id": "CEV-0004",
+                  "onsetS": -7,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen Engineering connection EWS-01 → PLC-500",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0005",
+                  "onsetS": -1,
+                  "ruleId": "UNAPPROVED-CHANGE",
+                  "severity": "warning",
+                  "title": "Unapproved setting change on PLC-500: Cooling-tower fan speed setpoint 100 → 35 %",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0001",
+                  "onsetS": -27,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen RDP connection ENT-01 → JMP-01",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0002",
+                  "onsetS": -19,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen RDP connection JMP-01 → EWS-01",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0003",
+                  "onsetS": -19,
+                  "ruleId": "ENG-SESSION",
+                  "severity": "warning",
+                  "title": "Remote engineering session on EWS-01 outside an approved window",
+                  "changeRecordId": null
+                }
+              ]
+            }
+          },
+          "rawOutput": {
+            "assessments": [
+              {
+                "hypothesisKey": "tower_airflow_loss@CT-401",
+                "stance": "supported",
+                "rationale": "The evidence directly supports this hypothesis with strong support (90%) and clear physical signatures (fan current/vibration, basin temperature, chiller load). The fan trip and basin temperature rise are direct indicators of airflow loss, and the chiller load is a downstream consequence.",
+                "supporting": [
+                  {
+                    "statement": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003",
+                      "ANM-0001",
+                      "ANM-0007"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Cyber activity unrelated to this incident",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0001",
+                      "CEV-0002",
+                      "CEV-0003"
+                    ]
+                  }
+                ]
+              },
+              {
+                "hypothesisKey": "mcc_joint@MCC-510",
+                "stance": "contested",
+                "rationale": "This hypothesis is contested due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (20%) and the verification is limited.",
+                "supporting": [
+                  {
+                    "statement": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0016",
+                      "ANM-0018"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Equipment fault, independent of any configuration change",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0005"
+                    ]
+                  }
+                ]
+              },
+              {
+                "hypothesisKey": "chiller_fault@CH-402",
+                "stance": "unsupported",
+                "rationale": "This hypothesis is unsupported due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (0%) and the verification is limited.",
+                "supporting": [
+                  {
+                    "statement": "Capacity fault in CH-402 Trim Chiller",
+                    "basis": "observation",
+                    "evidence": [
+                      "ANM-0006",
+                      "ANM-0008",
+                      "ANM-0014",
+                      "ANM-0015"
+                    ]
+                  }
+                ],
+                "contradicting": [
+                  {
+                    "statement": "Unrelated cyber activity",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0001",
+                      "CEV-0002",
+                      "CEV-0003"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+            "challengeToLeading": {
+              "statement": "A cyber event (CEV-0005) that modifies the PLC-500's cooling-tower fan speed setpoint would not produce the same physical signature as a fan failure. The observed deviation matches the expected signature of a fan failure, not a configuration change.",
+              "evidence": [
+                "CEV-0005",
+                "ANM-0002"
+              ]
+            },
+            "discriminators": [
+              {
+                "check": "Fan current/vibration (ANM-0002, ANM-0003, ANM-0001) are directly observed and match the expected signature of a fan failure.",
+                "separates": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "expectedIfFirst": "A configuration change would produce the same physical signature, but the observed deviation matches the expected signature of a fan failure."
+              },
+              {
+                "check": "Basin temperature (CT-401.BASIN_TEMP) is high and rising, indicating a physical deviation.",
+                "separates": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "expectedIfFirst": "A configuration change would not produce a physical deviation in basin temperature."
+              }
+            ],
+            "agreesWithDeterministicRanking": true,
+            "rankingNote": "The evidence is sufficient to support the tower airflow loss hypothesis, while the other hypotheses are contested due to lack of physical signatures and declared relationships."
+          },
+          "error": null,
+          "issues": [],
+          "accepted": true,
+          "latencyMs": 461208,
+          "usage": {
+            "inputTokens": 6689,
+            "outputTokens": 1118
+          }
+        },
+        {
+          "seq": 4,
+          "agent": "investigation_planner",
+          "attempt": 1,
+          "at": "2026-11-21T11:43:43.408Z",
+          "inputHash": "0fb3ddb1",
+          "inputBytes": 5798,
+          "input": {
+            "task": "Recommend the physical checks that would most reduce uncertainty, in priority order.",
+            "facility": {
+              "name": "Meridian Works · Unit 3",
+              "dataSource": "Local simulation"
+            },
+            "incident": {
+              "id": "INC-0001",
+              "revision": 43,
+              "status": "open",
+              "severity": "critical",
+              "title": "CT-401 Cooling Tower: abnormal current and vibration",
+              "openedAt": "06:02:30",
+              "ageS": 120,
+              "activeAnomalies": 15,
+              "assessmentFrozen": null
+            },
+            "assets": [
+              {
+                "id": "CT-401",
+                "name": "Cooling Tower",
+                "category": "cooling",
+                "role": "affected",
+                "operatingState": "running"
+              },
+              {
+                "id": "MCC-510",
+                "name": "Motor Control Centre A",
+                "category": "electrical",
+                "role": "affected",
+                "operatingState": "running"
+              },
+              {
+                "id": "TX-501",
+                "name": "Distribution Transformer",
+                "category": "electrical",
+                "role": "affected",
+                "operatingState": "running"
+              },
+              {
+                "id": "CH-402",
+                "name": "Trim Chiller",
+                "category": "cooling",
+                "role": "affected",
+                "operatingState": "running"
+              },
+              {
+                "id": "PL-410",
+                "name": "CW Supply Line",
+                "category": "pipeline",
+                "role": "affected",
+                "operatingState": "running"
+              },
+              {
+                "id": "P-401",
+                "name": "Cooling Water Pump",
+                "category": "pump",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "PL-400",
+                "name": "CW Circulation Line",
+                "category": "pipeline",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "HX-201",
+                "name": "Process Cooler",
+                "category": "heat_exchanger",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "PL-420",
+                "name": "CW Return Line",
+                "category": "pipeline",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "PL-120",
+                "name": "Reactor Feed Line",
+                "category": "pipeline",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "RX-301",
+                "name": "Mixing Reactor",
+                "category": "reactor",
+                "role": "at_risk",
+                "operatingState": "running"
+              },
+              {
+                "id": "M-101",
+                "name": "Feed Pump A Motor",
+                "category": "motor",
+                "role": "context",
+                "operatingState": "running"
+              },
+              {
+                "id": "M-102",
+                "name": "Feed Pump B Motor",
+                "category": "motor",
+                "role": "context",
+                "operatingState": "standby"
+              },
+              {
+                "id": "M-401",
+                "name": "Cooling Water Pump Motor",
+                "category": "motor",
+                "role": "context",
+                "operatingState": "running"
+              },
+              {
+                "id": "MCC-520",
+                "name": "Motor Control Centre B",
+                "category": "electrical",
+                "role": "context",
+                "operatingState": "running"
+              }
+            ],
+            "hypotheses": [
+              {
+                "key": "tower_airflow_loss@CT-401",
+                "title": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                "focalAssetId": "CT-401",
+                "supportPct": 90,
+                "band": "strong",
+                "unknowns": [
+                  "Ambient wet-bulb temperature is not measured, so a weather-driven rise cannot be excluded by the engine."
+                ],
+                "verification": "Local inspection of the fan drive: starter trip flag, gearbox, blades."
+              },
+              {
+                "key": "mcc_joint@MCC-510",
+                "title": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                "focalAssetId": "MCC-510",
+                "supportPct": 20,
+                "band": "weak",
+                "unknowns": [
+                  "No thermal imaging or per-phase voltages; the joint temperature is a single-point measurement."
+                ],
+                "verification": "Thermographic survey of the incomer and a micro-ohm test of the joint, with the board made safe."
+              },
+              {
+                "key": "chiller_fault@CH-402",
+                "title": "Capacity fault in CH-402 Trim Chiller",
+                "focalAssetId": "CH-402",
+                "supportPct": 0,
+                "band": "weak",
+                "unknowns": [
+                  "Refrigerant-side pressures and the chiller alarm log are not available to the engine."
+                ],
+                "verification": "Chiller controller alarm history and refrigerant circuit readings."
+              }
+            ],
+            "hypothesisAnalyst": {
+              "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+              "stances": [
+                {
+                  "hypothesisKey": "tower_airflow_loss@CT-401",
+                  "stance": "supported"
+                },
+                {
+                  "hypothesisKey": "mcc_joint@MCC-510",
+                  "stance": "contested"
+                },
+                {
+                  "hypothesisKey": "chiller_fault@CH-402",
+                  "stance": "unsupported"
+                }
+              ],
+              "challengeToLeading": {
+                "statement": "A cyber event (CEV-0005) that modifies the PLC-500's cooling-tower fan speed setpoint would not produce the same physical signature as a fan failure. The observed deviation matches the expected signature of a fan failure, not a configuration change.",
+                "evidence": [
+                  "CEV-0005",
+                  "ANM-0002"
+                ]
+              },
+              "discriminators": [
+                {
+                  "check": "Fan current/vibration (ANM-0002, ANM-0003, ANM-0001) are directly observed and match the expected signature of a fan failure.",
+                  "separates": [
+                    "tower_airflow_loss@CT-401",
+                    "mcc_joint@MCC-510"
+                  ],
+                  "expectedIfFirst": "A configuration change would produce the same physical signature, but the observed deviation matches the expected signature of a fan failure."
+                },
+                {
+                  "check": "Basin temperature (CT-401.BASIN_TEMP) is high and rising, indicating a physical deviation.",
+                  "separates": [
+                    "tower_airflow_loss@CT-401",
+                    "mcc_joint@MCC-510"
+                  ],
+                  "expectedIfFirst": "A configuration change would not produce a physical deviation in basin temperature."
+                }
+              ]
+            },
+            "evidenceGaps": [
+              {
+                "description": "The physical signatures of the cyber events are not fully observed. The exact impact on the physical equipment is unclear.",
+                "wouldClarify": "The physical effects of the cyber events and the cause-effect relationship between the cyber and physical systems are unknown.",
+                "relatedTo": [
+                  "CEV-0004",
+                  "CEV-0005",
+                  "CEV-0003"
+                ]
+              },
+              {
+                "description": "The OT devices (e.g., PLC-500) are not fully monitored for their operational state and control signals.",
+                "wouldClarify": "The operational state and control signals of the OT devices are not fully observed, making it difficult to determine the exact cause of the physical deviation.",
+                "relatedTo": [
+                  "PLC-500"
+                ]
+              }
+            ],
+            "exposedAssets": [
+              {
+                "assetId": "CH-402",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402",
+                "exposure": "high",
+                "evidence": [
+                  "PL-410",
+                  "CH-402"
+                ]
+              },
+              {
+                "assetId": "PL-410",
+                "pathway": "CT-401 → P-401 → PL-400 → CH-402 → PL-410",
+                "exposure": "moderate",
+                "evidence": [
+                  "PL-410"
+                ]
+              }
+            ],
+            "ruleBasedChecks": [
+              "Check the CT-401 fan starter at MCC-510 for a trip indication and its cause (overload, earth fault).",
+              "Inspect the CT-401 fan mechanically before any restart: gearbox, blades, obstruction.",
+              "Consider reducing throughput (heat load) if cooling-water supply temperature keeps rising.",
+              "Cross-check CT-401.FAN_CURRENT, CT-401.FAN_VIB against local instruments before acting on these readings.",
+              "Watch P-401, PL-400, HX-201, PL-420 for knock-on effects; they depend on CT-401."
+            ]
+          },
+          "rawOutput": {
+            "checks": [
+              {
+                "priority": 1,
+                "action": "Inspect CT-401 fan starter at MCC-510 for trip indication and cause",
+                "rationale": "Identifies potential mechanical failure or overload causing the fan to trip, separating fan failure from a cyber event.",
+                "targetAssetId": "MCC-510",
+                "addressesHypotheses": [
+                  "mcc_joint@MCC-510",
+                  "tower_airflow_loss@CT-401"
+                ],
+                "resolvesGap": "Clarifies cause of fan trip, separating physical from cyber explanation.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "priority": 2,
+                "action": "Mechanically inspect CT-401 fan: gearbox, blades, obstruction",
+                "rationale": "Directly observes physical cause of deviation, separating fan failure from cyber event.",
+                "targetAssetId": "CT-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Clarifies physical cause of fan deviation, resolving ambiguity between cyber and physical causes.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0001"
+                ]
+              },
+              {
+                "priority": 3,
+                "action": "Cross-check CT-401.FAN_CURRENT, CT-401.FAN_VIB against local instruments",
+                "rationale": "Verifies physical signature matches expected fan failure, resolving ambiguity between cyber and physical causes.",
+                "targetAssetId": "CT-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Confirms physical signature matches fan failure, resolving uncertainty about cause.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003"
+                ]
+              },
+              {
+                "priority": 4,
+                "action": "Monitor P-401, PL-400, HX-201, PL-420 for knock-on effects",
+                "rationale": "Identifies potential cascading effects, separating physical from cyber explanation.",
+                "targetAssetId": "P-401",
+                "addressesHypotheses": [
+                  "tower_airflow_loss@CT-401",
+                  "mcc_joint@MCC-510"
+                ],
+                "resolvesGap": "Clarifies impact of fan failure on downstream systems, resolving ambiguity between physical and cyber causes.",
+                "investigativeValue": "high",
+                "evidence": [
+                  "PL-400",
+                  "PL-420"
+                ]
+              }
+            ],
+            "sequencingNote": "Checks are ordered by priority to resolve evidence gaps and separate physical from cyber explanations."
+          },
+          "error": null,
+          "issues": [],
+          "accepted": true,
+          "latencyMs": 111611,
+          "usage": {
+            "inputTokens": 2163,
+            "outputTokens": 695
+          }
+        },
+        {
+          "seq": 5,
+          "agent": "orchestrator",
+          "attempt": 1,
+          "at": "2026-11-21T11:45:35.024Z",
+          "inputHash": "5b5b64f6",
+          "inputBytes": 18590,
+          "input": {
+            "task": "Produce the final assessment from the specialists’ findings and the rule-based baseline.",
+            "facility": {
+              "name": "Meridian Works · Unit 3",
+              "dataSource": "Local simulation"
+            },
+            "incident": {
+              "id": "INC-0001",
+              "revision": 43,
+              "status": "open",
+              "severity": "critical",
+              "title": "CT-401 Cooling Tower: abnormal current and vibration",
+              "openedAt": "06:02:30",
+              "ageS": 120,
+              "activeAnomalies": 15,
+              "assessmentFrozen": null
+            },
+            "origin": {
+              "assetId": "CT-401",
+              "score": 1,
+              "rationale": [
+                "Earliest abnormal onset in the incident (06:02:27).",
+                "4 of 4 other affected assets lie on dependency paths leading away from it."
+              ],
+              "alternatives": [
+                {
+                  "assetId": "CH-402",
+                  "score": 0.78
+                },
+                {
+                  "assetId": "PL-410",
+                  "score": 0.57
+                }
+              ]
+            },
+            "ruleBasedBaseline": {
+              "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+              "hypotheses": [
+                {
+                  "key": "tower_airflow_loss@CT-401",
+                  "title": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                  "supportPct": 90,
+                  "band": "strong"
+                },
+                {
+                  "key": "mcc_joint@MCC-510",
+                  "title": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                  "supportPct": 20,
+                  "band": "weak"
+                },
+                {
+                  "key": "chiller_fault@CH-402",
+                  "title": "Capacity fault in CH-402 Trim Chiller",
+                  "supportPct": 0,
+                  "band": "weak"
+                }
+              ]
+            },
+            "citable": {
+              "anomalies": [
+                {
+                  "id": "ANM-0002",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.FAN_CURRENT",
+                  "kind": "baseline_deviation",
+                  "direction": "low",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 0,
+                  "latest": 5.993,
+                  "baselineMean": 38.008,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0003",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.FAN_VIB",
+                  "kind": "baseline_deviation",
+                  "direction": "low",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 1,
+                  "latest": 0.462,
+                  "baselineMean": 2.402,
+                  "unit": "mm/s"
+                },
+                {
+                  "id": "ANM-0001",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.FAN_CURRENT",
+                  "kind": "threshold_low",
+                  "direction": "low",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 2,
+                  "latest": 6.093,
+                  "baselineMean": 38.008,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0004",
+                  "assetId": "MCC-510",
+                  "signalId": "MCC-510.CURRENT",
+                  "kind": "baseline_deviation",
+                  "direction": "low",
+                  "severity": "warning",
+                  "status": "cleared",
+                  "onsetS": 2,
+                  "latest": 313.249,
+                  "baselineMean": 322.224,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0005",
+                  "assetId": "TX-501",
+                  "signalId": "TX-501.LOAD",
+                  "kind": "baseline_deviation",
+                  "direction": "low",
+                  "severity": "advisory",
+                  "status": "cleared",
+                  "onsetS": 3,
+                  "latest": 328.674,
+                  "baselineMean": 337.661,
+                  "unit": "kW"
+                },
+                {
+                  "id": "ANM-0007",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.BASIN_TEMP",
+                  "kind": "rate_of_change",
+                  "direction": "rising",
+                  "severity": "warning",
+                  "status": "cleared",
+                  "onsetS": 6,
+                  "latest": 32.25,
+                  "baselineMean": 24.028,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0006",
+                  "assetId": "CH-402",
+                  "signalId": "CH-402.LOAD",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 7,
+                  "latest": 100.275,
+                  "baselineMean": 25.162,
+                  "unit": "%"
+                },
+                {
+                  "id": "ANM-0008",
+                  "assetId": "CH-402",
+                  "signalId": "CH-402.COMP_CURRENT",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 9,
+                  "latest": 149.776,
+                  "baselineMean": 69.185,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0009",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.BASIN_TEMP",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 10,
+                  "latest": 32.926,
+                  "baselineMean": 24.028,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0010",
+                  "assetId": "PL-410",
+                  "signalId": "PL-410.TEMP",
+                  "kind": "rate_of_change",
+                  "direction": "rising",
+                  "severity": "advisory",
+                  "status": "cleared",
+                  "onsetS": 13,
+                  "latest": 22.889,
+                  "baselineMean": 22.02,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0011",
+                  "assetId": "MCC-510",
+                  "signalId": "MCC-510.CURRENT",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 27,
+                  "latest": 371.087,
+                  "baselineMean": 322.224,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0012",
+                  "assetId": "CT-401",
+                  "signalId": "CT-401.BASIN_TEMP",
+                  "kind": "threshold_high",
+                  "direction": "high",
+                  "severity": "critical",
+                  "status": "active",
+                  "onsetS": 30,
+                  "latest": 32.894,
+                  "baselineMean": 24.028,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0013",
+                  "assetId": "TX-501",
+                  "signalId": "TX-501.LOAD",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 31,
+                  "latest": 366.329,
+                  "baselineMean": 337.761,
+                  "unit": "kW"
+                },
+                {
+                  "id": "ANM-0014",
+                  "assetId": "CH-402",
+                  "signalId": "CH-402.COMP_CURRENT",
+                  "kind": "threshold_high",
+                  "direction": "high",
+                  "severity": "critical",
+                  "status": "active",
+                  "onsetS": 37,
+                  "latest": 149.944,
+                  "baselineMean": 69.185,
+                  "unit": "A"
+                },
+                {
+                  "id": "ANM-0015",
+                  "assetId": "CH-402",
+                  "signalId": "CH-402.LOAD",
+                  "kind": "threshold_high",
+                  "direction": "high",
+                  "severity": "critical",
+                  "status": "active",
+                  "onsetS": 37,
+                  "latest": 100.186,
+                  "baselineMean": 25.162,
+                  "unit": "%"
+                },
+                {
+                  "id": "ANM-0016",
+                  "assetId": "MCC-510",
+                  "signalId": "MCC-510.BUS_TEMP",
+                  "kind": "rate_of_change",
+                  "direction": "rising",
+                  "severity": "advisory",
+                  "status": "cleared",
+                  "onsetS": 43,
+                  "latest": 46.546,
+                  "baselineMean": 42.138,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0017",
+                  "assetId": "PL-410",
+                  "signalId": "PL-410.TEMP",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 57,
+                  "latest": 24.881,
+                  "baselineMean": 22.02,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0018",
+                  "assetId": "MCC-510",
+                  "signalId": "MCC-510.BUS_TEMP",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "advisory",
+                  "status": "active",
+                  "onsetS": 64,
+                  "latest": 47.477,
+                  "baselineMean": 42.147,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0019",
+                  "assetId": "PL-410",
+                  "signalId": "PL-410.TEMP",
+                  "kind": "threshold_high",
+                  "direction": "high",
+                  "severity": "warning",
+                  "status": "active",
+                  "onsetS": 91,
+                  "latest": 24.912,
+                  "baselineMean": 22.02,
+                  "unit": "°C"
+                },
+                {
+                  "id": "ANM-0020",
+                  "assetId": "TX-501",
+                  "signalId": "TX-501.OIL_TEMP",
+                  "kind": "baseline_deviation",
+                  "direction": "high",
+                  "severity": "advisory",
+                  "status": "active",
+                  "onsetS": 108,
+                  "latest": 61.241,
+                  "baselineMean": 58.318,
+                  "unit": "°C"
+                }
+              ],
+              "assets": [
+                {
+                  "id": "CT-401",
+                  "name": "Cooling Tower",
+                  "role": "affected"
+                },
+                {
+                  "id": "MCC-510",
+                  "name": "Motor Control Centre A",
+                  "role": "affected"
+                },
+                {
+                  "id": "TX-501",
+                  "name": "Distribution Transformer",
+                  "role": "affected"
+                },
+                {
+                  "id": "CH-402",
+                  "name": "Trim Chiller",
+                  "role": "affected"
+                },
+                {
+                  "id": "PL-410",
+                  "name": "CW Supply Line",
+                  "role": "affected"
+                },
+                {
+                  "id": "P-401",
+                  "name": "Cooling Water Pump",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "PL-400",
+                  "name": "CW Circulation Line",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "HX-201",
+                  "name": "Process Cooler",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "PL-420",
+                  "name": "CW Return Line",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "PL-120",
+                  "name": "Reactor Feed Line",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "RX-301",
+                  "name": "Mixing Reactor",
+                  "role": "at_risk"
+                },
+                {
+                  "id": "M-101",
+                  "name": "Feed Pump A Motor",
+                  "role": "context"
+                },
+                {
+                  "id": "M-102",
+                  "name": "Feed Pump B Motor",
+                  "role": "context"
+                },
+                {
+                  "id": "M-401",
+                  "name": "Cooling Water Pump Motor",
+                  "role": "context"
+                },
+                {
+                  "id": "MCC-520",
+                  "name": "Motor Control Centre B",
+                  "role": "context"
+                }
+              ]
+            },
+            "cyberPhysical": {
+              "standing": "control_change_supported",
+              "headline": "Evidence supports an unapproved control-system change as the cause of the physical deviation. Whether the change was malicious is not established.",
+              "links": [
+                {
+                  "eventId": "CEV-0004",
+                  "relation": "PLC-500 controls CT-401",
+                  "leadS": 7
+                },
+                {
+                  "eventId": "CEV-0005",
+                  "relation": "PLC-500 controls CT-401",
+                  "leadS": 1
+                }
+              ],
+              "explanations": [
+                {
+                  "key": "equipment",
+                  "title": "Equipment fault, independent of any configuration change",
+                  "status": "not_supported",
+                  "criteria": [
+                    {
+                      "description": "Physical mechanism from the rule-based engine: Loss of airflow at CT-401 Cooling Tower (fan failure) (strong evidence support). A commanded change would produce the same mechanism; the explanations differ in what started it.",
+                      "observed": true,
+                      "evidence": [
+                        "ANM-0002",
+                        "ANM-0003",
+                        "ANM-0001",
+                        "ANM-0007",
+                        "ANM-0009",
+                        "ANM-0012"
+                      ]
+                    },
+                    {
+                      "description": "A trip or high vibration on the origin equipment (independent sign of an equipment fault)",
+                      "observed": false,
+                      "evidence": []
+                    },
+                    {
+                      "description": "No configuration change explains the deviation",
+                      "observed": false,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "key": "control_change",
+                  "title": "Unapproved configuration change on PLC-500",
+                  "status": "supported",
+                  "criteria": [
+                    {
+                      "description": "PLC-500 controls the origin equipment (declared relationship)",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    },
+                    {
+                      "description": "Parameter Cooling-tower fan speed setpoint is declared to act on CT-401",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005"
+                      ]
+                    },
+                    {
+                      "description": "The change preceded the first detection (1 s before, plausible lag ≤ 600 s)",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0005",
+                        "ANM-0002"
+                      ]
+                    },
+                    {
+                      "description": "Observed deviation matches the parameter's expected signature (4 of 4 expected signals)",
+                      "observed": true,
+                      "evidence": [
+                        "ANM-0001",
+                        "ANM-0002",
+                        "ANM-0003",
+                        "ANM-0006",
+                        "ANM-0007",
+                        "ANM-0009",
+                        "ANM-0012",
+                        "ANM-0015"
+                      ]
+                    },
+                    {
+                      "description": "No trip or high vibration contradicts a commanded change",
+                      "observed": true,
+                      "evidence": []
+                    }
+                  ]
+                },
+                {
+                  "key": "unrelated_cyber",
+                  "title": "Cyber activity unrelated to this incident",
+                  "status": "not_supported",
+                  "criteria": [
+                    {
+                      "description": "Cyber events in the investigation window without a declared relationship to the origin equipment",
+                      "observed": true,
+                      "evidence": [
+                        "CEV-0001",
+                        "CEV-0002",
+                        "CEV-0003"
+                      ]
+                    },
+                    {
+                      "description": "No event touched a controller of the origin equipment",
+                      "observed": false,
+                      "evidence": [
+                        "CEV-0004",
+                        "CEV-0005"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "unknowns": [
+                "Sensor validity is assumed: no redundant instruments are modelled, so a sensor fault cannot be excluded from telemetry alone.",
+                "Flow records summarise traffic; packet content is not captured.",
+                "Who operated vendor.remote is not established by the account name.",
+                "The program on PLC-500 has not been compared with a known-good copy."
+              ],
+              "events": [
+                {
+                  "id": "CEV-0004",
+                  "onsetS": -7,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen Engineering connection EWS-01 → PLC-500",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0005",
+                  "onsetS": -1,
+                  "ruleId": "UNAPPROVED-CHANGE",
+                  "severity": "warning",
+                  "title": "Unapproved setting change on PLC-500: Cooling-tower fan speed setpoint 100 → 35 %",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0001",
+                  "onsetS": -27,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen RDP connection ENT-01 → JMP-01",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0002",
+                  "onsetS": -19,
+                  "ruleId": "FIRST-SEEN",
+                  "severity": "advisory",
+                  "title": "First-seen RDP connection JMP-01 → EWS-01",
+                  "changeRecordId": null
+                },
+                {
+                  "id": "CEV-0003",
+                  "onsetS": -19,
+                  "ruleId": "ENG-SESSION",
+                  "severity": "warning",
+                  "title": "Remote engineering session on EWS-01 outside an approved window",
+                  "changeRecordId": null
+                }
+              ]
+            },
+            "agentStatus": {
+              "evidence_analyst": "completed",
+              "impact_analyst": "completed",
+              "hypothesis_analyst": "completed",
+              "investigation_planner": "completed"
+            },
+            "specialists": {
+              "evidence_analyst": {
+                "summary": "The incident shows abnormal current and vibration in the cooling tower, with cyber events indicating potential unauthorized changes to the system.",
+                "observations": [
+                  {
+                    "statement": "The cooling tower (CT-401) shows a baseline deviation in fan motor current (ANM-0002) and vibration (ANM-0003).",
+                    "basis": "inference",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003"
+                    ]
+                  },
+                  {
+                    "statement": "The MCC-510 (motor control centre) shows a baseline deviation in current (ANM-0004) and a high load (ANM-0006).",
+                    "basis": "inference",
+                    "evidence": [
+                      "ANM-0004",
+                      "ANM-0006"
+                    ]
+                  },
+                  {
+                    "statement": "The TX-501 (distribution transformer) shows a high load (ANM-0005) and a rising basin temperature (ANM-0007).",
+                    "basis": "inference",
+                    "evidence": [
+                      "ANM-0005",
+                      "ANM-0007"
+                    ]
+                  },
+                  {
+                    "statement": "The CH-402 (trim chiller) shows a high load (ANM-0006) and a high current (ANM-0008).",
+                    "basis": "inference",
+                    "evidence": [
+                      "ANM-0006",
+                      "ANM-0008"
+                    ]
+                  }
+                ],
+                "sequence": [
+                  {
+                    "step": 1,
+                    "assetId": "CT-401",
+                    "description": "Abnormal fan motor current and vibration detected.",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003"
+                    ]
+                  },
+                  {
+                    "step": 2,
+                    "assetId": "MCC-510",
+                    "description": "Abnormal current and high load detected.",
+                    "evidence": [
+                      "ANM-0004",
+                      "ANM-0006"
+                    ]
+                  },
+                  {
+                    "step": 3,
+                    "assetId": "TX-501",
+                    "description": "High load and rising basin temperature detected.",
+                    "evidence": [
+                      "ANM-0005",
+                      "ANM-0007"
+                    ]
+                  },
+                  {
+                    "step": 4,
+                    "assetId": "CH-402",
+                    "description": "High load and high current detected.",
+                    "evidence": [
+                      "ANM-0006",
+                      "ANM-0008"
+                    ]
+                  }
+                ],
+                "interpretations": [
+                  {
+                    "statement": "The cyber events (CEV-0004, CEV-0005, CEV-0003) suggest unauthorized changes to the system.",
+                    "basis": "inference",
+                    "evidence": [
+                      "CEV-0004",
+                      "CEV-0005",
+                      "CEV-0003"
+                    ]
+                  }
+                ],
+                "gaps": [
+                  {
+                    "description": "The physical signatures of the cyber events are not fully observed. The exact impact on the physical equipment is unclear.",
+                    "wouldClarify": "The physical effects of the cyber events and the cause-effect relationship between the cyber and physical systems are unknown.",
+                    "relatedTo": [
+                      "CEV-0004",
+                      "CEV-0005",
+                      "CEV-0003"
+                    ]
+                  },
+                  {
+                    "description": "The OT devices (e.g., PLC-500) are not fully monitored for their operational state and control signals.",
+                    "wouldClarify": "The operational state and control signals of the OT devices are not fully observed, making it difficult to determine the exact cause of the physical deviation.",
+                    "relatedTo": [
+                      "PLC-500"
+                    ]
+                  }
+                ],
+                "evidenceQuality": "partial"
+              },
+              "impact_analyst": {
+                "summary": "CT-401 is the direct abnormal asset, with anomalies in current and vibration. It depends on other assets (CH-402, PL-400, P-401) that are at_risk. The cascade involves high exposure to CH-402 and PL-410, with critical exposure to PL-410. The exposure is through cooling water pathways, with strong exposure to CH-402 and",
+                "directlyAbnormal": [
+                  {
+                    "assetId": "CT-401",
+                    "note": "Abnormal current and vibration detected at 06:02:27.",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003",
+                      "ANM-0001",
+                      "ANM-0004"
+                    ]
+                  }
+                ],
+                "potentiallyAffected": [
+                  {
+                    "assetId": "CH-402",
+                    "pathway": "CT-401 → P-401 → PL-400 → CH-402",
+                    "exposure": "high",
+                    "evidence": [
+                      "PL-410",
+                      "CH-402"
+                    ]
+                  },
+                  {
+                    "assetId": "PL-410",
+                    "pathway": "CT-401 → P-401 → PL-400 → CH-402 → PL-410",
+                    "exposure": "moderate",
+                    "evidence": [
+                      "PL-410"
+                    ]
+                  }
+                ],
+                "cascades": [
+                  {
+                    "description": "Abnormal in CT-401 leads to high exposure in CH-402 via cooling water.",
+                    "evidence": [
+                      "CH-402"
+                    ]
+                  },
+                  {
+                    "description": "Abnormal in CT-401 leads to moderate exposure in PL-410 via cooling water.",
+                    "evidence": [
+                      "PL-410"
+                    ]
+                  }
+                ]
+              },
+              "hypothesis_analyst": {
+                "assessments": [
+                  {
+                    "hypothesisKey": "tower_airflow_loss@CT-401",
+                    "stance": "supported",
+                    "rationale": "The evidence directly supports this hypothesis with strong support (90%) and clear physical signatures (fan current/vibration, basin temperature, chiller load). The fan trip and basin temperature rise are direct indicators of airflow loss, and the chiller load is a downstream consequence.",
+                    "supporting": [
+                      {
+                        "statement": "Loss of airflow at CT-401 Cooling Tower (fan failure)",
+                        "basis": "observation",
+                        "evidence": [
+                          "ANM-0002",
+                          "ANM-0003",
+                          "ANM-0001",
+                          "ANM-0007"
+                        ]
+                      }
+                    ],
+                    "contradicting": [
+                      {
+                        "statement": "Cyber activity unrelated to this incident",
+                        "basis": "inference",
+                        "evidence": [
+                          "CEV-0001",
+                          "CEV-0002",
+                          "CEV-0003"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "hypothesisKey": "mcc_joint@MCC-510",
+                    "stance": "contested",
+                    "rationale": "This hypothesis is contested due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (20%) and the verification is limited.",
+                    "supporting": [
+                      {
+                        "statement": "High-resistance connection at the MCC-510 Motor Control Centre A incomer",
+                        "basis": "observation",
+                        "evidence": [
+                          "ANM-0016",
+                          "ANM-0018"
+                        ]
+                      }
+                    ],
+                    "contradicting": [
+                      {
+                        "statement": "Equipment fault, independent of any configuration change",
+                        "basis": "inference",
+                        "evidence": [
+                          "CEV-0005"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "hypothesisKey": "chiller_fault@CH-402",
+                    "stance": "unsupported",
+                    "rationale": "This hypothesis is unsupported due to the lack of clear physical signatures (no fan trip or vibration) and the absence of a declared relationship between the cyber events and the physical equipment. The evidence is weak (0%) and the verification is limited.",
+                    "supporting": [
+                      {
+                        "statement": "Capacity fault in CH-402 Trim Chiller",
+                        "basis": "observation",
+                        "evidence": [
+                          "ANM-0006",
+                          "ANM-0008",
+                          "ANM-0014",
+                          "ANM-0015"
+                        ]
+                      }
+                    ],
+                    "contradicting": [
+                      {
+                        "statement": "Unrelated cyber activity",
+                        "basis": "inference",
+                        "evidence": [
+                          "CEV-0001",
+                          "CEV-0002",
+                          "CEV-0003"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+                "challengeToLeading": {
+                  "statement": "A cyber event (CEV-0005) that modifies the PLC-500's cooling-tower fan speed setpoint would not produce the same physical signature as a fan failure. The observed deviation matches the expected signature of a fan failure, not a configuration change.",
+                  "evidence": [
+                    "CEV-0005",
+                    "ANM-0002"
+                  ]
+                },
+                "discriminators": [
+                  {
+                    "check": "Fan current/vibration (ANM-0002, ANM-0003, ANM-0001) are directly observed and match the expected signature of a fan failure.",
+                    "separates": [
+                      "tower_airflow_loss@CT-401",
+                      "mcc_joint@MCC-510"
+                    ],
+                    "expectedIfFirst": "A configuration change would produce the same physical signature, but the observed deviation matches the expected signature of a fan failure."
+                  },
+                  {
+                    "check": "Basin temperature (CT-401.BASIN_TEMP) is high and rising, indicating a physical deviation.",
+                    "separates": [
+                      "tower_airflow_loss@CT-401",
+                      "mcc_joint@MCC-510"
+                    ],
+                    "expectedIfFirst": "A configuration change would not produce a physical deviation in basin temperature."
+                  }
+                ],
+                "agreesWithDeterministicRanking": true,
+                "rankingNote": "The evidence is sufficient to support the tower airflow loss hypothesis, while the other hypotheses are contested due to lack of physical signatures and declared relationships."
+              },
+              "investigation_planner": {
+                "checks": [
+                  {
+                    "priority": 1,
+                    "action": "Inspect CT-401 fan starter at MCC-510 for trip indication and cause",
+                    "rationale": "Identifies potential mechanical failure or overload causing the fan to trip, separating fan failure from a cyber event.",
+                    "targetAssetId": "MCC-510",
+                    "addressesHypotheses": [
+                      "mcc_joint@MCC-510",
+                      "tower_airflow_loss@CT-401"
+                    ],
+                    "resolvesGap": "Clarifies cause of fan trip, separating physical from cyber explanation.",
+                    "investigativeValue": "high",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003"
+                    ]
+                  },
+                  {
+                    "priority": 2,
+                    "action": "Mechanically inspect CT-401 fan: gearbox, blades, obstruction",
+                    "rationale": "Directly observes physical cause of deviation, separating fan failure from cyber event.",
+                    "targetAssetId": "CT-401",
+                    "addressesHypotheses": [
+                      "tower_airflow_loss@CT-401",
+                      "mcc_joint@MCC-510"
+                    ],
+                    "resolvesGap": "Clarifies physical cause of fan deviation, resolving ambiguity between cyber and physical causes.",
+                    "investigativeValue": "high",
+                    "evidence": [
+                      "ANM-0001"
+                    ]
+                  },
+                  {
+                    "priority": 3,
+                    "action": "Cross-check CT-401.FAN_CURRENT, CT-401.FAN_VIB against local instruments",
+                    "rationale": "Verifies physical signature matches expected fan failure, resolving ambiguity between cyber and physical causes.",
+                    "targetAssetId": "CT-401",
+                    "addressesHypotheses": [
+                      "tower_airflow_loss@CT-401",
+                      "mcc_joint@MCC-510"
+                    ],
+                    "resolvesGap": "Confirms physical signature matches fan failure, resolving uncertainty about cause.",
+                    "investigativeValue": "high",
+                    "evidence": [
+                      "ANM-0002",
+                      "ANM-0003"
+                    ]
+                  },
+                  {
+                    "priority": 4,
+                    "action": "Monitor P-401, PL-400, HX-201, PL-420 for knock-on effects",
+                    "rationale": "Identifies potential cascading effects, separating physical from cyber explanation.",
+                    "targetAssetId": "P-401",
+                    "addressesHypotheses": [
+                      "tower_airflow_loss@CT-401",
+                      "mcc_joint@MCC-510"
+                    ],
+                    "resolvesGap": "Clarifies impact of fan failure on downstream systems, resolving ambiguity between physical and cyber causes.",
+                    "investigativeValue": "high",
+                    "evidence": [
+                      "PL-400",
+                      "PL-420"
+                    ]
+                  }
+                ],
+                "sequencingNote": "Checks are ordered by priority to resolve evidence gaps and separate physical from cyber explanations."
+              }
+            },
+            "crossChecks": []
+          },
+          "rawOutput": {
+            "conclusion": {
+              "statement": "The evidence is consistent with a physical deviation in the CT-401 Cooling Tower due to a fan failure, supported by direct observations of fan current and vibration. The cyber events suggest unauthorized configuration changes, but the physical signatures of the cyber events are not fully observed. The leading cause is ",
+              "evidence": [
+                "ANM-0002",
+                "ANM-0003",
+                "ANM-0001",
+                "ANM-0007"
+              ]
+            },
+            "standing": "insufficient_evidence",
+            "leadingHypothesisKey": "tower_airflow_loss@CT-401",
+            "keyFindings": [
+              {
+                "statement": "The CT-401 Cooling Tower shows abnormal fan motor current and vibration, directly matching the expected signature of a fan failure.",
+                "basis": "observation",
+                "evidence": [
+                  "ANM-0002",
+                  "ANM-0003",
+                  "ANM-0001",
+                  "ANM-0007"
+                ]
+              },
+              {
+                "statement": "The PLC-500 controls the CT-401 Cooling Tower, and a configuration change (CEV-0005) modified the fan speed setpoint, producing the observed physical deviation.",
+                "basis": "inference",
+                "evidence": [
+                  "CEV-0005",
+                  "ANM-0002"
+                ]
+              }
+            ],
+            "disagreements": [
+              {
+                "between": [
+                  "mcc_joint@MCC-510",
+                  "tower_airflow_loss@CT-401"
+                ],
+                "topic": "Physical signature of the cyber event",
+                "resolution": "The observed deviation matches the expected signature of a fan failure, not a configuration change. The physical signature is clear, and the cyber event is not supported by physical evidence."
+              }
+            ],
+            "openQuestions": [
+              "What is the exact cause of the fan failure?",
+              "What is the impact of the fan failure on downstream systems?",
+              "What is the exact nature of the cyber event (e.g., whether it was malicious)?"
+            ],
+            "limitations": [
+              "The physical signatures of the cyber events are not fully observed.",
+              "The operational state and control signals of the OT devices are not fully monitored.",
+              "The exact impact of the cyber event on the physical equipment is unclear."
+            ],
+            "humanVerification": "A human must verify the physical signatures of the cyber events and the operational state of the OT devices before any cause can be treated as established."
+          },
+          "error": null,
+          "issues": [],
+          "accepted": true,
+          "latencyMs": 263322,
+          "usage": {
+            "inputTokens": 6340,
+            "outputTokens": 567
+          }
+        }
+      ],
+      "failure": null
+    }
+  ]
+}

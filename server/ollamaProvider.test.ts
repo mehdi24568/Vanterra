@@ -70,10 +70,27 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     expect(format.type).toBe('object');
     expect(format.additionalProperties).toBe(false);
     expect(Object.keys(format.properties as object)).toContain('observations');
-    // Lists are capped in what Ollama generates (speed on a CPU); validation is unchanged.
-    const props = format.properties as Record<string, { type?: string; maxItems?: number; items?: { properties?: Record<string, { maxItems?: number }> } }>;
-    expect(props.observations.maxItems).toBe(6);
-    expect(props.observations.items!.properties!.evidence.maxItems).toBe(6);
+    // Review steps are bounded in what Ollama generates (speed on a CPU): lists and text
+    // fields. Vanterra's validation is unchanged.
+    type Node = { type?: string; maxItems?: number; maxLength?: number; enum?: unknown[]; items?: { properties?: Record<string, Node> } };
+    const props = format.properties as Record<string, Node>;
+    expect(props.observations.maxItems).toBe(4);
+    expect(props.observations.items!.properties!.evidence.maxItems).toBe(4);
+    expect(props.summary.maxLength).toBe(320);
+    expect(props.observations.items!.properties!.statement.maxLength).toBe(320);
+    expect(props.observations.items!.properties!.basis.maxLength).toBeUndefined(); // enums are not text
+    // With the investigation's IDs, ID fields can only take real IDs, and every claim must cite one.
+    await provider(url).complete(request({ citableIds: ['ANM-0001', 'CT-401'] }));
+    const constrained = (seen.format as { properties: Record<string, Node & { minItems?: number }> }).properties;
+    const evidenceItems = (constrained.observations.items!.properties!.evidence as unknown as { items: { enum?: string[] }; minItems?: number });
+    expect(evidenceItems.items.enum).toEqual(['ANM-0001', 'CT-401']);
+    expect(evidenceItems.minItems).toBe(1);
+    expect((constrained.summary as { enum?: unknown }).enum).toBeUndefined(); // free text stays free
+    // Interactive questions keep longer lists and no text cap (their own output limit applies).
+    await provider(url).complete(request({ priority: 'interactive' }));
+    const asked = (seen.format as { properties: Record<string, Node> }).properties;
+    expect(asked.observations.maxItems).toBe(6);
+    expect(asked.summary.maxLength).toBeUndefined();
     expect((seen.messages as { role: string }[]).map((m) => m.role)).toEqual(['system', 'user']);
     expect(out.output).toEqual({ summary: 'ok' });
     expect(out.usage).toEqual({ inputTokens: 812, outputTokens: 40 });

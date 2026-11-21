@@ -25,6 +25,12 @@ export interface LlmRequest<T> {
   deadlineAt?: number;
   /** A person is waiting for this answer (Ask, Quick AI review): a queueing provider serves it next. */
   priority?: 'interactive' | 'background';
+  /**
+   * Every ID that exists in the investigation. A provider that constrains generation may
+   * restrict ID fields to these, so the model cannot cite evidence that does not exist.
+   * The answer is still validated and grounded afterwards.
+   */
+  citableIds?: string[];
   signal?: AbortSignal;
 }
 

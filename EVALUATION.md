@@ -247,9 +247,20 @@ What it completed, from the run log and Ollama's timing log (answer contents wer
 
 This establishes that real local inference runs end to end inside a real investigation, that real model answers were rejected by the gates and repaired, and the timing profile. It does not measure answer quality.
 
-### Run 2: flagship cyber-physical scenario
+### Run 2: flagship cyber-physical scenario, complete (`qwen3:1.7b`, 0.4.4 provider)
 
-*In progress at the time of writing; results are added here when the run finishes.*
+The first complete, scored live investigation (`eval/results/agentic-live.md`). The model ran alone, on the same CPU-only laptop, with the 0.4.4 local-model settings: lists capped at 4, text at 320 characters, citations constrained to the investigation's real IDs.
+
+| Measure | Result |
+| --- | --- |
+| Outcome | complete: 5 of 5 agents completed, 5 model calls, **0 repairs**, **20.4 minutes** (evidence 4.0, impact 2.5, hypothesis 7.7, planner 1.9, orchestrator 4.4) |
+| Tokens | 24,606 read, 3,794 written; cost 0 |
+| Grounding | 68 citations accepted, 8 of them cyber events; **0** invented evidence IDs, assets or hypotheses; 0 uncited observations; 0 certainty or probability wording; 0 causal overreach; 0 schema failures; 34 claims checked, 0 % unsupported |
+| Against ground truth | AI lead = injected mechanism (`tower_airflow_loss`) = deterministic lead; stance on the true hypothesis *supported*; both alternatives given a contradiction; leading explanation challenged; 4 of 4 checks linked to hypotheses; 1 disagreement recorded |
+| Weaknesses | Overall standing *insufficient evidence* (more cautious than the deterministic *control-system change supported*); none of the engine's at-risk assets covered; first check not on the true origin |
+| Governance | confirmed nothing; incident unchanged |
+
+For comparison, with the installed 0.4.1 settings a full review took about 45 minutes, because answers were long and invented citations forced repairs (docs/LOCAL_AI.md, items 4–7). One run on one case: an observation, not a statistic.
 
 ### Earlier provider checks
 

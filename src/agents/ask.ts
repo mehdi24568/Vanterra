@@ -15,6 +15,7 @@ import { catalogueOf } from './context';
 import type { InvestigationContext } from './context';
 import { LlmError } from './provider';
 import type { LlmProvider } from './provider';
+import { Id } from './schemas';
 
 export const ASK_MAX_QUESTION = 500;
 
@@ -25,7 +26,7 @@ export const QUICK_REVIEW_QUESTION =
 export const AskAnswerSchema = z.strictObject({
   answer: z.string().min(1).max(1500),
   /** Evidence IDs from the context that the answer rests on. */
-  evidence: z.array(z.string()).max(15),
+  evidence: z.array(Id).max(15),
   /** observed: what was measured or recorded; inferred: interpretation; not_in_evidence: the context cannot answer it. */
   basis: z.enum(['observed', 'inferred', 'not_in_evidence']),
 });
@@ -148,6 +149,7 @@ export async function answerQuestion(
         maxOutputTokens: 700,
         // Someone is waiting for this: served before queued five-agent review steps.
         priority: 'interactive',
+        citableIds: [...catalogueOf(ctx).all],
         timeoutMs: opts.timeoutMs,
         deadlineAt: started + opts.timeoutMs * 2,
         signal: opts.signal,

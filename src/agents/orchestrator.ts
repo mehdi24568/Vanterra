@@ -235,6 +235,7 @@ export async function runInvestigation(ctx: InvestigationContext, deps: RunDeps)
           user: feedback ? `${inputJson}\n\n${feedback}` : inputJson,
           schema,
           maxOutputTokens: limits.maxOutputTokens,
+          citableIds: [...catalogue.all],
           timeoutMs: Math.min(limits.agentTimeoutMs, remaining),
           deadlineAt: deadline,
           signal: deps.signal,

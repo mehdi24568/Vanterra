@@ -51,7 +51,8 @@ const SHARED_RULES = `Rules that apply to everything you write:
 - An ATT&CK technique listed with an event is context about what that kind of activity can represent, not a finding.
 - The telemetry comes from a simulated facility. Do not claim real-world consequences.
 - Be concise: one or two sentences per statement. Give conclusions and the evidence for them, not your reasoning steps.
-- Keep lists short: report the 3 to 5 most important items in each list, not every item you could find.`;
+- Keep lists short: report the 3 to 5 most important items in each list, not every item you could find.
+- Keep every text field under 300 characters.`;
 
 export const AGENT_PROMPTS: Record<AgentId, string> = {
   evidence_analyst: `You are the Evidence Analyst in an industrial incident investigation.
