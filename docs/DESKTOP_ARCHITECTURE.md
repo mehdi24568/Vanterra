@@ -2,7 +2,7 @@
 
 **Goal:** download → install → launch → investigate. No terminal, no localhost URL, no ports, no configuration files, no manual Ollama start.
 
-## Implementation status (0.5.0)
+## Implementation status (0.4.4)
 
 | Phase (§16) | State | Where |
 | --- | --- | --- |

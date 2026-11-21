@@ -9,7 +9,7 @@ This document reports what has been measured about Vanterra, how, and what has n
 | Independent, blind-authored scenarios (18 scenarios × 5 new seeds) | `npm run eval` | **Measured** — first run 80/90, after one product fix 90/90 (§2c) |
 | Governance gate against adversarial model answers | `npm run eval` | **Measured** — 99 corrupted answers |
 | Agent-workflow mechanics | `npm run eval` | **Measured with the scripted test double** — says nothing about reasoning quality |
-| Live model: grounding, reasoning quality, latency, tokens, cost | `npm run eval:live` | **Local model (`qwen3:4b`, CPU): run on a small sample** (§4). Claude: not measured (no API key) |
+| Live model: grounding, reasoning quality, latency, tokens, cost | `npm run eval:live` | **Local models, CPU: a small sample** (§4): partial runs on `qwen3:4b`, one complete flagship run on `qwen3:1.7b`. Claude: not measured (no API key) |
 | Human assessment | — | **Not studied** — no user study was run |
 
 Raw results: `eval/results/*.json`; generated tables: `eval/results/*.md`.
@@ -315,5 +315,5 @@ In the evaluation the injected fault stands in for a verified human verdict, sin
 ```
 npm run eval        # offline, about a minute, never calls a model
 npm run eval:live   # a real model: local Ollama (free, slow on CPU) or Claude (API key, costs money)
-npm test            # 177 unit, finance, scenario, cyber, briefing, ask, contrast, agent and provider tests
+npm test            # 165 unit, scenario, cyber, briefing, ask, contrast, agent and provider tests
 ```

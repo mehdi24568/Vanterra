@@ -120,6 +120,8 @@ Why this domain: EU financial entities must manage, classify and report ICT-rela
 
 What it would take: a domain pack (service graph, change-ticket and access-log adapters, detection rules), new evidence types, and validation with practitioners. It is a consulting-style use as much as a product: an *evidence standard* for post-incident reviews. **Not started**; the industrial product stays the focus.
 
+**Decision (2026-11-21):** Vanterra stays in its industrial, cyber-physical domain. Finance work will be a separate project, not a view inside Vanterra.
+
 ## 9. Sources
 
 - Dragos, *OT Cybersecurity Lessons Learned from the Frontlines*: https://www.dragos.com/blog/ot-cybersecurity-lessons-learned-frontlines

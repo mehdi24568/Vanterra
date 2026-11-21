@@ -29,7 +29,7 @@ The possible conclusions are explicit: *physical explanation supported* · *cont
 
 ## Quick start
 
-**Download for Windows:** [latest release](https://github.com/mehdi24568/Vanterra/releases/latest) → `Vanterra-Setup-<version>.exe`. The release notes give its SHA-256.
+**Download for Windows:** [Vanterra-Setup-0.4.4.exe](https://github.com/mehdi24568/Vanterra/releases/download/v0.4.4/Vanterra-Setup-0.4.4.exe) (116 MB, Windows 10/11, 64-bit; [release notes](https://github.com/mehdi24568/Vanterra/releases/tag/v0.4.4)). SHA-256: `66d5d5f92f9f68be73de57c2bb169c8524003957acdc9d05e0938c111374856d` (PowerShell: `Get-FileHash .\Vanterra-Setup-0.4.4.exe`).
 
 **Windows desktop app.** Vanterra runs as a desktop application with its own window, Start Menu entry and uninstaller. It runs no local web server and opens no port, and it needs no configuration. To build the installer (Node.js 20+ required to build, not to run):
 
@@ -41,7 +41,7 @@ npm install
 npm run desktop:dist
 ```
 
-This produces `release/Vanterra-Setup-0.5.0.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+This produces `release/Vanterra-Setup-0.4.4.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
 
 For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 
@@ -63,7 +63,7 @@ Open http://localhost:5173 in a WebGL2 browser. Everything works offline with no
 | `npm run desktop` | Build and run the desktop app without installing |
 | `node scripts/smoke-desktop.mjs` | Launch the packaged app and check UI, AI service, Ask, 3D and console errors |
 | `npm run dev` | Development server (with the AI service) |
-| `npm test` | 177 unit, scenario, cyber, finance, agent, provider, desktop-bridge and accessibility tests |
+| `npm test` | 165 unit, scenario, cyber, agent, provider, desktop-bridge and accessibility tests |
 | `npm run eval` | Offline evaluation over 10 seeds → `eval/results/` |
 | `npm run eval:live` | Live-model evaluation with a real model (local Ollama or Claude) |
 | `npm run build` | Type-check and build a static bundle (no AI service) |
@@ -134,20 +134,6 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 - **Cyber Engine** (`src/cyber/CyberEngine.ts`): five detection rules: `AUTH-BURST`, `ENG-SESSION` (outside an approved window), `CONDUIT` (segmentation violation), `FIRST-SEEN` (new communication after a learned baseline), and `UNAPPROVED-CHANGE` (matches no change record on account, host, parameter, window and value). Approved changes and controller reads are recorded as informational. Each event carries evidence fields, rationale and limitations; related events form cases.
 - **ATT&CK for ICS context** (`src/cyber/attack.ts`): seven techniques, each ID and tactic checked against attack.mitre.org (content v20.1). They are shown as context, with a standing caveat that a mapping is not a finding.
 
-## Finance: is this result real?
-
-The same investigation method applied to a company's monthly results (**Finance** view, key `4`). When EBITDA, margin or revenue moves, or fails to move, Vanterra determines with evidence whether the cause is operating performance (price, volume, costs), an accounting entry (approved or not), or both. It also shows the **normalised** result without unapproved manual entries, as a quality-of-earnings review would.
-
-![On budget as reported, but a manual entry hides a real price-driven decline](docs/screenshots/14-finance-masked-decline.png)
-
-- An exact bridge from budget to reported: price, volume × margin, unit cost, freight, operating expenses, approved entries, unapproved entries.
-- Drivers flagged when they move unusually against their own 12 months.
-- Competing explanations with explicit criteria and evidence IDs. An entry explains a line only if it posts to it.
-- Seven standings, including **masked by an entry**: the reported result looks fine because an entry offsets a real deterioration.
-- A fictional company with synthetic data, and six scenarios with a known cause, all reached by the engine in tests (`src/finance/`). An entry without an approval reference is never called an error or fraud.
-
-Why finance, what was researched, what was decided and what was not built: [docs/FINANCE_CONSULTING.md](docs/FINANCE_CONSULTING.md).
-
 ## The cyber-physical assessment
 
 `src/cyber/assess.ts` evaluates up to four explanations for every incident: equipment fault, unapproved control change, approved change, and unrelated cyber activity. Each has explicit criteria (observed or not, with evidence IDs), a status, unknowns and next steps. It is deterministic and read-only, and it cannot change an incident or a verdict. Only an operator confirms.
@@ -165,7 +151,7 @@ Why finance, what was researched, what was decided and what was not built: [docs
 
 **Quick AI review** (AI tab) gives one checked answer in about a minute on a local model: the best-supported explanation, what argues against it and the two most useful checks. **Run AI agents** in the incident header starts the full five-agent review at any time (about 20 minutes on a laptop CPU); it can be stopped while running.
 
-Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator), backed by Claude or by a local Ollama model, review an incident in a code-controlled workflow: at most 2 calls per agent, 90 s per call, 240 s per run. They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
+Five agents (Evidence, Impact, Hypothesis, Planner, Orchestrator), backed by Claude or by a local Ollama model, review an incident in a code-controlled workflow: at most 2 calls per agent; with Claude, 90 s per call and 240 s per run (a local model on a CPU gets up to an hour per call and four hours per run). They now receive the cyber events and the deterministic cyber-physical assessment. Every answer passes a strict schema gate and a grounding gate. The grounding gate rejects invented evidence IDs (including CEV IDs), assets and hypotheses, uncited observations, certainty and probability wording, and **causal overreach**, such as "the attacker reduced the fan speed"; hedged, evidence-bounded wording is accepted. AI reports sit beside incidents, never inside them. Without a key the review is shown as unavailable; the scripted test double, used for tests, is always labelled. No paid service is required to use or evaluate the deterministic product.
 
 ## Evaluation
 
@@ -181,13 +167,13 @@ Measured over 10 seeds (details, ground truth and caveats in [EVALUATION.md](EVA
 | Cyber-physical conclusions correct (6 cases × 10 seeds) | 60 / 60, with 0 wrongly attributed to cyber and 0 cyber causes missed |
 | **Independent, blind-authored scenarios** (18 × 5 new seeds) | first run 80 / 90; one product defect found and fixed; now 90 / 90, with 0 false cyber attributions |
 | Adversarial model answers reaching an accepted output | 0 / 99 |
-| Live-model reasoning quality, latency, cost | **not measured** |
+| Live local model (`qwen3:1.7b`, CPU, flagship incident, one complete run) | 5 / 5 agents, 0 repairs, 68 citations, 0 invented, 20.4 min. One run is an observation, not a statistic; Claude has not been run live |
 
 Most scenarios were designed together with the rules. To counter that, a separate agent with no access to the implementation wrote 18 scenarios and their ground truth, covering sensor faults, conflicting evidence, approved work that looks suspicious, and sequential faults. Its first run exposed a real defect: an approved change was masking a later unapproved one. That was fixed and is covered by a regression test. These results show the system behaves as specified on situations it was not tuned to. They do not show performance on real plants or against real adversaries.
 
 ## Testing
 
-`npm test` runs 177 tests in 15 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 165 tests in 14 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 
@@ -206,7 +192,8 @@ src/
   runtime/      headless core, browser runtime, AI client
   spatial/      Three.js scene and OT layer
   ui/           Overview, Spatial, workbench, Cyber & OT
-server/         AI service, Claude and Ollama providers
+server/         AI service, Claude and Ollama providers, desktop bridge, Ollama start-up
+desktop/        Electron main process: app:// pages, in-app AI service, sandboxed window
 docs/           screenshots, brand, demo script, portfolio, publishing
 ```
 
@@ -217,7 +204,7 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 - **Flow summaries, not packets**; account names, not people. The assessment says so in every conclusion.
 - **One incident per asset at a time**, and hypotheses freeze after an operator intervention.
 - **Live AI evidence is a small local sample**: one complete scored investigation (flagship, `qwen3:1.7b`) plus partial runs, on one CPU-only laptop. Claude has not been run live.
-- **Not a desktop application yet**: it runs on a local development server and needs Node.js; no persistence. The AI service exists only with `npm run dev` or `npm run preview`. The plan is in [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
+- **Windows only, not code-signed, no persistence**: investigations are not saved between sessions. The local AI is slow on a CPU (about a minute per answer, about 20 minutes for a full review). In a browser, the AI service exists only with `npm run dev` or `npm run preview`. Remaining desktop work is in [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 - **The independent scenario author was another AI agent**, separated by information, not a human investigator.
 - **No real equipment or network can be reached or controlled**, by design.
 
@@ -230,9 +217,8 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 | [docs/SIMULATED_VS_REAL.md](docs/SIMULATED_VS_REAL.md) | Exactly what is simulated and what is real |
 | [docs/BRAND.md](docs/BRAND.md) | Name evaluation, identity, colour and terminology |
 | [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: measured performance, fixes, setup |
-| [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md) | Decision record and plan for a standalone Windows app |
+| [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md) | Decision record and implementation of the Windows desktop app |
 | [docs/PRODUCT_DISCOVERY.md](docs/PRODUCT_DISCOVERY.md) | Who this is for, evidence versus hypotheses, the selected direction and its first proof |
-| [docs/FINANCE_CONSULTING.md](docs/FINANCE_CONSULTING.md) | Finance and consulting discovery, the decision (earnings movement investigation) and its working proof |
 | [SECURITY.md](SECURITY.md) | Security controls, known risks, reporting |
 | [eval/independent/](eval/independent/) | Authoring brief, plant catalog and blind-authored scenarios |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo recording package |

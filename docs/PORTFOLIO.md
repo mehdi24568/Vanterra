@@ -8,10 +8,6 @@ Vanterra is a cyber-physical intelligence platform that investigates industrial 
 
 ## Positioning for consulting and finance
 
-**The finance demo (Finance view):** "EBITDA came in on budget. Is that real?" Vanterra's bridge shows a €168k price-driven decline in one segment, offset by a €170k manual accrual release with no recorded approval. The normalised EBITDA is €195k under budget, and the first next step is to report the underlying result alongside the reported one. That is a quality-of-earnings finding, reached by the same evidence discipline that separates a control-system change from an equipment fault in the plant. See docs/FINANCE_CONSULTING.md.
-
-**CV bullet (finance):** Extended Vanterra to financial performance: an earnings-movement investigation engine that separates operating drivers from accounting entries with an exact budget-to-actual bridge, explicit criteria and evidence trails, and surfaces results "masked" by unapproved entries, as in quality-of-earnings work. Six ground-truth scenarios, all reached in tests.
-
 What Vanterra shows, in the terms those roles use:
 
 | Consulting / finance skill | Where it is in Vanterra |
@@ -32,9 +28,9 @@ What Vanterra shows, in the terms those roles use:
 - Designed and built Vanterra, a cyber-physical incident investigation platform (TypeScript, React, Three.js): six statistical detectors and graph correlation under physical propagation rules over an 84-signal plant simulation. It adds a simulated Purdue-model OT network with five detection rules, verified MITRE ATT&CK for ICS context, and a 3D digital twin with an OT layer.
 - Built a deterministic cyber-physical assessment that links cyber events to physical incidents only through declared controller relationships, temporal precedence and expected physical signatures. Across 10 seeds it reached the correct conclusion in 60/60 runs, with 0 physical faults wrongly attributed to cyber activity, including deliberately misleading cases.
 - Validated it against 18 blind-authored scenarios in 8 categories (90 runs). The first run scored 80/90 and exposed a real defect: an approved change could mask a later unapproved change to the same setting. After the fix and a regression test, it scored 90/90.
-- Integrated a bounded five-agent investigation workflow that runs on the Claude API or on a local model through Ollama (no key, no cost): zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 177 automated tests in total. Ran it for real on a local 4B model on a CPU-only laptop, which exposed and led me to fix three reliability defects the stub tests could not reveal.
-
+- Integrated a bounded five-agent investigation workflow that runs on the Claude API or on a local model through Ollama (no key, no cost): zod-validated outputs, a grounding validator that rejects invented evidence IDs and causal overreach ("the attacker caused…"), deterministic fallback, audit trail and server-side key isolation. 0 of 99 adversarial outputs passed validation; 165 automated tests in total. Ran it for real on a local 4B model on a CPU-only laptop, which exposed and led me to fix three reliability defects the stub tests could not reveal.
 - Measured the agent workflow live on a local 1.7B model (CPU only): a complete five-agent review in 20.4 minutes with 0 repairs, 68 accepted citations and 0 invented evidence IDs, after constraining citations to the investigation's own evidence catalogue at generation time (one run, one scenario).
+- Shipped it as a Windows desktop app (Electron): pages served from a custom `app://` protocol with no local server and no open ports, a sandboxed window, and a local model started automatically; a per-user installer published on GitHub with a verified SHA-256.
 
 ## GitHub / LinkedIn
 
@@ -66,6 +62,6 @@ Vanterra is an investigation platform for industrial incidents where physical an
 | Physical intelligence | Six detectors; graph correlation with nine physically justified rules; evidence-scored hypotheses |
 | Cyber layer | Purdue-style OT model as data; simulated security telemetry; five rules; cases; verified ATT&CK for ICS context |
 | Cyber-physical reasoning | Declared-relationship linking, precedence and signature tests, fault discriminator, seven explicit conclusions, stated unknowns |
-| AI | Five agents, code orchestration, schema and grounding gates including causal overreach, audit, key isolation |
+| AI | Five agents, code orchestration, schema and grounding gates including causal overreach, citations constrained to real evidence, checked Ask answers, audit, key isolation |
 | Evaluation | Counterfactual ground truth, multi-seed physical and cyber-physical suites, adversarial governance check, live-model harness |
-| Product | Overview, Spatial with OT layer, investigation workbench, Cyber & OT view, guided demo, scenario launcher, restrained design system |
+| Product | Overview, Spatial with OT layer, investigation workbench, Cyber & OT view, Ask tab, guided demo, scenario launcher, restrained design system, Windows desktop app |
