@@ -11,7 +11,9 @@ import { _electron as electron } from 'playwright-core';
 
 const exe = process.env.VANTERRA_EXE ?? 'release/win-unpacked/Vanterra.exe';
 const shot = process.argv[2] ?? 'release/smoke.png';
-const app = await electron.launch({ executablePath: exe, timeout: 60_000 });
+// A separate data folder lets the test run next to an installed, running Vanterra.
+const userData = process.env.SMOKE_USER_DATA;
+const app = await electron.launch({ executablePath: exe, timeout: 60_000, args: userData ? [`--user-data-dir=${userData}`] : [] });
 const pid = app.process().pid;
 const page = await app.firstWindow();
 const errors = [];

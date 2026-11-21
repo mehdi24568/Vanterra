@@ -70,6 +70,10 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     expect(format.type).toBe('object');
     expect(format.additionalProperties).toBe(false);
     expect(Object.keys(format.properties as object)).toContain('observations');
+    // Lists are capped in what Ollama generates (speed on a CPU); validation is unchanged.
+    const props = format.properties as Record<string, { type?: string; maxItems?: number; items?: { properties?: Record<string, { maxItems?: number }> } }>;
+    expect(props.observations.maxItems).toBe(6);
+    expect(props.observations.items!.properties!.evidence.maxItems).toBe(6);
     expect((seen.messages as { role: string }[]).map((m) => m.role)).toEqual(['system', 'user']);
     expect(out.output).toEqual({ summary: 'ok' });
     expect(out.usage).toEqual({ inputTokens: 812, outputTokens: 40 });

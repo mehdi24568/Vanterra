@@ -50,7 +50,8 @@ const SHARED_RULES = `Rules that apply to everything you write:
 - Cyber events (CEV-0001) are evidence that something happened on the OT network or a controller. They are not evidence that it caused the physical deviation. A cyber explanation needs a declared relationship (a controller that controls the equipment), the change coming first, and a matching physical signature; the "cyberPhysical" assessment shows which of these were observed. Never attribute intent: do not call anything an attack, sabotage or malicious, and do not name an attacker.
 - An ATT&CK technique listed with an event is context about what that kind of activity can represent, not a finding.
 - The telemetry comes from a simulated facility. Do not claim real-world consequences.
-- Be concise: one or two sentences per statement. Give conclusions and the evidence for them, not your reasoning steps.`;
+- Be concise: one or two sentences per statement. Give conclusions and the evidence for them, not your reasoning steps.
+- Keep lists short: report the 3 to 5 most important items in each list, not every item you could find.`;
 
 export const AGENT_PROMPTS: Record<AgentId, string> = {
   evidence_analyst: `You are the Evidence Analyst in an industrial incident investigation.

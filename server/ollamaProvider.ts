@@ -40,9 +40,25 @@ export interface OllamaOptions {
    * running for hours on a CPU. Default 4096.
    */
   maxOutputTokens?: number;
+  /**
+   * Upper bound on items per list in the JSON Schema sent to Ollama (`maxItems`). Ollama
+   * enforces it while generating, so a small model cannot write 15 observations at a few
+   * tokens per second. Vanterra's own validation is unchanged. Default 6; 0 disables.
+   */
+  maxListItems?: number;
 }
 
 const THINKING_FAMILIES = /^(qwen3|deepseek-r1|gpt-oss|magistral)/i;
+
+/** Adds `maxItems` to every array in a JSON Schema that has no tighter limit. Returns a copy. */
+export function capArrays(schema: unknown, maxItems: number): unknown {
+  if (Array.isArray(schema)) return schema.map((s) => capArrays(s, maxItems));
+  if (!schema || typeof schema !== 'object') return schema;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(schema)) out[k] = capArrays(v, maxItems);
+  if (out.type === 'array' && (typeof out.maxItems !== 'number' || out.maxItems > maxItems)) out.maxItems = maxItems;
+  return out;
+}
 
 /** Resolves when `turn` settles; rejects as cancelled if `signal` fires first. */
 function waitForTurn(turn: Promise<void>, signal?: AbortSignal): Promise<void> {
@@ -128,8 +144,10 @@ export class OllamaProvider implements LlmProvider {
 
   private async send<T>(request: LlmRequest<T>): Promise<LlmResponse> {
     const started = performance.now();
-    const format = z.toJSONSchema(request.schema as z.ZodType);
-    delete (format as Record<string, unknown>).$schema;
+    const schema = z.toJSONSchema(request.schema as z.ZodType) as Record<string, unknown>;
+    delete schema.$schema;
+    const listCap = this.options.maxListItems ?? 6;
+    const format = listCap > 0 ? capArrays(schema, listCap) : schema;
     const body = {
       model: this.model,
       stream: false,

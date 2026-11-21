@@ -29,6 +29,8 @@ The possible conclusions are explicit: *physical explanation supported* · *cont
 
 ## Quick start
 
+**Download for Windows:** [latest release](https://github.com/mehdi24568/Vanterra/releases/latest) → `Vanterra-Setup-<version>.exe`. The release notes give its SHA-256.
+
 **Windows desktop app.** Vanterra runs as a desktop application with its own window, Start Menu entry and uninstaller. It runs no local web server and opens no port, and it needs no configuration. To build the installer (Node.js 20+ required to build, not to run):
 
 ```bash
@@ -39,7 +41,7 @@ npm install
 npm run desktop:dist
 ```
 
-This produces `release/Vanterra-Setup-0.4.0.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+This produces `release/Vanterra-Setup-0.4.1.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
 
 For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 

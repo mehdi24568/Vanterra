@@ -98,6 +98,7 @@ export function configureAi(env: Env) {
       numCtx: positive(env.ATLAS_OLLAMA_NUM_CTX, 16384),
       keepAlive: env.ATLAS_OLLAMA_KEEP_ALIVE?.trim() || '10m',
       maxOutputTokens: positive(env.ATLAS_OLLAMA_NUM_PREDICT, 4096),
+      maxListItems: env.ATLAS_OLLAMA_MAX_LIST_ITEMS === '0' ? 0 : positive(env.ATLAS_OLLAMA_MAX_LIST_ITEMS, 6),
     });
     // Measured on a CPU-only laptop (i5-1135G7, 16 GB, qwen3:4b): single calls took 19–45 min
     // under memory pressure and an investigation needs 5–10 calls, so the earlier 15 min /

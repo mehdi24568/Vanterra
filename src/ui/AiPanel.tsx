@@ -419,6 +419,11 @@ export function AiPanel({ incident }: { incident: Incident }) {
             <p className="ai-intro">
               Five agents review this incident: each sees a different slice of the evidence, must cite it by ID, and is checked before anything is shown. They advise; they cannot confirm a cause or change the incident.
             </p>
+            {ai.provider === 'ollama' ? (
+              <p className="notice">
+                Runs on this computer’s local model ({ai.model ?? 'Ollama'}). On a laptop processor a full review takes several minutes per agent, longer if memory is short. For a quick answer, use the <button type="button" className="link-button" onClick={() => runtime.setInvestigationTab('ask')}>Ask</button> tab (about a minute).
+              </p>
+            ) : null}
             <div className="button-row">
               <button type="button" className="btn btn--primary" onClick={() => runtime.runAiInvestigation(incident.id)} disabled={running}>
                 {running ? 'Investigating…' : report || run?.error ? 'Run again' : 'Run AI investigation'}
