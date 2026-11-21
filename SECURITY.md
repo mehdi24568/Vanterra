@@ -18,11 +18,13 @@ Please do not post vulnerability details in a public issue. Open an issue asking
 | Cross-site requests | `POST /api/ai/investigate` requires `application/json` and refuses a foreign `Origin` or a cross-site `Sec-Fetch-Site`, so a website open in the same browser cannot start a run (which would cost money with Claude or hours of CPU with a local model) | `server/atlasAi.test.ts` (*refuses to start an investigation from another site*) |
 | Local model | Calls go only to the configured Ollama address (default `127.0.0.1:11434`), one at a time, with a timeout and an output cap | `server/ollamaProvider.test.ts` |
 | Logs | The AI service logs run IDs, status, timings and counts, not investigation content or keys | `server/atlasAi.ts` |
+| Desktop app | Renderer sandboxed and context-isolated, no Node integration and no preload; content served from `app://vanterra` with a strict Content-Security-Policy; navigation away and new windows blocked; permission requests (camera, location, …) denied; no local server: verified **no listening TCP port and no UDP endpoint**; Ollama started only from its fixed install path, without a shell, and only for a loopback address; API keys in the environment are not read | `desktop/main.ts`, `server/desktopBridge.test.ts`, `server/ollamaRuntime.test.ts`, `scripts/smoke-desktop.mjs` |
 | Repository | `.env` files (except `.env.example`) are ignored; every commit was scanned for keys, tokens, private keys, personal email addresses and local paths before the repository was made public | docs/PUBLISHING.md |
 
 ## Known risks and limits
 
-- **Development server.** Vanterra runs on Vite's development server, which listens on localhost by default. Do not start it with `--host` on an untrusted network: the server is a development tool, not a hardened web server.
+- **Unsigned installer.** The Windows installer is not code-signed (a certificate costs money), so its origin cannot be verified by Windows; SmartScreen warns on first run. Build it from source if in doubt.
+- **Development server (web build only).** In the browser build, Vanterra runs on Vite's development server, which listens on localhost by default. Do not start it with `--host` on an untrusted network: the server is a development tool, not a hardened web server.
 - **Ollama has no authentication.** Any process on the machine can use the local model server. That is Ollama's design, not something Vanterra changes.
 - **Gates catch patterns, not wrong reasoning.** An answer that cites real evidence but draws a wrong conclusion passes both gates. That is why AI output stays advisory and only a person confirms.
 - **Dependencies.** `npm audit` (2026-11-20): 0 advisories in runtime dependencies; 9 moderate advisories in the ESLint development toolchain (through `minimatch`), which is not part of the application.

@@ -1,8 +1,28 @@
 # Desktop architecture decision
 
-**Status:** decision record and plan. Nothing in this document is implemented yet. Vanterra today is a web app served by a local development server ([README](../README.md#quick-start)).
-
 **Goal:** download → install → launch → investigate. No terminal, no localhost URL, no ports, no configuration files, no manual Ollama start.
+
+## Implementation status (0.4.0)
+
+| Phase (§16) | State | Where |
+| --- | --- | --- |
+| 1. Shell | **Done.** Electron 45; the production build is served from `app://vanterra`; the renderer is sandboxed and isolated, with no Node access and no preload; strict CSP; navigation and new windows blocked; permission requests denied; single instance | `desktop/main.ts` |
+| AI without a local server | **Done.** `/api/ai/*` requests from the page are answered inside the app by the unchanged AI service through `server/desktopBridge.ts` (3 tests), with the same checks | `server/desktopBridge.ts` |
+| 2. Runtime manager | **Partly.** Ollama is detected, started if installed and not running (fixed path, no shell, loopback only), and stopped on exit only if Vanterra started it (3 tests). Default model `qwen3:1.7b`, no configuration. **Not yet:** an in-app model download | `server/ollamaRuntime.ts` |
+| 3. Persistence | Not started | — |
+| 4. Installer | **Done, unsigned.** NSIS, per-user, no admin rights, Start Menu and desktop shortcuts, uninstaller; 116 MB | `npm run desktop:dist` |
+
+**Verified on the packaged app** (`scripts/smoke-desktop.mjs`, plus a normal launch):
+- loads from `app://vanterra/`;
+- the AI service reports available with Ollama and `qwen3:1.7b`, with zero configuration;
+- WebGL2 and the 3D scene work;
+- the flagship scenario, the incident and the Ask tab work;
+- no console errors;
+- **no listening TCP port and no UDP endpoint** owned by the app.
+
+**Deviation from §3:** the AI service runs in the main process behind the protocol handler, not in a separate utility process over IPC. That kept the renderer and the service code unchanged, and with them every existing check and test. The service's work is network I/O to Ollama, which does not block the main process. A utility process remains the right move if CPU-heavy work is ever added there.
+
+**Settings for power users:** `settings.json` in the app's data folder (`%APPDATA%\Vanterra`) may hold `ATLAS_*` values and, optionally, `ANTHROPIC_API_KEY`. API keys in the environment are deliberately not read, so a key set for another tool cannot start paid calls.
 
 ## 1. What exists today (verified)
 

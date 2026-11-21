@@ -15,9 +15,9 @@ Updated 2026-11-20. The product (formerly ATLAS) is described in [README.md](REA
 | Ollama provider (local, free) | yes | local stub of the Ollama API: queueing, slow answers, cut-off connections, cancellation, deadline, output cap, full five-agent run | **yes, on a CPU-only laptop** (slow: 19–45 min per call) |
 | Plain-language briefing ("In plain words", Cyber-physical tab) | yes | 6 tests: verdicts per case, evidence exists, no jargon or overreach, read-only; checked in the browser | n/a (deterministic); **not yet tested with users** |
 | Ask Vanterra (Ask tab): instant engine answers + checked model answers; "Run AI agents" button | yes | 8 tests (grounding, overreach with negation, repair, rejected drafts, failures); WCAG contrast test | **yes**: accepted, cited answer in 57 s on `qwen3:1.7b`, CPU |
-| Standalone desktop app | **no** | — | — (plan: docs/DESKTOP_ARCHITECTURE.md) |
+| Windows desktop app (Electron, `app://`, no local server; Ollama auto-start; NSIS installer) | yes, 0.4.0 | bridge and runtime tests (6); packaged-app smoke test; no listening ports verified | **yes**: AI available in the packaged app with zero configuration |
 
-Verified on 2026-11-20: type-check and lint clean; 158 tests pass in 12 files; the build succeeds; `npm run eval` runs all four suites.
+Verified on 2026-11-21: type-check and lint clean; 164 tests pass in 14 files; the build succeeds; `npm run eval` runs all four suites.
 
 **Repository:** public on GitHub, [mehdi24568/Vanterra](https://github.com/mehdi24568/Vanterra), branch `main`. See docs/PUBLISHING.md.
 
@@ -29,7 +29,7 @@ Verified on 2026-11-20: type-check and lint clean; 158 tests pass in 12 files; t
 ## 3. Roadmap
 
 1. Validate the plain-language briefing with 3–5 non-specialists, then prototype investigation drills (docs/PRODUCT_DISCOVERY.md §8).
-1. Desktop application, phases 1–4 of docs/DESKTOP_ARCHITECTURE.md (Electron shell, Ollama runtime manager, persistence, installer).
+1. Desktop application, remaining work: in-app model download, persistence (phase 3), code signing and auto-update (docs/DESKTOP_ARCHITECTURE.md).
 2. Broader live AI measurement on a machine with enough free memory to keep the model resident (all four live cases, several runs each), so answer quality can be compared with the deterministic engine rather than only observed.
 3. More cyber scenarios: communication loss (loss of view), program download, and a session through an unexpected path. Each needs a rule test and an evaluation case.
 4. A second independent evaluation round, with scenarios written by a domain expert rather than an AI author, and without access to the scenario-language interface.

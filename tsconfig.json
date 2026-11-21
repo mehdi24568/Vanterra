@@ -19,5 +19,5 @@
     "noImplicitOverride": true,
     "types": ["vite/client", "node"]
   },
-  "include": ["src", "server", "scripts", "vite.config.ts", "vitest.eval.config.ts"]
+  "include": ["src", "server", "desktop", "scripts", "vite.config.ts", "vitest.eval.config.ts", "vite.desktop.config.ts"]
 }

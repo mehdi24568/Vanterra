@@ -29,11 +29,21 @@ The possible conclusions are explicit: *physical explanation supported* · *cont
 
 ## Quick start
 
-Vanterra currently runs as a web app on a local development server; it is not yet a packaged desktop application ([the plan for that](docs/DESKTOP_ARCHITECTURE.md)). You need [Node.js](https://nodejs.org) 20 or newer.
+**Windows desktop app.** Vanterra runs as a desktop application with its own window, Start Menu entry and uninstaller. It runs no local web server and opens no port, and it needs no configuration. To build the installer (Node.js 20+ required to build, not to run):
 
-**Windows:** double-click `start-vanterra.cmd`. It installs dependencies on first run, starts the server and opens the browser.
+```bash
+npm install
+```
 
-**Any platform:**
+```bash
+npm run desktop:dist
+```
+
+This produces `release/Vanterra-Setup-0.4.0.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+
+For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
+
+**In a browser (development).** On Windows, double-click `start-vanterra.cmd`; on any platform:
 
 ```bash
 npm install
@@ -47,8 +57,11 @@ Open http://localhost:5173 in a WebGL2 browser. Everything works offline with no
 
 | Command | What it does |
 | --- | --- |
+| `npm run desktop:dist` | Build the Windows installer into `release/` |
+| `npm run desktop` | Build and run the desktop app without installing |
+| `node scripts/smoke-desktop.mjs` | Launch the packaged app and check UI, AI service, Ask, 3D and console errors |
 | `npm run dev` | Development server (with the AI service) |
-| `npm test` | 118 unit, scenario, cyber and agent-workflow tests |
+| `npm test` | 164 unit, scenario, cyber, agent, provider, desktop-bridge and accessibility tests |
 | `npm run eval` | Offline evaluation over 10 seeds → `eval/results/` |
 | `npm run eval:live` | Live-model evaluation with a real model (local Ollama or Claude) |
 | `npm run build` | Type-check and build a static bundle (no AI service) |
@@ -158,7 +171,7 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 158 tests in 12 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 164 tests in 14 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 

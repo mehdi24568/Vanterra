@@ -1,12 +1,15 @@
 {
   "name": "vanterra",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Vanterra - cyber-physical intelligence platform: process anomaly detection, simulated OT network detection, evidence-bound cyber-physical assessment, 3D digital twin and a bounded multi-agent LLM review (simulated environment)",
+  "author": "Mehdi Majd",
+  "homepage": "https://github.com/mehdi24568/Vanterra",
   "engines": {
     "node": ">=20"
   },
   "type": "module",
+  "main": "desktop-dist/main.cjs",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -19,7 +22,40 @@
     "capture": "node scripts/capture-screenshots.mjs",
     "record-demo": "node scripts/record-demo.mjs",
     "eval:live": "vitest run --config vitest.eval.config.ts --project live --silent=false",
-    "check": "tsc --noEmit && eslint . && vitest run"
+    "check": "tsc --noEmit && eslint . && vitest run",
+    "desktop:main": "vite build --config vite.desktop.config.ts",
+    "desktop": "npm run build && npm run desktop:main && electron .",
+    "desktop:dist": "npm run build && npm run desktop:main && electron-builder --win nsis",
+    "icon": "node scripts/make-icon.mjs"
+  },
+  "build": {
+    "appId": "io.github.mehdi24568.vanterra",
+    "productName": "Vanterra",
+    "copyright": "Copyright © 2026 Mehdi Majd",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "desktop-dist/**/*",
+      "package.json",
+      "!node_modules/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vanterra",
+      "artifactName": "Vanterra-Setup-${version}.${ext}"
+    }
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
@@ -35,6 +71,8 @@
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
     "@vitejs/plugin-react": "^6.3.0",
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0",
     "eslint": "^10.14.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.14.0",
