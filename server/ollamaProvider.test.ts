@@ -196,6 +196,22 @@ describe('Ollama provider (local inference) against a protocol stub', () => {
     expect(maxInFlight).toBe(1);
   }, 30_000);
 
+  // Regression (installed 0.4.2): a Quick AI review waited ~8 minutes behind two queued
+  // five-agent review steps. Interactive questions now go next after the running call.
+  it('serves an interactive question before queued background calls', async () => {
+    const order: string[] = [];
+    const url = await stub((_req, body, res) => {
+      order.push((JSON.parse(body) as { messages: { content: string }[] }).messages[1].content);
+      setTimeout(() => send(res, 200, { message: { content: '{"summary":"ok"}' }, done_reason: 'stop' }), 300);
+    });
+    const p = provider(url);
+    const running = p.complete(request({ user: 'agent step 1', timeoutMs: 5000 }));
+    const queued = p.complete(request({ user: 'agent step 2', timeoutMs: 5000 }));
+    const question = p.complete(request({ user: 'quick review', timeoutMs: 5000, priority: 'interactive' }));
+    await Promise.all([running, queued, question]);
+    expect(order).toEqual(['agent step 1', 'quick review', 'agent step 2']);
+  }, 30_000);
+
   it('is configured from the environment with zero cost and wider local time bounds', () => {
     const ai = configureAi({ ATLAS_LLM_PROVIDER: 'ollama' });
     expect(ai.provider?.id).toBe('ollama');

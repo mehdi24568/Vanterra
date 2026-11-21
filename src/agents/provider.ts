@@ -23,6 +23,8 @@ export interface LlmRequest<T> {
   timeoutMs: number;
   /** End of the whole run (epoch ms). A provider that queues calls must not wait past it. */
   deadlineAt?: number;
+  /** A person is waiting for this answer (Ask, Quick AI review): a queueing provider serves it next. */
+  priority?: 'interactive' | 'background';
   signal?: AbortSignal;
 }
 

@@ -42,7 +42,7 @@ function Evidence({ ids }: { ids: string[] }) {
   );
 }
 
-function Message({ m }: { m: AskMessage }) {
+function Message({ m, reviewRunning }: { m: AskMessage; reviewRunning: boolean }) {
   const seconds = (m.latencyMs / 1000).toFixed(m.latencyMs < 10_000 ? 1 : 0);
   const source =
     m.source === 'engine'
@@ -55,7 +55,13 @@ function Message({ m }: { m: AskMessage }) {
       <p className="ask__q">{m.question}</p>
       <div className="ask__a">
         <span className="ask__source">{source}</span>
-        {m.state === 'pending' ? <p className="ask__pending">The local model is reading the investigation. On a laptop CPU this can take a minute or more.</p> : null}
+        {m.state === 'pending' ? (
+          <p className="ask__pending">
+            {reviewRunning
+              ? 'The full AI review is also running. Your question goes next, as soon as its current step finishes, then takes about a minute.'
+              : 'The local model is reading the investigation. On a laptop processor this takes about a minute.'}
+          </p>
+        ) : null}
         {m.state === 'rejected' ? <p className="ask__rejected">The AI’s answer did not pass Vanterra’s checks, so it is not shown.</p> : null}
         {m.state === 'failed' ? <p className="ask__rejected">No answer: the AI could not respond.</p> : null}
         {m.answer ? <p className="ask__text">{m.answer}</p> : null}
@@ -97,6 +103,7 @@ export function AskPanel({ incident }: { incident: Incident }) {
   const history = runtime.askHistory(incident.id);
   const briefing = runtime.core.briefIncident(incident.id);
   const pending = history.some((m) => m.state === 'pending');
+  const reviewRunning = runtime.aiRun(incident.id)?.state === 'running';
 
   const quick = (item: Quick) => {
     if (!briefing) return;
@@ -127,7 +134,7 @@ export function AskPanel({ incident }: { incident: Incident }) {
 
       <ol className="ask__log" aria-live="polite">
         {history.map((m) => (
-          <Message key={m.id} m={m} />
+          <Message key={m.id} m={m} reviewRunning={reviewRunning} />
         ))}
       </ol>
 

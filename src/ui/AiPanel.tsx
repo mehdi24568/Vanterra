@@ -381,6 +381,7 @@ export function AiPanel({ incident }: { incident: Incident }) {
   const catalogue = run ? catalogueOf(run.context) : null;
   const running = run?.state === 'running';
   const testDouble = run?.testDouble ?? ai.testDouble;
+  const askPending = runtime.askHistory(incident.id).some((m) => m.state === 'pending');
 
   return (
     <div className="ai-panel">
@@ -430,12 +431,13 @@ export function AiPanel({ incident }: { incident: Incident }) {
                 type="button"
                 className={`btn ${ai.provider === 'ollama' ? 'btn--primary' : 'btn--ghost'}`}
                 title="One question to the AI: the best-supported explanation, what argues against it, and the two most useful checks. Answered in the Ask tab, checked against the evidence."
+                disabled={askPending}
                 onClick={() => {
                   runtime.askAi(incident.id, QUICK_REVIEW_QUESTION);
                   runtime.setInvestigationTab('ask');
                 }}
               >
-                Quick AI review
+                {askPending ? 'Question in progress…' : 'Quick AI review'}
               </button>
               <button type="button" className={`btn ${ai.provider === 'ollama' ? 'btn--ghost' : 'btn--primary'}`} onClick={() => runtime.runAiInvestigation(incident.id)} disabled={running}>
                 {running ? 'Investigating…' : report || run?.error ? 'Run full review again' : 'Run full five-agent review'}

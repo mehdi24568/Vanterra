@@ -146,6 +146,8 @@ export async function answerQuestion(
         user: `Investigation data:\n${data}\n\nQuestion: ${question}${feedback}`,
         schema: AskAnswerSchema,
         maxOutputTokens: 700,
+        // Someone is waiting for this: served before queued five-agent review steps.
+        priority: 'interactive',
         timeoutMs: opts.timeoutMs,
         deadlineAt: started + opts.timeoutMs * 2,
         signal: opts.signal,

@@ -60,18 +60,47 @@ export function capArrays(schema: unknown, maxItems: number): unknown {
   return out;
 }
 
-/** Resolves when `turn` settles; rejects as cancelled if `signal` fires first. */
-function waitForTurn(turn: Promise<void>, signal?: AbortSignal): Promise<void> {
-  if (!signal) return turn;
-  if (signal.aborted) return Promise.reject(new LlmError('aborted', 'Request cancelled'));
-  return new Promise((resolve, reject) => {
-    const onAbort = () => reject(new LlmError('aborted', 'Request cancelled'));
-    signal.addEventListener('abort', onAbort, { once: true });
-    void turn.then(() => {
-      signal.removeEventListener('abort', onAbort);
-      resolve();
+/**
+ * One call at a time (Ollama on a CPU has one slot), in priority order: an interactive
+ * question waits only for the call already running, not behind a queued five-agent review.
+ * Within a priority, first come first served. A cancelled waiter leaves the queue.
+ */
+class CallQueue {
+  private busy = false;
+  private seq = 0;
+  private waiting: { priority: number; seq: number; start: () => void }[] = [];
+
+  acquire(priority: number, signal?: AbortSignal): Promise<void> {
+    if (signal?.aborted) return Promise.reject(new LlmError('aborted', 'Request cancelled'));
+    if (!this.busy) {
+      this.busy = true;
+      return Promise.resolve();
+    }
+    return new Promise((resolve, reject) => {
+      const waiter = {
+        priority,
+        seq: ++this.seq,
+        start: () => {
+          signal?.removeEventListener('abort', onAbort);
+          resolve();
+        },
+      };
+      const onAbort = () => {
+        const i = this.waiting.indexOf(waiter);
+        if (i >= 0) this.waiting.splice(i, 1);
+        reject(new LlmError('aborted', 'Request cancelled'));
+      };
+      signal?.addEventListener('abort', onAbort, { once: true });
+      this.waiting.push(waiter);
     });
-  });
+  }
+
+  release(): void {
+    this.waiting.sort((a, b) => b.priority - a.priority || a.seq - b.seq);
+    const next = this.waiting.shift();
+    if (next) next.start();
+    else this.busy = false;
+  }
 }
 
 /** POST a JSON body and read the whole reply, with no deadline other than `signal`. */
@@ -97,8 +126,7 @@ export class OllamaProvider implements LlmProvider {
   readonly id = 'ollama';
   readonly testDouble = false;
   readonly model: string;
-  /** Settles when the last queued call has finished. */
-  private tail: Promise<void> = Promise.resolve();
+  private readonly queue = new CallQueue();
 
   constructor(private readonly options: OllamaOptions) {
     this.model = options.model;
@@ -123,18 +151,13 @@ export class OllamaProvider implements LlmProvider {
   }
 
   async complete<T>(request: LlmRequest<T>): Promise<LlmResponse> {
-    let release!: () => void;
-    const mine = new Promise<void>((r) => (release = r));
-    const turn = this.tail;
-    // The next call waits for every earlier call and for this one, even if this one gives up early.
-    this.tail = turn.then(() => mine);
+    await this.queue.acquire(request.priority === 'interactive' ? 1 : 0, request.signal);
     try {
-      await waitForTurn(turn, request.signal);
       const left = (request.deadlineAt ?? Infinity) - Date.now();
       if (left <= 1000) throw new LlmError('timeout', 'The run deadline was reached while this call waited for the local model');
       return await this.send({ ...request, timeoutMs: Math.min(request.timeoutMs, left) });
     } finally {
-      release();
+      this.queue.release();
     }
   }
 

@@ -41,7 +41,7 @@ npm install
 npm run desktop:dist
 ```
 
-This produces `release/Vanterra-Setup-0.4.2.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+This produces `release/Vanterra-Setup-0.4.3.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
 
 For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 
