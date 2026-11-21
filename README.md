@@ -41,7 +41,7 @@ npm install
 npm run desktop:dist
 ```
 
-This produces `release/Vanterra-Setup-0.4.4.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
+This produces `release/Vanterra-Setup-0.5.0.exe`. The installer is per-user and needs no administrator rights. It is **not code-signed**, so Windows SmartScreen shows a warning on first run (*More info → Run anyway*). `npm run desktop` runs the app without installing it.
 
 For the AI features, install [Ollama](https://ollama.com) and run `ollama pull qwen3:1.7b` once. The app finds Ollama and starts it if it is not running. Without Ollama, everything except the AI works. How the desktop app is built: [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md).
 
@@ -63,7 +63,7 @@ Open http://localhost:5173 in a WebGL2 browser. Everything works offline with no
 | `npm run desktop` | Build and run the desktop app without installing |
 | `node scripts/smoke-desktop.mjs` | Launch the packaged app and check UI, AI service, Ask, 3D and console errors |
 | `npm run dev` | Development server (with the AI service) |
-| `npm test` | 164 unit, scenario, cyber, agent, provider, desktop-bridge and accessibility tests |
+| `npm test` | 177 unit, scenario, cyber, finance, agent, provider, desktop-bridge and accessibility tests |
 | `npm run eval` | Offline evaluation over 10 seeds → `eval/results/` |
 | `npm run eval:live` | Live-model evaluation with a real model (local Ollama or Claude) |
 | `npm run build` | Type-check and build a static bundle (no AI service) |
@@ -134,6 +134,20 @@ The deterministic core is the source of truth. It runs in the browser, in tests 
 - **Cyber Engine** (`src/cyber/CyberEngine.ts`): five detection rules: `AUTH-BURST`, `ENG-SESSION` (outside an approved window), `CONDUIT` (segmentation violation), `FIRST-SEEN` (new communication after a learned baseline), and `UNAPPROVED-CHANGE` (matches no change record on account, host, parameter, window and value). Approved changes and controller reads are recorded as informational. Each event carries evidence fields, rationale and limitations; related events form cases.
 - **ATT&CK for ICS context** (`src/cyber/attack.ts`): seven techniques, each ID and tactic checked against attack.mitre.org (content v20.1). They are shown as context, with a standing caveat that a mapping is not a finding.
 
+## Finance: is this result real?
+
+The same investigation method applied to a company's monthly results (**Finance** view, key `4`). When EBITDA, margin or revenue moves, or fails to move, Vanterra determines with evidence whether the cause is operating performance (price, volume, costs), an accounting entry (approved or not), or both. It also shows the **normalised** result without unapproved manual entries, as a quality-of-earnings review would.
+
+![On budget as reported, but a manual entry hides a real price-driven decline](docs/screenshots/14-finance-masked-decline.png)
+
+- An exact bridge from budget to reported: price, volume × margin, unit cost, freight, operating expenses, approved entries, unapproved entries.
+- Drivers flagged when they move unusually against their own 12 months.
+- Competing explanations with explicit criteria and evidence IDs. An entry explains a line only if it posts to it.
+- Seven standings, including **masked by an entry**: the reported result looks fine because an entry offsets a real deterioration.
+- A fictional company with synthetic data, and six scenarios with a known cause, all reached by the engine in tests (`src/finance/`). An entry without an approval reference is never called an error or fraud.
+
+Why finance, what was researched, what was decided and what was not built: [docs/FINANCE_CONSULTING.md](docs/FINANCE_CONSULTING.md).
+
 ## The cyber-physical assessment
 
 `src/cyber/assess.ts` evaluates up to four explanations for every incident: equipment fault, unapproved control change, approved change, and unrelated cyber activity. Each has explicit criteria (observed or not, with evidence IDs), a status, unknowns and next steps. It is deterministic and read-only, and it cannot change an incident or a verdict. Only an operator confirms.
@@ -173,7 +187,7 @@ Most scenarios were designed together with the rules. To counter that, a separat
 
 ## Testing
 
-`npm test` runs 164 tests in 14 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
+`npm test` runs 177 tests in 15 files: the physical pipeline per scenario, normal operation, fault separation, operator workflow and reset; the cyber layer (detection, cases, ATT&CK caveats, flagship, approved change, "a cyber event does not establish causality", "a physical anomaly does not imply cyber activity", "a change after onset cannot explain it", "a trip keeps the physical explanation open", read-only assessment, reset repeatability, bit-identical physics, and **no code outside the simulator can write a controller setting**); the agent workflow and grounding (including CEV citations and causal overreach); and the Claude and Ollama providers against local API stubs (for Ollama, including one-at-a-time queueing and slow answers).
 
 ## Configuration
 
@@ -218,6 +232,7 @@ docs/           screenshots, brand, demo script, portfolio, publishing
 | [docs/LOCAL_AI.md](docs/LOCAL_AI.md) | Local inference with Ollama: measured performance, fixes, setup |
 | [docs/DESKTOP_ARCHITECTURE.md](docs/DESKTOP_ARCHITECTURE.md) | Decision record and plan for a standalone Windows app |
 | [docs/PRODUCT_DISCOVERY.md](docs/PRODUCT_DISCOVERY.md) | Who this is for, evidence versus hypotheses, the selected direction and its first proof |
+| [docs/FINANCE_CONSULTING.md](docs/FINANCE_CONSULTING.md) | Finance and consulting discovery, the decision (earnings movement investigation) and its working proof |
 | [SECURITY.md](SECURITY.md) | Security controls, known risks, reporting |
 | [eval/independent/](eval/independent/) | Authoring brief, plant catalog and blind-authored scenarios |
 | [docs/DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Demo recording package |

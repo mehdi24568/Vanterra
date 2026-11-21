@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { ControlRail } from './ui/ControlRail';
 import { CyberPage } from './ui/CyberPage';
+import { FinancePage } from './ui/FinancePage';
 import { OverviewPage } from './ui/OverviewPage';
 import { DemoGuide, Welcome } from './ui/DemoGuide';
 import { useRuntime, useUi } from './ui/context';
@@ -71,6 +72,9 @@ export function App() {
         case '3':
           runtime.setView('cyber');
           return;
+        case '4':
+          runtime.setView('finance');
+          return;
         default:
       }
       if (state.view !== 'spatial') return;
@@ -115,6 +119,7 @@ export function App() {
       <TopBar />
       {view === 'overview' ? <OverviewPage /> : null}
       {view === 'cyber' ? <CyberPage /> : null}
+      {view === 'finance' ? <FinancePage /> : null}
       {spatial ? (
         <>
           {/* Below 1100 px the rails are drawers; the scrim closes them. */}

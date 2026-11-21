@@ -85,7 +85,7 @@ export interface ScanInfo {
 export type RightPanel = 'asset' | 'incidents' | 'anomalies' | 'investigation';
 export type InvestigationTab = 'overview' | 'ask' | 'evidence' | 'hypotheses' | 'cyber' | 'ai' | 'impact' | 'checks';
 /** Top-level product areas. */
-export type AppView = 'overview' | 'spatial' | 'cyber';
+export type AppView = 'overview' | 'spatial' | 'cyber' | 'finance';
 export type LeftTab = 'scenarios' | 'sonar' | 'layers';
 
 export interface DemoState {

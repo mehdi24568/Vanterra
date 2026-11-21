@@ -44,6 +44,7 @@ const VIEWS: { id: AppView; label: string; key: string }[] = [
   { id: 'overview', label: 'Overview', key: '1' },
   { id: 'spatial', label: 'Spatial', key: '2' },
   { id: 'cyber', label: 'Cyber & OT', key: '3' },
+  { id: 'finance', label: 'Finance', key: '4' },
 ];
 
 /**

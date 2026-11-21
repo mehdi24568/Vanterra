@@ -2,7 +2,8 @@
  * Smoke test of the packaged desktop app (release/win-unpacked/Vanterra.exe):
  * launches it, waits for the UI, checks the AI service through app://, runs the flagship
  * scenario, opens the incident's Ask tab, asks a quick (engine) question, checks the 3D
- * canvas and console errors, and saves a screenshot. Optionally asks the model one
+ * canvas, reads the Finance view's verdict, checks console errors, and saves a screenshot.
+ * Optionally asks the model one
  * question when SMOKE_ASK_MODEL=1 (slow on a CPU).
  *
  *   npm run desktop:dist && node scripts/smoke-desktop.mjs [screenshot.png]
@@ -55,6 +56,11 @@ if (process.env.SMOKE_ASK_MODEL === '1') {
 await page.keyboard.press('2'); // Spatial (3D) view
 await page.waitForTimeout(3000);
 result.canvases = await page.locator('canvas').count();
+await page.keyboard.press('4'); // Finance view
+await page.locator('.fin-verdict__label').waitFor({ timeout: 15_000 });
+result.financeVerdict = `${await page.locator('.fin-verdict__label').textContent()}: ${await page.locator('.fin-verdict__answer').textContent()}`;
+await page.keyboard.press('2');
+await page.waitForTimeout(1000);
 await page.screenshot({ path: shot });
 result.consoleErrors = errors;
 console.log(JSON.stringify(result, null, 2));
